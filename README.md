@@ -1,2 +1,3 @@
-# Laser-Tag-Project
-Laser tag project
+# Laser Tag Project Repository
+
+Laser tag project boiiiiis
