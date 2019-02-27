@@ -1,7 +1,6 @@
 @startuml systemsekvensdiagram-uc1
 
 hide footbox
-
 skinparam monochrome true
 skinparam dpi 300
 skinparam padding 5
