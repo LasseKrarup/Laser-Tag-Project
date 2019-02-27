@@ -1,0 +1,39 @@
+@startuml systemsekvensdiagram-uc1
+
+hide footbox
+
+skinparam monochrome true
+skinparam dpi 300
+skinparam padding 5
+
+actor Bruger
+participant "TargetController" as tgtCtrl
+participant "Target" as tgt
+
+'== Use case 1 ==
+
+Bruger -> tgtCtrl: Tænder for
+activate tgtCtrl
+loop 5 sekunder
+    tgtCtrl -> tgt: Nulstil position
+end
+tgtCtrl -> tgt: Start bevægelse
+activate tgt
+
+tgtCtrl -> tgtCtrl: Starter nedtælling til slut (60 sek)
+
+loop 60 sekunder
+    tgt -> tgt: Bevæger sig i tilfældig sekvens
+    Bruger -> tgt: Skyder efter target
+
+    alt target rammes
+        tgtCtrl <- tgt: Target ramt
+        tgtCtrl -> tgtCtrl: Point +1
+    end
+end
+
+tgtCtrl -> tgt: Stop bevægelse
+deactivate tgt
+deactivate tgtCtrl
+
+@enduml
