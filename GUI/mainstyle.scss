@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=B612');
+
+$bgcolor: white;
+$textcolor: #232323;
+
+html, body {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    font-family: 'B612', sans-serif;
+    color: $textcolor;
+    background-color: $bgcolor;
+}
+
+.container {
+    display: grid;
+    margin: auto;
+    text-align: center;
+    width: 80%;
+    height: 100%;
+    border-left: 1px;
+    border-right: 1px;
+    background-color: darkslategray;
+}
