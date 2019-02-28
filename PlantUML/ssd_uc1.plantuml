@@ -8,6 +8,7 @@ skinparam {
     padding 5
     sequenceMessageAlign center
     packageStyle frame
+    shadowing false
     'backgroundColor transparent
 }
 
