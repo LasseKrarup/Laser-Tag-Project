@@ -5,30 +5,36 @@
     <title>Laser-Tag 3000</title>
 </head>
 <body>
-
-    <div class="container">
-        <h1>Laser-Tag 3000</h1>
-        <h2 id="myh2"></h2>
-    </div>
+    <div class="topbar"><button class="quit" type="button">X</button></div>
 
     <script>
-        const {ipcRenderer} = require('electron');
+            const {ipcRenderer, remote} = require('electron');
+    
+            // Catch "yes" to save highscore
+           /*  ipcRenderer.on('yes:saveHighscore',
+                (e, item) => {
+                    const itemText = document.createTextNode(item);
+                    h2.appendChild(itemText);
+                }
+            );
 
-        const h2 = document.getElementById('myh2');
+            ipcRenderer.on('item:clear',
+                () => {
+                    h2.innerHTML = '';
+                }
+            ); */
 
-        // Catch "yes" to save highscore
-        ipcRenderer.on('yes:saveHighscore',
-            (e, item) => {
-                const itemText = document.createTextNode(item);
-                h2.appendChild(itemText);
-            }
-        );
+            document.querySelector('.quit').addEventListener('click', 
+                ()=>{
+                    ipcRenderer.send('quit', (event));
+                }
+            );
+        </script>
 
-        ipcRenderer.on('item:clear',
-            () => {
-                h2.innerHTML = '';
-            }
-        );
-    </script>
+    <header>
+        <div class="container">
+            <a id="titletext" href="#">Laser-Tag 3000</a>
+        </div>
+    </header>
 </body>
 </html>

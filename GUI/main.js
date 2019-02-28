@@ -2,14 +2,24 @@ const electron = require('electron');
 const url = require('url');
 const path = require('path');
 
-const {app, BrowserWindow, Menu, ipcMain} = electron;
+const {app, BrowserWindow, Menu, ipcMain, globalShortcut} = electron;
 
 let mainWindow;
+let menuOverlay;
+let menuExists=false;
 
 // Listen for app to be ready
 app.on('ready', 
     () => {   //create window
-        mainWindow = new BrowserWindow();
+        mainWindow = new BrowserWindow({
+            show: false,
+            frame: false,
+            resizable: false,
+            height: 560,
+            width: 700,
+            title: projectData.sysname,
+
+        });
         // Load html
         mainWindow.loadURL(url.format({
             pathname: path.join(__dirname, 'main_window.html'),
@@ -17,7 +27,15 @@ app.on('ready',
             slashes: true
         })); //passes this into loadURL:    file://dirname/main_window.html
     
-        //Quit entire app on close
+        mainWindow.once('ready-to-show', 
+            () => {
+                mainWindow.show();
+            }
+        );
+
+        globalShortcut.register('Esc', toggleMenuOverlay);
+
+        //Quit entire app on closed
         mainWindow.on('closed', ()=>{
                 app.quit();
             }
@@ -56,6 +74,14 @@ ipcMain.on('yes:saveHighscore',
     }
 );
 
+// Catch quit
+ipcMain.on('quit', 
+    (event) => {
+        console.log('caught quit')
+        app.quit();
+    }
+)
+
 // Create menu template (top of the app window)
 const mainMenuTemplate = 
 [
@@ -80,9 +106,15 @@ const mainMenuTemplate =
                 click(){
                     app.quit();
                 }
+            },
+            {
+                role: 'close',
             }
         ]
-    }
+    },
+    {
+        role: 'edit',
+    },
 ];
 
 // If Mac, add empty object to menu, because Mac is stupid
@@ -107,4 +139,40 @@ if(process.env.NODE_ENV != 'production'){
             }
         ]
     });
+}
+
+function toggleMenuOverlay(err, ) {
+    if (menuExists == false) {
+            menuOverlay = new BrowserWindow({
+            parent: mainWindow,
+            modal: true,
+            show: false,
+            backgroundColor: "#cbccf3",
+            frame: false,
+            width: 300,
+            height: 400,
+            skipTaskbar: true,
+            //resizable: false,
+        })
+
+        menuExists = true;
+
+        menuOverlay.loadURL(`file://${__dirname}/menu_overlay.html`) //backticks so I can use var's
+        menuOverlay.once('ready-to-show', () => {
+            menuOverlay.show();
+        })
+
+        menuOverlay.once('closed', ()=>{
+            menuExists = false;
+            menuOverlay = null;
+        })
+    } else {
+        menuOverlay.close();
+    }
+}
+
+
+// Define global variables
+global.projectData = {
+    sysname: "Laser-Tag 3000"
 }

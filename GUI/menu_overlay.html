@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Menu</title>
+    <link rel="stylesheet" href="mainstyle.css">
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body>
+    <ul class="menu">
+        <li id="close" class="close">Add players</li>
+        <li id="remove" class="close">Remove players</li>
+        <li id="stop" class="close">Stop game</li>
+        <li id="quit">Exit</li>
+    </ul>
+
+    <script>
+        const {ipcRenderer, remote} = require('electron');
+
+        const close = document.getElementById('close');
+        console.log(close);
+        close.addEventListener('click', closeWin);
+
+        function closeWin() {   
+            remote.getCurrentWindow().close();
+        }
+
+        const quit = document.getElementById('quit');
+        quit.addEventListener('click', fnQuit);
+
+        function fnQuit(event){
+            ipcRenderer.send('quit', event);
+        }
+    </script>
+</body>
+</html>
