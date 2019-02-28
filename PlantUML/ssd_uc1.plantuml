@@ -1,17 +1,23 @@
 @startuml systemsekvensdiagram-uc1
 
 hide footbox
-skinparam monochrome true
-skinparam dpi 300
-skinparam padding 5
 
-actor Bruger
+skinparam {
+    monochrome true
+    dpi 300
+    padding 5
+    sequenceMessageAlign center
+    packageStyle frame
+    'backgroundColor transparent
+}
+
+actor Bruger as user
 participant "TargetController" as tgtCtrl
 participant "Target" as tgt
 
 '== Use case 1 ==
 
-Bruger -> tgtCtrl: Tænder for
+user -> tgtCtrl: Tænder for
 activate tgtCtrl
 loop 5 sekunder
     tgtCtrl -> tgt: Nulstil position
@@ -23,7 +29,7 @@ tgtCtrl -> tgtCtrl: Starter nedtælling til slut (60 sek)
 
 loop 60 sekunder
     tgt -> tgt: Bevæger sig i tilfældig sekvens
-    Bruger -> tgt: Skyder efter target
+    user -> tgt: Skyder efter target
 
     alt target rammes
         tgtCtrl <- tgt: Target ramt
