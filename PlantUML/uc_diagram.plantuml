@@ -9,6 +9,8 @@ skinparam {
   packageStyle rectangle
   packageStyle frame
   shadowing false
+  'linetype polyline
+  'linetype ortho
   'backgroundColor transparent
 }
 
