@@ -1,0 +1,27 @@
+@startuml uc_diagram
+
+left to right direction
+
+skinparam {
+    monochrome true
+    dpi 300
+    padding 5
+    packageStyle rectangle
+    packageStyle frame
+    shadowing false
+    'linetype polyline
+    'linetype ortho
+    'backgroundColor transparent
+}
+
+frame "uc Laser-Tag 3000" {
+
+    actor Bruger as user
+    actor Administrator as admin
+    rectangle "Laser-Tag 3000" as lasertag
+
+    user -- lasertag
+    admin -- lasertag
+}
+
+@enduml
