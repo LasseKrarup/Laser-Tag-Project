@@ -1,4 +1,4 @@
-@startuml use-case-diagram
+@startuml uc_diagram
 
 left to right direction
 
