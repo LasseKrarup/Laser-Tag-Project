@@ -14,7 +14,7 @@ skinparam {
     'backgroundColor transparent
 }
 
-frame "uc Laser-Tag 3000" {
+frame "ac Laser-Tag 3000" {
 
     actor Bruger as user
     actor Administrator as admin
