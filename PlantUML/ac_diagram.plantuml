@@ -18,7 +18,7 @@ frame "ac Laser-Tag 3000" {
 
     actor Bruger as user
     actor Administrator as admin
-    rectangle "Laser-Tag 3000" as lasertag
+    rectangle "\n\nLaser-Tag 3000\n\n" as lasertag
 
     user -- lasertag
     admin -- lasertag
