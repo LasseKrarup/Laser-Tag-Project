@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="mainstyle.css">
+    <title>Laser-Tag 3000</title>
+</head>
+<body>
+    <div class="topbar"><button class="quit" type="button">X</button></div>
+
+    <script>
+            const {ipcRenderer, remote} = require('electron');
+    
+            // Catch "yes" to save highscore
+           /*  ipcRenderer.on('yes:saveHighscore',
+                (e, item) => {
+                    const itemText = document.createTextNode(item);
+                    h2.appendChild(itemText);
+                }
+            );
+
+            ipcRenderer.on('item:clear',
+                () => {
+                    h2.innerHTML = '';
+                }
+            ); */
+
+            document.querySelector('.quit').addEventListener('click', 
+                ()=>{
+                    ipcRenderer.send('quit', (event));
+                }
+            );
+        </script>
+
+    <header>
+        <div class="container">
+            <a id="titletext" href="#">Laser-Tag 3000</a>
+        </div>
+    </header>
+</body>
+</html>
