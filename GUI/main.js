@@ -74,6 +74,33 @@ ipcMain.on('yes:saveHighscore',
     }
 );
 
+// Catch 'add players'
+ipcMain.on('addPlayers', 
+    (event, msg) => {
+        console.log(msg);
+
+        menuOverlay.close(); //close menu
+    }
+)
+
+// Catch 'remove players'
+ipcMain.on('removePlayers', 
+    (event, msg) => {
+        console.log(msg);
+
+        menuOverlay.close(); //close menu
+    }
+)
+
+// Catch 'stop game'
+ipcMain.on('stopGame', 
+    (event, msg) => {
+        console.log(msg);
+
+        menuOverlay.close(); //close menu
+    }
+)
+
 // Catch quit
 ipcMain.on('quit', 
     (event) => {
