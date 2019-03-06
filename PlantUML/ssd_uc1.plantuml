@@ -14,6 +14,7 @@ skinparam {
 
 actor Bruger as user
 participant "Target" as tgt
+participant "Server" as svr
 
 '== Use case 1 ==
 
@@ -34,6 +35,10 @@ loop 60 sekunder
 end
 
 tgt -> tgt: Stop bevægelse
+
+tgt -> user: Point vises til bruger
+tgt -> svr: Point sendes til server
+
 deactivate tgt
 
 @enduml
