@@ -13,6 +13,7 @@ skinparam {
 }
 
 actor Bruger as user
+
 participant "Target" as tgt
 participant "Server" as svr
 
