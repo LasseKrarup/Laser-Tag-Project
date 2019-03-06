@@ -36,9 +36,10 @@ end
 
 tgt -> tgt: Stop bevægelse
 
-tgt -> user: Point vises til bruger
 tgt -> svr: Point sendes til server
-
 deactivate tgt
+activate svr
+svr -> user: Point vises til bruger
+deactivate svr
 
 @enduml
