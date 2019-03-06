@@ -13,33 +13,27 @@ skinparam {
 }
 
 actor Bruger as user
-participant "TargetController" as tgtCtrl
 participant "Target" as tgt
 
 '== Use case 1 ==
 
-user -> tgtCtrl: Tænder for
-activate tgtCtrl
-loop 5 sekunder
-    tgtCtrl -> tgt: Nulstil position
-end
-tgtCtrl -> tgt: Start bevægelse
+user -> tgt: Tænder for
 activate tgt
-
-tgtCtrl -> tgtCtrl: Starter nedtælling til slut (60 sek)
+loop 5 sekunder
+    tgt -> tgt: Nulstil position
+end
+tgt -> tgt: Start bevægelse
 
 loop 60 sekunder
     tgt -> tgt: Bevæger sig i tilfældig sekvens
     user -> tgt: Skyder efter target
 
     alt target rammes
-        tgtCtrl <- tgt: Target ramt
-        tgtCtrl -> tgtCtrl: Point +1
+        tgt <- tgt: Target ramt: Point +1
     end
 end
 
-tgtCtrl -> tgt: Stop bevægelse
+tgt -> tgt: Stop bevægelse
 deactivate tgt
-deactivate tgtCtrl
 
 @enduml
