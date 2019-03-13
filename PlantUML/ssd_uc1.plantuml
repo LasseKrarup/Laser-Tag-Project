@@ -25,9 +25,10 @@ user -> practiceKit: Tænder for
 
 activate practiceKit
 
+practiceKit -> target: Nulstil position
 practiceKit -> practiceKit: Starter timer (5 sekunder)
 loop 5 sekunder
-    practiceKit -> target: Nulstil position
+    practiceKit -> practiceKit: Venter
 end
 
 practiceKit -> target: Start bevægelse

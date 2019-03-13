@@ -4,7 +4,7 @@ hide footbox
 
 skinparam {
     monochrome true
-    dpi 300
+    dpi 200
     padding 5
     sequenceMessageAlign center
     packageStyle frame
@@ -12,10 +12,9 @@ skinparam {
     'backgroundColor transparent
 }
 
-participant "PC" as pc
-actor Admin as admin
-
 actor Users as users
+actor Admin as admin
+participant "PC" as pc
 participant "Server" as server
 collections "ComUnit : UserKit" as comUnit
 collections "transmitter : UserKit" as transmitter
