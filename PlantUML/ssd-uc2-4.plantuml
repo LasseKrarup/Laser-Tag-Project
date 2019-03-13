@@ -20,8 +20,7 @@ participant "Server" as server
 collections "ComUnit : UserKit" as comUnit
 collections "transmitter : UserKit" as transmitter
 collections "reciever : UserKit" as reciever
-participant "Laser-Tag 3000" as laserTag
-participant "Ramt lasermodtager" as laserReciever
+participant "ScoreDisplay" as display
 
 == Use case 2: Start spil ==
 
@@ -51,7 +50,7 @@ group Prækondition
     transmitter -> reciever: Udsender laserstråle
     deactivate transmitter
     activate reciever
-    reciever -> reciever: Modtager ramt
+    reciever -> reciever: Modtager ramt: Vibrerer og blinker
 end
 
 reciever -> comUnit: Fortæller hvilken bruger, der har ramt modtageren
@@ -59,16 +58,9 @@ deactivate reciever
 
 comUnit -> server: Sender information om ramt modtager til server
 
-'Her går der noget galt - det er vel modtageren der detektere det og sender til server???
-laserTag -> laserTag: Detektere at brugeren rammer en lasermodtager
-laserTag -> server: Hældelsen logges i servern
-'Hvordan ved brugeren hvor mange point han har???
-laserReciever -> laserReciever: Vibrerer og blinker
-
 == Use case 4: Afslut spil ==
 
 server -> server: Statistikker for det afsluttede spil opdateres
-server -> laserTag: Point og statistikker downloades
-laserTag -> laserTag: Point og statistikker vises på en skærm
+server -> display: Point og statistikker vises på skærm
 
 @enduml
