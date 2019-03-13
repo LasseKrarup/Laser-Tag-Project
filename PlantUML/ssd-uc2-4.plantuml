@@ -15,10 +15,10 @@ skinparam {
 actor Users as users
 actor Admin as admin
 participant "PC" as pc
-participant "Server" as server
 collections "ComUnit : UserKit" as comUnit
 collections "transmitter : UserKit" as transmitter
 collections "reciever : UserKit" as reciever
+participant "Server" as server
 participant "ScoreDisplay" as display
 
 == Use case 2: Start spil ==
@@ -35,11 +35,13 @@ admin -> pc: Indtaster antal spillere
 admin -> pc: Bekræfter indtastningerne
 admin -> pc: Bekræfter start af spil
 deactivate admin
-pc -> server: Start spil
+pc -> server: Start spil samt informationer om spil
 deactivate pc
 activate server
 server -> comUnit: Spil startet
 deactivate server
+activate comUnit
+comUnit -> comUnit: Starter timer
 
 == Use case 3: Skyd ==
 
@@ -58,6 +60,14 @@ deactivate reciever
 comUnit -> server: Sender information om ramt modtager til server
 
 == Use case 4: Afslut spil ==
+
+alt Timer udløber
+    comUnit -> server: Spil afsluttes
+else Admin afbryder spil
+    admin -> server: Afslut spil
+    server -> comUnit: Afbryd spil
+
+end
 
 server -> server: Statistikker for det afsluttede spil opdateres
 server -> display: Point og statistikker vises på skærm
