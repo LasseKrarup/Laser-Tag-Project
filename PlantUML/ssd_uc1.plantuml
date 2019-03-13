@@ -14,33 +14,44 @@ skinparam {
 
 actor Bruger as user
 
-participant "Target" as tgt
-participant "Server" as svr
+participant "UserKit" as userKit
+participant "PracticeKit" as practiceKit
+participant "Target" as target
+participant "Server" as server
+participant "ScoreDisplay" as screen
 
 '== Use case 1 ==
+user -> practiceKit: Tænder for
 
-user -> tgt: Tænder for
-activate tgt
+activate practiceKit
+
+practiceKit -> practiceKit: Starter timer (5 sekunder)
 loop 5 sekunder
-    tgt -> tgt: Nulstil position
+    practiceKit -> target: Nulstil position
 end
-tgt -> tgt: Start bevægelse
 
+practiceKit -> target: Start bevægelse
+activate target
+
+practiceKit -> practiceKit: Starter timer (60 sekunder)
 loop 60 sekunder
-    tgt -> tgt: Bevæger sig i tilfældig sekvens
-    user -> tgt: Skyder efter target
+    target -> target: Bevæger sig i tilfældig sekvens
+    user -> userKit: Trykker på aftrækkeren
+    userKit -> target: Udsender laserstråle
 
     alt target rammes
-        tgt <- tgt: Target ramt: Point +1
+        target -> practiceKit: Target ramt
+        practiceKit -> practiceKit: Point +1
     end
 end
 
-tgt -> tgt: Stop bevægelse
+practiceKit -> target: Stop bevægelse
+deactivate target
 
-tgt -> svr: Point sendes til server
-deactivate tgt
-activate svr
-svr -> user: Point vises til bruger
-deactivate svr
+practiceKit -> server: Point sendes til server
+deactivate practiceKit
+activate server
+server -> screen: Point vises på skærm
+deactivate server
 
 @enduml

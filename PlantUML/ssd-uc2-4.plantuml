@@ -12,33 +12,63 @@ skinparam {
     'backgroundColor transparent
 }
 
+participant "PC" as pc
 actor Admin as admin
-participant "GUI" as gui
-participant "Laser-Tag 3000" as lasertag
-participant "Database" as database
+
+actor Users as users
+participant "Server" as server
+collections "ComUnit : UserKit" as comUnit
+collections "transmitter : UserKit" as transmitter
+collections "reciever : UserKit" as reciever
+participant "Laser-Tag 3000" as laserTag
 participant "Ramt lasermodtager" as laserReciever
 
 == Use case 2: Start spil ==
 
-admin -> gui: Vælger at starte spil
-admin -> gui: Indtaster længden på spillet
-admin -> gui: Bekræfter indtastningerne
-admin -> gui: Indtaster antal spillere
+group Prækondition
+    users -> admin: To eller flere brugere henvender sig
+end
 
-'Mangler: Spil startes (Men hvordan??? Fra GUI til server til enheder???)
+activate admin
+admin -> pc: Vælger at starte spil
+activate pc
+admin -> pc: Indtaster længden på spillet
+admin -> pc: Indtaster antal spillere
+admin -> pc: Bekræfter indtastningerne
+admin -> pc: Bekræfter start af spil
+deactivate admin
+pc -> server: Start spil
+deactivate pc
+activate server
+server -> comUnit: Spil startet
+deactivate server
 
 == Use case 3: Skyd ==
 
-'Her går der noget galt - det er vel modtageren der detektere det og sender til database???
-lasertag -> lasertag: Detektere at brugeren rammer en lasermodtager
-lasertag -> database: Hældelsen logges i databasen
+group Prækondition
+    users -> transmitter: En bruger trykker på aftrækkeren
+    activate transmitter
+    transmitter -> reciever: Udsender laserstråle
+    deactivate transmitter
+    activate reciever
+    reciever -> reciever: Modtager ramt
+end
+
+reciever -> comUnit: Fortæller hvilken bruger, der har ramt modtageren
+deactivate reciever
+
+comUnit -> server: Sender information om ramt modtager til server
+
+'Her går der noget galt - det er vel modtageren der detektere det og sender til server???
+laserTag -> laserTag: Detektere at brugeren rammer en lasermodtager
+laserTag -> server: Hældelsen logges i servern
 'Hvordan ved brugeren hvor mange point han har???
 laserReciever -> laserReciever: Vibrerer og blinker
 
 == Use case 4: Afslut spil ==
 
-database -> database: Statistikker for det afsluttede spil opdateres
-database -> lasertag: Point og statistikker downloades
-lasertag -> lasertag: Point og statistikker vises på en skærm
+server -> server: Statistikker for det afsluttede spil opdateres
+server -> laserTag: Point og statistikker downloades
+laserTag -> laserTag: Point og statistikker vises på en skærm
 
 @enduml
