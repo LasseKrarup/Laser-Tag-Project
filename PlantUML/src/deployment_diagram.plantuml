@@ -20,8 +20,6 @@ node "<b>PC" <<device>> as PC {
     note "This application serves\n as the admin interface" as N2
     N2 .left. desktopApp
 
-    DB -[hidden]-> N2
-
     node "<b>Server" <<server>> as server {
         artifact "<b>backend.exe" <<executable>> as backend
     }
@@ -37,7 +35,9 @@ node "<b>UserKit" <<device>> as UserKit {
         artifact "userkitApp" <<executable>>
     }
 
-    node "<b>Communication unit" <<device>> as comUnit
+    node "<b>UserKit Communication Unit" <<device>> as UsrComUnit {
+        artifact "comApp" <<executable>> as usrComApp
+    }
 }
 
 node "<b>TargetKit" <<device>> as TargetKit {
@@ -45,7 +45,9 @@ node "<b>TargetKit" <<device>> as TargetKit {
         artifact "targetKitApp" <<executable>>
     }
 
-    node "<b>TargetComUnit" <<device>> as comUnit
+    node "<b>TargetKit Communication Unit" <<device>> as TrgtComUnit {
+        artifact "comApp" <<executable>> as trgtComApp
+    }
 }
 
 node "<b>Scoreboard Display" <<device>> as scoreboard {
@@ -55,6 +57,7 @@ node "<b>Scoreboard Display" <<device>> as scoreboard {
 UserKit -- PC : <<protocol>>\nWebSocket
 TargetKit -- PC : <<protocol>>\nWebSocket
 scoreboard -- PC : <<protocol>>\nHTTP
+server -- DB
 
 
 desktopApp -- server : <<protocol>>\nWebSocket
