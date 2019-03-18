@@ -1,0 +1,64 @@
+@startuml deployment_diagram
+
+left to right direction
+
+skinparam {
+    monochrome true
+    dpi 300
+    padding 5
+    packageStyle rectangle
+    packageStyle frame
+    shadowing false
+}
+
+frame "Deployment diagram" {
+
+node "<b>PC" <<device>> as PC {
+    node "<b>Desktop App" <<application>> as desktopApp {
+        artifact "<b>frontend.exe" <<executable>> as frontend
+    }
+    note "This application serves\n as the admin interface" as N2
+    N2 .left. desktopApp
+
+    DB -[hidden]-> N2
+
+    node "<b>Server" <<server>> as server {
+        artifact "<b>backend.exe" <<executable>> as backend
+    }
+
+    database "<b>High score database\n----" <<database>> as DB {
+        entity "HighScore"
+        entity "Users"
+    }
+}
+
+node "<b>UserKit" <<device>> as UserKit {
+    node "<b>UserKitController" <<device>> as userKitCtrl {
+        artifact "userkitApp" <<executable>>
+    }
+
+    node "<b>Communication unit" <<device>> as comUnit
+}
+
+node "<b>TargetKit" <<device>> as TargetKit {
+    node "<b>TargetKitController" <<device>> as targetKitCtrl {
+        artifact "targetKitApp" <<executable>>
+    }
+
+    node "<b>TargetComUnit" <<device>> as comUnit
+}
+
+node "<b>Scoreboard Display" <<device>> as scoreboard {
+    note "Access a HTTP server from a browser" as N1
+}
+
+UserKit -- PC : <<protocol>>\nWebSocket
+TargetKit -- PC : <<protocol>>\nWebSocket
+scoreboard -- PC : <<protocol>>\nHTTP
+
+
+desktopApp -- server : <<protocol>>\nWebSocket
+
+}
+
+@enduml
