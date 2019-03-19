@@ -1,0 +1,60 @@
+@startuml ssd-uc1
+
+hide footbox
+
+skinparam {
+    monochrome true
+    dpi 300
+    padding 5
+    sequenceMessageAlign center
+    packageStyle frame
+    shadowing false
+    'backgroundColor transparent
+}
+
+mainframe **sd** Use case 1
+
+actor Bruger as user
+
+participant "UserKit" as userKit
+participant "PracticeKit" as practiceKit
+participant "Target" as target
+participant "Server" as server
+participant "ScoreDisplay" as screen
+
+'== Use case 1 ==
+user -> practiceKit: Tænder for
+
+activate practiceKit
+
+practiceKit -> target: Nulstil position
+practiceKit -> practiceKit: Starter timer (5 sekunder)
+loop 5 sekunder
+    practiceKit -> practiceKit: Venter
+end
+
+practiceKit -> target: Start bevægelse
+activate target
+
+practiceKit -> practiceKit: Starter timer (60 sekunder)
+loop 60 sekunder
+    target -> target: Bevæger sig i tilfældig sekvens
+    user -> userKit: Trykker på aftrækkeren
+    userKit -> target: Udsender laserstråle
+
+    alt target rammes
+        target -> practiceKit: Target ramt
+        practiceKit -> practiceKit: Point +1
+    end
+end
+
+practiceKit -> target: Stop bevægelse
+deactivate target
+
+practiceKit -> server: Point sendes til server
+deactivate practiceKit
+activate server
+server -> screen: Point vises på skærm
+deactivate server
+
+@enduml
