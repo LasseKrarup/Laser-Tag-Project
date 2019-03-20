@@ -12,6 +12,8 @@ skinparam {
     'backgroundColor transparent
 }
 
+mainframe **sd** Use case 1
+
 actor Bruger as user
 
 participant "UserKit" as userKit

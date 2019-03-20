@@ -12,6 +12,8 @@ skinparam {
     'backgroundColor transparent
 }
 
+mainframe **sd** Use case 2-4
+
 actor Users as users
 actor Admin as admin
 participant "PC" as pc
