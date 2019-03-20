@@ -53,8 +53,9 @@ group Prækondition
     transmitter -> reciever: Udsender laserstråle
     deactivate transmitter
     activate reciever
-    reciever -> reciever: Modtager ramt: Vibrerer og blinker
 end
+
+reciever -> reciever: Modtager ramt: Vibrerer og blinker
 
 reciever -> comUnit: Fortæller hvilken bruger, der har ramt modtageren
 deactivate reciever
