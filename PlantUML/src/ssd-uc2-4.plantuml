@@ -16,10 +16,10 @@ mainframe **sd** Use case 2-4
 
 actor Users as users
 actor Admin as admin
-participant "PC" as pc
-collections "ComUnit : UserKit" as comUnit
-collections "transmitter : UserKit" as transmitter
-collections "reciever : UserKit" as reciever
+participant "DesktopApp" as desktopApp
+collections "ComUnit" as comUnit
+collections "LaserTransmitter" as transmitter
+collections "LaserReciever" as reciever
 participant "Server" as server
 participant "ScoreDisplay" as display
 
@@ -27,18 +27,18 @@ participant "ScoreDisplay" as display
 
 group Prækondition
     users -> admin: To eller flere brugere henvender sig
+    activate admin
 end
 
-activate admin
-admin -> pc: Vælger at starte spil
-activate pc
-admin -> pc: Indtaster længden på spillet
-admin -> pc: Indtaster antal spillere
-admin -> pc: Bekræfter indtastningerne
-admin -> pc: Bekræfter start af spil
+admin -> desktopApp: Vælger at starte spil
+activate desktopApp
+admin -> desktopApp: Indtaster længden på spillet
+admin -> desktopApp: Indtaster antal spillere
+admin -> desktopApp: Bekræfter indtastningerne
+admin -> desktopApp: Bekræfter start af spil
 deactivate admin
-pc -> server: Start spil samt informationer om spil
-deactivate pc
+desktopApp -> server: Start spil samt informationer om spil
+deactivate desktopApp
 activate server
 server -> comUnit: Spil startet
 deactivate server
@@ -73,6 +73,6 @@ else Admin afbryder spil
 end
 
 server -> server: Statistikker for det afsluttede spil opdateres
-server -> display: Point og statistikker vises på skærm
+server -> display: Point og statistikker gøres tilgængelige på skærm
 
 @enduml

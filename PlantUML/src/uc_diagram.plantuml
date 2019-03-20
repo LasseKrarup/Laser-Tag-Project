@@ -22,7 +22,7 @@ frame "uc Laser-Tag 3000" {
   rectangle "Laser-Tag 3000" {
     user -- (UC1: Øve på PraticeKit)
     user -- (UC2: Start spil): 2..10
-    user -- (UC3: Skyd): 1..2
+    user -- (UC3: Skyd anden spiller): 1..2
     admin -- (UC2: Start spil)
     admin -- (UC4: Afslut spil)
   }
