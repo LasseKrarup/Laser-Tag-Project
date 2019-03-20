@@ -19,7 +19,7 @@ actor Admin as admin
 participant "DesktopApp" as desktopApp
 collections "ComUnit" as comUnit
 collections "LaserTransmitter" as transmitter
-collections "LaserReciever" as reciever
+collections "LaserReceiver" as receiver
 participant "Server" as server
 participant "ScoreDisplay" as display
 
@@ -50,15 +50,15 @@ comUnit -> comUnit: Starter timer
 group Prækondition
     users -> transmitter: En bruger trykker på aftrækkeren
     activate transmitter
-    transmitter -> reciever: Udsender laserstråle
+    transmitter -> receiver: Udsender laserstråle
     deactivate transmitter
-    activate reciever
+    activate receiver
 end
 
-reciever -> reciever: Modtager ramt: Vibrerer og blinker
+receiver -> receiver: Modtager ramt: Vibrerer og blinker
 
-reciever -> comUnit: Fortæller hvilken bruger, der har ramt modtageren
-deactivate reciever
+receiver -> comUnit: Fortæller hvilken bruger, der har ramt modtageren
+deactivate receiver
 
 comUnit -> server: Sender information om ramt modtager til server
 
