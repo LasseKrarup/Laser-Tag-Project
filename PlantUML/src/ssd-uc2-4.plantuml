@@ -17,7 +17,7 @@ mainframe **sd** Use case 2-4
 actor Users as users
 actor Admin as admin
 participant "DesktopApp" as desktopApp
-collections "ComUnit" as comUnit
+collections "UserKit : ComUnit" as comUnit
 collections "LaserTransmitter" as transmitter
 collections "LaserReceiver" as receiver
 participant "Server" as server
