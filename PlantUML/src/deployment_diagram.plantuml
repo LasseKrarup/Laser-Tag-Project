@@ -1,7 +1,5 @@
 @startuml deployment_diagram
 
-left to right direction
-
 skinparam {
     monochrome true
     dpi 300
@@ -18,7 +16,7 @@ node "<b>PC" <<device>> as PC {
         artifact "<b>frontend.exe" <<executable>> as frontend
     }
     note "This application serves\n as the admin interface" as N2
-    N2 .left. desktopApp
+    N2 .. desktopApp
 
     node "<b>Server" <<server>> as server {
         artifact "<b>backend.exe" <<executable>> as backend
@@ -30,37 +28,47 @@ node "<b>PC" <<device>> as PC {
     }
 }
 
-node "<b>UserKit" <<device>> as UserKit {
-    node "<b>UserKitController" <<device>> as userKitCtrl {
-        artifact "userkitApp" <<executable>>
+together {
+    node "<b>UserKit" <<device>> as UserKit {
+        node "<b>UserKitController" <<device>> as userKitCtrl {
+            artifact "userkitApp" <<executable>>
+        }
+
+        node "<b>UserKit Communication Unit" <<device>> as UsrComUnit {
+            artifact "comApp" <<executable>> as usrComApp
+        }
     }
 
-    node "<b>UserKit Communication Unit" <<device>> as UsrComUnit {
-        artifact "comApp" <<executable>> as usrComApp
+    node "<b>PracticeKit" <<device>> as PracticeKit {
+        node "<b>PracticeKitController" <<device>> as PracticeKitCtrl {
+            artifact "practiceKitApp" <<executable>>
+        }
+
+        node "<b>PracticeKit Communication Unit" <<device>> as TrgtComUnit {
+            artifact "comApp" <<executable>> as trgtComApp
+        }
+    }
+
+    node "<b>TargetController" <<device>> as TargetKit {
+        artifact "regulatorApp" <<executable>> as targetApp
+    }
+
+    node "<b>Scoreboard Display" <<device>> as scoreboard {
+        note "Access a HTTP server from a browser" as N1
     }
 }
 
-node "<b>TargetKit" <<device>> as TargetKit {
-    node "<b>TargetKitController" <<device>> as targetKitCtrl {
-        artifact "targetKitApp" <<executable>>
-    }
+' PC -- UserKit
+' PC -- PracticeKit
+' PC -- scoreboard
 
-    node "<b>TargetKit Communication Unit" <<device>> as TrgtComUnit {
-        artifact "comApp" <<executable>> as trgtComApp
-    }
-}
-
-node "<b>Scoreboard Display" <<device>> as scoreboard {
-    note "Access a HTTP server from a browser" as N1
-}
 
 UserKit -- PC : <<protocol>>\nWebSocket
-TargetKit -- PC : <<protocol>>\nWebSocket
+PracticeKit -- PC : <<protocol>>\nWebSocket
 scoreboard -- PC : <<protocol>>\nHTTP
-server -- DB
 
-
-desktopApp -- server : <<protocol>>\nWebSocket
+server - DB
+desktopApp - server : <<protocol>>\nWebSocket
 
 }
 
