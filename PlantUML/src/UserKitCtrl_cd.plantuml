@@ -1,0 +1,47 @@
+@startuml UserKitCtrl_cd
+
+skinparam {
+    monochrome true
+    dpi 300
+    padding 2
+    packageStyle rectangle
+    packageStyle frame
+    shadowing false
+    classAttributeIconSize 0
+}
+hide circle
+hide empty members
+
+frame "class UserKitController" {
+
+    class main <<utility>> {
+        transmitterID : char
+    }
+
+    class UserKitCtrl <<controller>> {
+        - transmitterID_ : char
+        - init() : void
+    }
+
+    class UserKitComUnit <<boundary>> {
+        + recieverHit(transmitterID : char) : void
+    }
+
+    class Transmitter <<controller>> {
+        + transmit()
+    }
+
+    class Receiver <<controller>> {
+        + set()
+    }
+}
+
+main *-- "1" UserKitCtrl
+
+main *-- "1" UserKitComUnit
+
+main *-- "1" Transmitter
+
+main *-- "1" Receiver
+
+@enduml

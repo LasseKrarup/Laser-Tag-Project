@@ -1,0 +1,53 @@
+@startuml UserKitCtrl_sd
+
+hide footbox
+
+skinparam {
+    monochrome true
+    dpi 300
+    padding 5
+    sequenceMessageAlign center
+    packageStyle frame
+    shadowing false
+    'backgroundColor transparent
+}
+
+mainframe **sd** UserKitCtrl
+
+participant main <<utility>>
+participant UserKitCtrl <<controller>>
+participant Transmitter <<controller>>
+participant Receiver <<controller>>
+participant UserKitComUnit <<boundary>>
+
+main -> UserKitCtrl: init()
+
+loop
+    main -> Receiver: checkReceiver(laserID)
+    Receiver --> main: true/false
+
+    alt true
+        main -> UserKitComUnit: receiverHit(laserID)
+    end
+
+    main -> Receiver: checkReceiver(laserID + 1)
+    Receiver --> main: true/false
+
+    alt true
+        main -> UserKitComUnit: receiverHit(laserID)
+    end
+
+    main -> Receiver: checkReceiver(laserID + n)
+    Receiver --> main: true/false
+
+    alt true
+        main -> UserKitComUnit: receiverHit(laserID)
+    end
+
+    alt Interrupt fra aftrækker
+        main -> Transmitter: transmit()
+    end
+
+end
+
+@enduml

@@ -16,11 +16,10 @@ mainframe **sd** Use case 2-4
 
 actor Users as users
 actor Admin as admin
-participant "DesktopApp" as desktopApp
-collections "UserKit : ComUnit" as comUnit
-collections "LaserTransmitter" as transmitter
-collections "LaserReceiver" as receiver
-participant "Server" as server
+participant "PC"
+collections "UserKitComUnit" as comUnit
+participant "UserKitCtrl (User 1)" as kitCtrl1
+participant "UserKitCtrl (User 2)" as kitCtrl2
 participant "ScoreDisplay" as display
 
 == Use case 2: Start spil ==
@@ -30,49 +29,46 @@ group Prækondition
     activate admin
 end
 
-admin -> desktopApp: Vælger at starte spil
-activate desktopApp
-admin -> desktopApp: Indtaster længden på spillet
-admin -> desktopApp: Indtaster antal spillere
-admin -> desktopApp: Bekræfter indtastningerne
-admin -> desktopApp: Bekræfter start af spil
+admin -> PC: Vælger at starte spil
+activate PC
+admin -> PC: Indtaster længden på spillet
+admin -> PC: Indtaster antal spillere
+admin -> PC: Bekræfter indtastningerne
+admin -> PC: Bekræfter start af spil
 deactivate admin
-desktopApp -> server: Start spil samt informationer om spil
-deactivate desktopApp
-activate server
-server -> comUnit: Spil startet
-deactivate server
+PC -> PC: Starter timer
+PC -> comUnit: Spil startet
 activate comUnit
-comUnit -> comUnit: Starter timer
 
 == Use case 3: Skyd ==
 
 group Prækondition
-    users -> transmitter: En bruger trykker på aftrækkeren
-    activate transmitter
-    transmitter -> receiver: Udsender laserstråle
-    deactivate transmitter
-    activate receiver
+    users -> kitCtrl1: En bruger trykker på aftrækkeren
+    activate kitCtrl1
+    kitCtrl1 -> kitCtrl2: Udsender laserstråle
+    deactivate kitCtrl1
+    activate kitCtrl2
 end
 
-receiver -> receiver: Modtager ramt: Vibrerer og blinker
+kitCtrl2 -> kitCtrl2: Modtager ramt: Vibrerer og blinker
+kitCtrl2 -> comUnit: Fortæller hvilken bruger, der har ramt modtageren
+deactivate kitCtrl2
+comUnit -> PC: Sender information om ramt modtager til PC
 
-receiver -> comUnit: Fortæller hvilken bruger, der har ramt modtageren
-deactivate receiver
-
-comUnit -> server: Sender information om ramt modtager til server
 
 == Use case 4: Afslut spil ==
 
 alt Timer udløber
-    comUnit -> server: Spil afsluttes
+    admin -> PC: Afslut spil
 else Admin afbryder spil
-    admin -> server: Afslut spil
-    server -> comUnit: Afbryd spil
-
+    admin -> PC: Spil afbrudt
 end
 
-server -> server: Statistikker for det afsluttede spil opdateres
-server -> display: Point og statistikker gøres tilgængelige på skærm
+PC -> comUnit: Afslut spil
+deactivate comUnit
+
+PC -> PC: Statistikker for det afsluttede spil opdateres
+PC -> display: Point og statistikker gøres tilgængelige på skærm
+deactivate PC
 
 @enduml
