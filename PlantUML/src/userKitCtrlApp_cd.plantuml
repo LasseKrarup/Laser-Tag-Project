@@ -1,0 +1,47 @@
+@startuml UserKitCtrlApp_cd
+
+skinparam {
+    monochrome true
+    dpi 300
+    padding 2
+    packageStyle rectangle
+    packageStyle frame
+    shadowing false
+    classAttributeIconSize 0
+}
+hide circle
+hide empty members
+
+frame "cd userKitCtrlApp" {
+
+    class main <<utility>> {
+        unitID : char
+        laserID : char[]
+    }
+
+    class UserKitCtrl <<controller>> {
+        init(unitID : char) : void
+    }
+
+    class UserKitComUnit <<boundary>> {
+        recieverHit(laserID : char) : int
+    }
+
+    class Transmitter <<controller>> {
+        startTransmitting(void) : void
+        startBlockingTimer(void) : void
+        stopTransmitting(void) : void
+        stopBlockingTimer(void) : void
+    }
+
+    class Receiver <<controller>> {
+        checkReceiver(laserID : char) : int
+    }
+}
+
+main -- UserKitCtrl
+main -- Transmitter
+main -- Receiver
+main -- UserKitComUnit
+
+@enduml

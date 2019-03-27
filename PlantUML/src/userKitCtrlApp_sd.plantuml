@@ -1,0 +1,63 @@
+@startuml userKitCtrlApp_sd
+
+hide footbox
+
+skinparam {
+    monochrome true
+    dpi 300
+    padding 5
+    sequenceMessageAlign center
+    packageStyle frame
+    shadowing false
+    'backgroundColor transparent
+}
+
+mainframe **sd** userKitCtrlApp
+
+participant main <<utility>>
+participant UserKitCtrl <<controller>>
+participant UserKitComUnit <<boundary>>
+participant Transmitter <<controller>>
+participant Receiver <<controller>>
+
+main -> UserKitCtrl: init(unitID : char)
+
+loop
+    loop i < elements in laserID
+        activate main
+        main -> main: i++
+        main -> Receiver++: checkReceiver(laserID[i])
+        return succes/faliure
+
+        alt succes
+            main -> UserKitComUnit++: receiverHit(laserID[i])
+            return succes/faliure
+            deactivate main
+        end
+    end
+
+    else Interrupt from trigger
+    [o-> main: <<trigger event>>
+    activate main
+    main -> main: disable interrupts from trigger
+    main -> Transmitter: startTransmitting()
+    activate Transmitter
+    main -> Transmitter: startBlockingTimer()
+    deactivate Transmitter
+    deactivate main
+
+    else Interrupt from blockingTimer
+    [o-> main: <<timer event>>
+    activate main
+
+    main -> Transmitter: stopTransmitting()
+    activate Transmitter
+    main -> Transmitter: stopBlockingTimer()
+    deactivate Transmitter
+    main -> main: enable interrupts from trigger
+    deactivate main
+
+end
+
+
+@enduml
