@@ -16,7 +16,7 @@ frame "cd userKitCtrlApp" {
 
     class main <<utility>> {
         unitID : char
-        laserID : char[]
+        laserID : char
     }
 
     class UserKitCtrl <<controller>> {
@@ -24,18 +24,16 @@ frame "cd userKitCtrlApp" {
     }
 
     class UserKitComUnit <<boundary>> {
-        recieverHit(laserID : char) : int
+        recieverHit(currentLaserID : char) : bool
     }
 
     class Transmitter <<controller>> {
         startTransmitting(void) : void
-        startBlockingTimer(void) : void
         stopTransmitting(void) : void
-        stopBlockingTimer(void) : void
     }
 
     class Receiver <<controller>> {
-        checkReceiver(laserID : char) : int
+        checkReceiver() : char
     }
 }
 
