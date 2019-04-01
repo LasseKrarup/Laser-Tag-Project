@@ -10582,6 +10582,10 @@ body {
           user-select: none;
 }
 
+form {
+  padding: 10px;
+}
+
 .topbar {
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
@@ -10619,6 +10623,7 @@ body {
 }
 
 header {
+  margin-bottom: 30px;
   display: block;
   padding: 30px 0;
   text-align: center;
@@ -10674,5 +10679,9 @@ ul li {
 ul li:hover {
   opacity: 1;
   cursor: pointer;
+}
+
+.start-game-form input {
+  width: 70%;
 }
 /*# sourceMappingURL=mainstyle.css.map */

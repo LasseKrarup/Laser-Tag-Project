@@ -8,7 +8,7 @@ $textcolor2: #d8d1ff;
 $lipad: 10px;
 $numli: 2;
 
-@import "./node_modules/bootstrap/scss/bootstrap.scss";
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
 
 * {
     margin: 0;
@@ -25,6 +25,10 @@ body {
     color: $textcolor;
     background-color: $bgcolor;
     user-select: none;
+}
+
+form {
+    padding: 10px;
 }
 
 .topbar {
@@ -62,6 +66,7 @@ body {
 }
 
 header {
+    margin-bottom: 30px;
     display: block;
     padding: 30px 0;
     text-align: center;
@@ -113,5 +118,11 @@ ul {
             opacity: 1;
             cursor: pointer;
         }
+    }
+}
+
+.start-game-form {
+    input {
+        width: 70%;
     }
 }

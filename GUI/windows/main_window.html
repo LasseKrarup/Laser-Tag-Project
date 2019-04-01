@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <link rel="stylesheet" href="mainstyle.css" />
+        <link rel="stylesheet" href="../style/mainstyle.css" />
         <title>Laser-Tag 3000</title>
     </head>
     <body>
@@ -12,8 +12,181 @@
         <header>
             <h1>Laser-Tag 3000</h1>
         </header>
-        <div class="container-fluid"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h4>Add player</h4>
+                    <form onsubmit="addPlayer(event)" id="addPlayerForm">
+                        <div class="form-group">
+                            <label>Player: </label>
+                            <input
+                                class="form-control"
+                                type="text"
+                                name="name"
+                                id="playerNameInput"
+                                placeholder="Name of player"
+                            />
+                        </div>
 
-        <script src="../scripts/websocketClient.js"></script>
+                        <div class="form-group">
+                            <label>Kit ID:</label>
+                            <select
+                                class="form-control"
+                                name="kitnumber"
+                                id="kitNumberSelectAdd"
+                            >
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+
+                        <input
+                            type="submit"
+                            class="btn btn-primary"
+                            value="Add player"
+                        />
+                    </form>
+                </div>
+
+                <div class="col">
+                    <h4>Remove player</h4>
+                    <form onsubmit="removePlayer(event)" id="removePlayerForm">
+                        <div class="form-group">
+                            <label>Kit ID:</label>
+                            <select
+                                class="form-control"
+                                name="kitnumber"
+                                id="kitNumberSelectRemove"
+                            >
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+
+                        <input
+                            type="submit"
+                            class="btn btn-primary"
+                            value="Remove player"
+                        />
+                    </form>
+                </div>
+
+                <div class="col start-game-form">
+                    <h4>Start game</h4>
+                    <form class="align-bottom">
+                        <div class="form-group">
+                            <label>Gametime: </label>
+                            <input
+                                type="number"
+                                min="10"
+                                max="20"
+                                id="gametime"
+                                placeholder="Enter the gametime..."
+                            />
+                        </div>
+                        <button
+                            class="btn btn-primary"
+                            onclick="startGame(event)"
+                        >
+                            Start game
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            let activeIDs = new Array();
+
+            const addPlayer = event => {
+                event.preventDefault();
+
+                const playerName = document.getElementById("playerNameInput")
+                    .value;
+                const kitNumber = document.getElementById("kitNumberSelectAdd")
+                    .value;
+
+                if (!activeIDs.includes(kitNumber)) {
+                    activeIDs.push(kitNumber);
+
+                    wsClient.send(
+                        JSON.stringify({
+                            action: "addPlayer",
+                            name: playerName,
+                            id: kitNumber
+                        })
+                    );
+                } else {
+                    console.log(
+                        "Player with ID " +
+                            kitNumber +
+                            " is already in the game"
+                    );
+                }
+            };
+
+            const removePlayer = event => {
+                event.preventDefault();
+
+                const kitNumber = document.getElementById(
+                    "kitNumberSelectRemove"
+                ).value;
+
+                /*
+                    If the ID is in the list of active ID's,
+                    then remove the ID and request server
+                    to remove it as well
+                */
+                let index = activeIDs.indexOf(kitNumber);
+                if (index > -1) {
+                    activeIDs.splice(index, 1);
+
+                    wsClient.send(
+                        JSON.stringify({
+                            action: "removePlayer",
+                            id: kitNumber
+                        })
+                    );
+                } else {
+                    console.log(
+                        "Player with ID " + kitNumber + " is not in the game"
+                    );
+                }
+            };
+
+            const startGame = event => {
+                event.preventDefault();
+
+                const gametime = document.getElementById("gametime").value;
+
+                if (activeIDs.length > 1) {
+                    wsClient.send(
+                        JSON.stringify({ action: "startGame", time: gametime })
+                    );
+                } else {
+                    console.log("Not enough players");
+                }
+            };
+        </script>
+        <script
+            type="text/javascript"
+            src="../scripts/websocketClient.js"
+        ></script>
     </body>
 </html>

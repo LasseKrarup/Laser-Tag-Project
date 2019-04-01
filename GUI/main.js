@@ -14,10 +14,10 @@ app.on("ready", () => {
     mainWindow = new BrowserWindow({
         show: false,
         frame: false,
-        resizable: false,
-        height: 560,
-        width: 700,
-        title: projectData.sysname
+        // resizable: false,
+        // height: 560,
+        // width: 700,
+        title: "Laser Tag-3000"
     });
     // Load html
     mainWindow.loadURL(
@@ -29,6 +29,7 @@ app.on("ready", () => {
     ); //passes this into loadURL:    file://dirname/windows/main_window.html
 
     mainWindow.once("ready-to-show", () => {
+        mainWindow.maximize();
         mainWindow.show();
     });
 
