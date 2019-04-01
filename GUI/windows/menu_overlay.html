@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Menu</title>
+        <link rel="stylesheet" href="../style/mainstyle.css" />
+        <style>
+            body {
+                overflow-x: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <ul class="menu">
+            <li id="stop">Stop game</li>
+            <li id="quit">Exit</li>
+        </ul>
+
+        <script>
+            const { ipcRenderer, remote } = require("electron");
+
+            const stop = document.getElementById("stop");
+            const quit = document.getElementById("quit");
+
+            stop.addEventListener("click", fnStop);
+            quit.addEventListener("click", fnQuit);
+
+            function fnStop(event) {
+                ipcRenderer.send("stopGame", event);
+            }
+
+            function fnQuit(event) {
+                ipcRenderer.send("quit", event);
+            }
+        </script>
+    </body>
+</html>

@@ -1,15 +1,17 @@
 {
-  "name": "gui_lasertag",
-  "version": "1.0.0",
-  "description": "The front end for the Laser Tag application",
-  "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "electron": "^4.0.6"
-  }
+    "name": "gui_lasertag",
+    "version": "1.0.0",
+    "description": "The front end for the Laser Tag application",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "electron": "^4.0.6"
+    },
+    "dependencies": {
+        "bootstrap": "^4.3.1"
+    }
 }
