@@ -16,7 +16,7 @@ mainframe **sd** userKitCtrlApp
 
 participant main <<utility>>
 participant UserKitCtrl <<controller>>
-participant UserKitComUnit <<boundary>>
+participant UserKitComUnitIF <<boundary>>
 participant Transmitter <<controller>>
 participant Receiver <<controller>>
 
