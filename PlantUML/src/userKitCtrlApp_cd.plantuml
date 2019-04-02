@@ -40,6 +40,6 @@ frame "cd userKitCtrlApp" {
 main -- UserKitCtrl
 main -- Transmitter
 main -- Receiver
-main -- UserKitComUnit
+main -- UserKitComUnitIF
 
 @enduml
