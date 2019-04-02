@@ -175,12 +175,19 @@
 
                 const gametime = document.getElementById("gametime").value;
 
-                if (activeIDs.length > 1) {
-                    wsClient.send(
-                        JSON.stringify({ action: "startGame", time: gametime })
-                    );
+                if (gametime >= 10 && gametime <= 20) {
+                    if (activeIDs.length > 1) {
+                        wsClient.send(
+                            JSON.stringify({
+                                action: "startGame",
+                                time: gametime
+                            })
+                        );
+                    } else {
+                        console.log("Not enough players");
+                    }
                 } else {
-                    console.log("Not enough players");
+                    console.log("Gametime not withing range");
                 }
             };
         </script>
