@@ -1,4 +1,4 @@
-@startuml userKitCtrlApp_cd
+@startuml practiceKitCtrlApp_cd
 
 skinparam {
     monochrome true
@@ -19,17 +19,12 @@ frame "cd userKitCtrlApp" {
         laserID : char
     }
 
-    class UserKitCtrl <<controller>> {
+    class PracticeKitCtrl <<controller>> {
         init(unitID : char) : void
     }
 
-    class UserKitComUnitIF <<boundary>> {
+    class PracticeKitComUnitIF <<boundary>> {
         recieverHit(currentLaserID : char) : bool
-    }
-
-    class Transmitter <<controller>> {
-        startTransmitting(void) : void
-        stopTransmitting(void) : void
     }
 
     class Receiver <<controller>> {
@@ -37,9 +32,8 @@ frame "cd userKitCtrlApp" {
     }
 }
 
-main -- UserKitCtrl
-main -- Transmitter
+main -- PracticeKitCtrl
 main -- Receiver
-main -- UserKitComUnitIF
+main -- PracticeKitComUnitIF
 
 @enduml

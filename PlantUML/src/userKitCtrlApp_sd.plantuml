@@ -29,7 +29,7 @@ loop
 
     alt succes
         main -> main: disable all interrupts
-        main -> UserKitComUnit++: receiverHit(currentLaserID)
+        main -> UserKitComUnitIF++: receiverHit(currentLaserID)
         return succes/faliure
         main -> main: sleep (blocking)
         main -> main: enable all interrupts
