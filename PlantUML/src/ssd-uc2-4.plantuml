@@ -32,7 +32,10 @@ end
 admin -> PC: Vælger at starte spil
 activate PC
 admin -> PC: Indtaster længden på spillet
-admin -> PC: Indtaster antal spillere
+loop Indtil alle spillere er indtastet
+    admin -> PC: Indtaster navn på spiller
+    admin -> PC: Indtaster ID på UserKit
+end
 admin -> PC: Bekræfter indtastningerne
 admin -> PC: Bekræfter start af spil
 deactivate admin
