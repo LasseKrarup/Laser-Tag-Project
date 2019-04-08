@@ -24,7 +24,7 @@ frame "cd userKitCtrlApp" {
     }
 
     class UserKitComUnitIF <<boundary>> {
-        recieverHit(currentLaserID : char) : bool
+        receiverHit(currentLaserID : char) : bool
     }
 
     class Transmitter <<controller>> {

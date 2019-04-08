@@ -24,7 +24,7 @@ frame "cd userKitCtrlApp" {
     }
 
     class PracticeKitComUnitIF <<boundary>> {
-        recieverHit(currentLaserID : char) : bool
+        receiverHit(currentLaserID : char) : bool
     }
 
     class Receiver <<controller>> {
