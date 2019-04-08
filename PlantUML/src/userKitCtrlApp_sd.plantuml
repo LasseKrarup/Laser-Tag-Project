@@ -25,7 +25,7 @@ main -> UserKitCtrl: init(unitID : char)
 loop
     activate main
     main -> Receiver++: checkReceiver()
-    return currentLaserID on succes and '0' on faliure
+    return currentLaserID or 0 on faliure
 
     alt succes
         main -> main: disable all interrupts
