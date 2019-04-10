@@ -47,7 +47,7 @@ loop
     [o-> main: <<mixerFrequencyTimer event>>
     activate main
     main -> Receiver++: changeMixerFrequency(currentLaserID)
-    return currentLaserID
+    return newLaserID
     deactivate main
     deactivate Receiver
 
