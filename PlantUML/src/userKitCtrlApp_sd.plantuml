@@ -20,26 +20,34 @@ participant UserKitComUnitIF <<boundary>>
 participant Transmitter <<controller>>
 participant Receiver <<controller>>
 
-main -> UserKitCtrl: init(unitID : int)
+main -> UserKitCtrl++: init(userkitID : int)
+deactivate UserKitCtrl
 
 loop
-    activate main
-    main -> Receiver++: checkReceiver()
-    return currentLaserID or 0 on faliure
 
-    alt succes
+    note over main : empty loop
+
+    else Interrupt from filter
+    [o-> main: <<filter event>>
+    activate main
+
+    main -> main: update filterOutput
+
+    alt filterOutput > minLevelDetection
         main -> main: disable all interrupts
         main -> UserKitComUnitIF++: receiverHit(currentLaserID)
-        return succes/faliure
+        deactivate UserKitComUnitIF
         main -> main: sleep (blocking)
         main -> main: enable all interrupts
         deactivate main
     end
 
+
     else Interrupt from mixerFrequencyTimer
     [o-> main: <<mixerFrequencyTimer event>>
     activate main
-    main -> Receiver++: changeMixerFrequency()
+    main -> Receiver++: changeMixerFrequency(currentLaserID)
+    return currentLaserID
     deactivate main
     deactivate Receiver
 
@@ -49,14 +57,14 @@ loop
     main -> main: disable interrupts from trigger
     main -> Transmitter++: startTransmitting()
     deactivate Transmitter
-    main -> main: start blocking timer
+    main -> main: start triggerBlocking timer
     deactivate main
 
     else Interrupt from triggerBlockingTimer
     [o-> main: <<triggerBlockingTimer event>>
     activate main
 
-    main -> main: stop blocking timer
+    main -> main: stop triggerBlocking timer
     main -> Transmitter++: stopTransmitting()
     deactivate Transmitter
     main -> main: enable interrupts from trigger
