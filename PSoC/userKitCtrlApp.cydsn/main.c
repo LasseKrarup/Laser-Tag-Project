@@ -15,6 +15,7 @@ int main(void)
 {
     init(unitId);   // Initialize to UserKit
     
+    // Start isr_routines
     CyGlobalIntEnable; // Enable global interrupts
 
     for(;;)
