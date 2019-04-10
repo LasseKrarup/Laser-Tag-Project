@@ -20,7 +20,7 @@ participant UserKitComUnitIF <<boundary>>
 participant Transmitter <<controller>>
 participant Receiver <<controller>>
 
-main -> UserKitCtrl: init(unitID : char)
+main -> UserKitCtrl: init(unitID : int)
 
 loop
     activate main
