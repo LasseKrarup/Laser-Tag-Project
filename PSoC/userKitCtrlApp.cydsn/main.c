@@ -1,21 +1,21 @@
-/* ========================================
- *
- * Copyright YOUR COMPANY, THE YEAR
- * All Rights Reserved
- * UNPUBLISHED, LICENSED SOFTWARE.
- *
- * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
- *
- * ========================================
-*/
+/**
+ * main.c
+ * 
+ * @author  Frederik Sidenius Dam
+ * @version 0.1
+ */
+
 #include "project.h"
+#include "UserKitCtrl.h"
+
+static const int unitId = 1;    // Hardcoded UserKitId
+int currentLaserId = 0; // Holds current laser id
 
 int main(void)
 {
-    CyGlobalIntEnable; /* Enable global interrupts. */
-
-    /* Place your initialization/startup code here (e.g. MyInst_Start()) */
+    init(unitId);   // Initialize to UserKit
+    
+    CyGlobalIntEnable; // Enable global interrupts
 
     for(;;)
     {
