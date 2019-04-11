@@ -8,9 +8,9 @@
 #ifndef PRACTICE_KIT_COM_UNIT_IF_H
 #define PRACTICE_KIT_COM_UNIT_IF_H
 
-int receiverHit(int currentLaserId)
+void receiverHit(int currentLaserId)
 {
-    return currentLaserId;
+    currentLaserId = 0;
 }
 
 #endif /* PRACTICE_KIT_COM_UNIT_IF_H */ 

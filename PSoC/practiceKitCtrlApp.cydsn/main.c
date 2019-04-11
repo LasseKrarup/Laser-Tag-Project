@@ -10,18 +10,19 @@
 #include "PracticeKitComUnitIF.h"
 #include "Receiver.h"
 
-static const float minLevelDetection = 2.5; // Minimum level for detection
-int currentLaserID = 0;                     // Holds current laser id
-int filterOutput = 0;                       // Holds last output from filter
+static const int16 minLevelDetection = 2; // Minimum level for detection
+uint16 currentLaserID = 0;                // Holds current laser id
 
 CY_ISR_PROTO(isr_filter_handler);
+CY_ISR_PROTO(isr_mixerFreq_handler);
 
 int main(void)
 {
-    init();   // Initialize to PracticeKit
+    init();   // Initialize PracticeKit
     
-    isr_filter_StartEx(isr_filter_handler); // Start filter isr
-    CyGlobalIntEnable;                      // Enable global interrupts
+    isr_filter_StartEx(isr_filter_handler);         // Start filter isr
+    isr_mixerFreq_StartEx(isr_mixerFreq_handler);   // Start mixerFreq isr
+    CyGlobalIntEnable;                              // Enable global interrupts
 
     for(;;)
     {
@@ -31,7 +32,14 @@ int main(void)
 
 CY_ISR(isr_filter_handler)
 {
-       
+    if (filterOutput > minLevelDetection)
+    {
+        // Disable interrupt
+        // receiverHit(currentLaserID)
+        // Evt. sleep???
+        // Evt. clear pending interrupts
+        // Enable interrupts
+    }  
 }
 
 /* [] END OF FILE */

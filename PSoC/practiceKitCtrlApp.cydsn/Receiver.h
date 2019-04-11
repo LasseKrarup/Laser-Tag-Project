@@ -10,7 +10,6 @@
 
 int changeMixerFrequency(int currentLaserID)
 {
-    
     return currentLaserID;
 }
 
