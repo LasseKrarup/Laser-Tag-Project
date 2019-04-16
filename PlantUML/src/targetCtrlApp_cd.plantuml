@@ -1,0 +1,29 @@
+' WORK IN PROGRESS
+@startuml practiceKitCtrlApp_cd
+
+skinparam {
+    monochrome true
+    dpi 300
+    padding 2
+    packageStyle rectangle
+    packageStyle frame
+    shadowing false
+    classAttributeIconSize 0
+}
+hide circle
+hide empty members
+
+frame "cd targetCtrlApp" {
+
+    class main <<utility>> {
+        
+    }
+
+    class PracticeKitCtrl <<controller>> {
+        init() : void
+    }
+}
+
+main -- PracticeKitCtrl
+
+@enduml
