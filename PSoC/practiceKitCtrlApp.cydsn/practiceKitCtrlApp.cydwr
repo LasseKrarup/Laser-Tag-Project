@@ -251,7 +251,8 @@
   <Data key="DataVersionKey" value="2" />
   <Group key="DWRInstGuidMapping">
     <Group key="Pin">
-      <Data key="77715107-f8d5-47e5-a629-0fb83101ac6b" value="Pin_1" />
+      <Data key="77715107-f8d5-47e5-a629-0fb83101ac6b" value="Rcv_in" />
+      <Data key="e851a3b9-efb8-48be-bbb8-b303b216c393" value="Test_1" />
     </Group>
   </Group>
   <Group key="EEPROM">
@@ -3341,6 +3342,11 @@
     <Group key="77715107-f8d5-47e5-a629-0fb83101ac6b">
       <Group key="0">
         <Data key="Port Format" value="3,3" />
+      </Group>
+    </Group>
+    <Group key="e851a3b9-efb8-48be-bbb8-b303b216c393">
+      <Group key="0">
+        <Data key="Port Format" value="2,0" />
       </Group>
     </Group>
   </Group>
