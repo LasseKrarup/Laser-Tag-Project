@@ -1,0 +1,58 @@
+@startuml targetCtrlApp_sd
+
+hide footbox
+
+skinparam {
+    monochrome true
+    dpi 300
+    padding 5
+    sequenceMessageAlign center
+    packageStyle frame
+    shadowing false
+    'backgroundColor transparent
+}
+
+mainframe **sd** targetCtrlApp
+
+participant main <<utility>>
+participant TargetCtrl <<controller>>
+
+[o-> main: <<start practice>>
+activate main
+
+loop
+    else Practice for 60 seconds
+    main -> main: Generate position
+    loop
+        main -> TargetCtrl: Get position control(position)
+        activate TargetCtrl
+        return positionCtrl
+        deactivate TargetCtrl
+        main -> main: Move to position
+        main -> main: Sample delay
+    end
+    main -> main: Wait 2 seconds
+    TargetCtrl -[hidden]> main
+
+    deactivate main
+
+
+
+    else Practice over
+    
+    [o-> main: Practice over
+    activate main
+    loop
+        main -> TargetCtrl: get position control(zero position)
+        activate TargetCtrl
+        return positionCtrl
+        deactivate TargetCtrl
+        main -> main: Move to position
+        main -> main: Sample delay
+        TargetCtrl -[hidden]> main
+        deactivate TargetCtrl
+        deactivate main
+    end
+end
+
+@enduml
