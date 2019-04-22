@@ -9,6 +9,7 @@
 <projects>
 <v>.\userKitCtrlApp.cydsn\userKitCtrlApp.cyprj</v>
 <v>.\practiceKitCtrlApp.cydsn\practiceKitCtrlApp.cyprj</v>
+<v>.\timer_test.cydsn\timer_test.cyprj</v>
 </projects>
 <workspace_id v="16be0122-f5dc-468d-82e7-6073d3e0982f" />
 <WriteAppVersionLastSavedWith v="4.2.0.641" />

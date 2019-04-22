@@ -23,11 +23,12 @@ CY_ISR_PROTO(isr_mixerFreq_handler);
 
 int main(void)
 {
-    init();   // Initialize PracticeKit
+    CyGlobalIntEnable;  // Enable global interrupts
+    
+    init(); // Initialize PracticeKit
     
     isr_filter_StartEx(isr_filter_handler);         // Start filter isr
     isr_mixerFreq_StartEx(isr_mixerFreq_handler);   // Start mixerFreq isr
-    CyGlobalIntEnable;                              // Enable global interrupts
     
     for(;;)
     {
@@ -39,25 +40,23 @@ CY_ISR(isr_filter_handler)
 {
     filterOutputVolt = ADC_DelSig_CountsTo_Volts(filterOutput);
     test++;
+    
     if ((filterOutputVolt > minLevelDetection) | (filterOutputVolt < -minLevelDetection))
     {
         test2++;
-        Test_1_Write(!Test_1_Read());
         // Disable interrupt
         // receiverHit(currentLaserID)
         // Evt. sleep???
         // Evt. clear pending interrupts
-        // Enable interrupts 
-        currentLaserID = changeMixerFrequency(currentLaserID);
-        
+        // Enable interrupts         
     }
-    
-    isr_filter_ClearPending();
 }
 
 CY_ISR(isr_mixerFreq_handler)
-{
+{ 
     test3++;
+    currentLaserID = changeMixerFrequency(currentLaserID);
+    // Reset ADC og filter?
 }
 
 /* [] END OF FILE */

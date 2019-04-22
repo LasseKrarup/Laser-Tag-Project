@@ -60,18 +60,23 @@ void DMA_Filter_Config()
     
 void init(void)
 {    
-    // Start
-    Timer_mixerFreq_Start();
-    
+    // Start    
     TIA_Start();
+    
     Mixer_Start();
+    
     ADC_DelSig_Start();
     ADC_DelSig_SetCoherency(ADC_DelSig_COHER_MID);
     ADC_DelSig_StartConvert();
+    
     DMA_DelSig_Config();
+    
     Filter_Start();
     Filter_SetCoherency(Filter_CHANNEL_A, Filter_KEY_HIGH);
+    
     DMA_Filter_Config();
+    
+    Timer_mixerFreq_Start();
 }
 
 #endif /* PRACTICE_KIT_CTRL_H */ 

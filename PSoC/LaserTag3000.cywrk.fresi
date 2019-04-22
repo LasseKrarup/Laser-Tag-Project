@@ -13,7 +13,7 @@
 <v>Output</v>
 </TreeKeys>
 <TreeStates>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="LaserTag3000\practiceKitCtrlApp\Header Files\PracticeKitCtrl.h">
 <ExpandedNodeIds>
 <v>LaserTag3000</v>
 <v>LaserTag3000\practiceKitCtrlApp</v>
@@ -37,6 +37,23 @@
 <v>LaserTag3000\practiceKitCtrlApp\Source Files\main.c</v>
 <v>LaserTag3000\practiceKitCtrlApp\Generated_Source</v>
 <v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5</v>
+<v>LaserTag3000\timer_test\TopDesign</v>
+<v>LaserTag3000\timer_test\timer_test.cydwr</v>
+<v>LaserTag3000\timer_test\timer_test.cydwr\Pins</v>
+<v>LaserTag3000\timer_test\timer_test.cydwr\Analog</v>
+<v>LaserTag3000\timer_test\timer_test.cydwr\Clocks</v>
+<v>LaserTag3000\timer_test\timer_test.cydwr\Interrupts</v>
+<v>LaserTag3000\timer_test\timer_test.cydwr\DMA</v>
+<v>LaserTag3000\timer_test\timer_test.cydwr\System</v>
+<v>LaserTag3000\timer_test\timer_test.cydwr\Directives</v>
+<v>LaserTag3000\timer_test\timer_test.cydwr\Flash Security</v>
+<v>LaserTag3000\timer_test\timer_test.cydwr\EEPROM</v>
+<v>LaserTag3000\timer_test\Header Files</v>
+<v>LaserTag3000\timer_test\Header Files\cyapicallbacks.h</v>
+<v>LaserTag3000\timer_test\Source Files</v>
+<v>LaserTag3000\timer_test\Source Files\main.c</v>
+<v>LaserTag3000\timer_test\Generated_Source</v>
+<v>LaserTag3000\timer_test\Generated_Source\PSoC5</v>
 <v>LaserTag3000\userKitCtrlApp\TopDesign</v>
 <v>LaserTag3000\userKitCtrlApp\userKitCtrlApp.cydwr</v>
 <v>LaserTag3000\userKitCtrlApp\userKitCtrlApp.cydwr\Pins</v>
@@ -107,6 +124,7 @@
 <v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\cydevice_trm.h</v>
 <v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\cydevicegnu.inc</v>
 <v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\cydevicegnu_trm.inc</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\cydeviceiar.inc</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
@@ -115,6 +133,9 @@
 <v>LaserTag3000\practiceKitCtrlApp</v>
 <v>LaserTag3000\practiceKitCtrlApp\TopDesign</v>
 <v>LaserTag3000\practiceKitCtrlApp\TopDesign\TopDesign.cysch</v>
+<v>LaserTag3000\timer_test</v>
+<v>LaserTag3000\timer_test\TopDesign</v>
+<v>LaserTag3000\timer_test\TopDesign\TopDesign.cysch</v>
 <v>LaserTag3000\userKitCtrlApp</v>
 <v>LaserTag3000\userKitCtrlApp\TopDesign</v>
 <v>LaserTag3000\userKitCtrlApp\TopDesign\TopDesign.cysch</v>
@@ -124,6 +145,9 @@
 <v>LaserTag3000\practiceKitCtrlApp</v>
 <v>LaserTag3000\practiceKitCtrlApp\TopDesign</v>
 <v>LaserTag3000\practiceKitCtrlApp\TopDesign\TopDesign.cysch</v>
+<v>LaserTag3000\timer_test</v>
+<v>LaserTag3000\timer_test\TopDesign</v>
+<v>LaserTag3000\timer_test\TopDesign\TopDesign.cysch</v>
 <v>LaserTag3000\userKitCtrlApp</v>
 <v>LaserTag3000\userKitCtrlApp\TopDesign</v>
 <v>LaserTag3000\userKitCtrlApp\TopDesign\TopDesign.cysch</v>
@@ -180,6 +204,34 @@
 <v>LaserTag3000\practiceKitCtrlApp\practiceKitCtrlApp.gpdsc</v>
 <v>LaserTag3000\practiceKitCtrlApp\practiceKitCtrlApp.rpt</v>
 <v>LaserTag3000\practiceKitCtrlApp\practiceKitCtrlApp_timing.html</v>
+<v>LaserTag3000\timer_test</v>
+<v>LaserTag3000\timer_test\CortexM3</v>
+<v>LaserTag3000\timer_test\CortexM3\ARM_GCC_541</v>
+<v>LaserTag3000\timer_test\CortexM3\ARM_GCC_541\Debug</v>
+<v>LaserTag3000\timer_test\CortexM3\ARM_GCC_541\Debug\Listing Files</v>
+<v>LaserTag3000\timer_test\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
+<v>LaserTag3000\timer_test\CortexM3\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
+<v>LaserTag3000\timer_test\CortexM3\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>LaserTag3000\timer_test\CortexM3\ARM_GCC_541\Debug\Listing Files\CyDmac.lst</v>
+<v>LaserTag3000\timer_test\CortexM3\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>LaserTag3000\timer_test\CortexM3\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
+<v>LaserTag3000\timer_test\CortexM3\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
+<v>LaserTag3000\timer_test\CortexM3\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
+<v>LaserTag3000\timer_test\CortexM3\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
+<v>LaserTag3000\timer_test\CortexM3\ARM_GCC_541\Debug\Listing Files\CySpc.lst</v>
+<v>LaserTag3000\timer_test\CortexM3\ARM_GCC_541\Debug\Listing Files\cyutils.lst</v>
+<v>LaserTag3000\timer_test\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_mixerFreq.lst</v>
+<v>LaserTag3000\timer_test\CortexM3\ARM_GCC_541\Debug\Listing Files\main.lst</v>
+<v>LaserTag3000\timer_test\CortexM3\ARM_GCC_541\Debug\Listing Files\Test_1.lst</v>
+<v>LaserTag3000\timer_test\CortexM3\ARM_GCC_541\Debug\Listing Files\timer_clock.lst</v>
+<v>LaserTag3000\timer_test\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer_mixerFreq.lst</v>
+<v>LaserTag3000\timer_test\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer_mixerFreq_PM.lst</v>
+<v>LaserTag3000\timer_test\CortexM3\ARM_GCC_541\Debug\timer_test.elf</v>
+<v>LaserTag3000\timer_test\CortexM3\ARM_GCC_541\Debug\timer_test.hex</v>
+<v>LaserTag3000\timer_test\CortexM3\ARM_GCC_541\Debug\timer_test.map</v>
+<v>LaserTag3000\timer_test\timer_test.gpdsc</v>
+<v>LaserTag3000\timer_test\timer_test.rpt</v>
+<v>LaserTag3000\timer_test\timer_test_timing.html</v>
 <v>LaserTag3000\userKitCtrlApp</v>
 <v>LaserTag3000\userKitCtrlApp\CortexM3</v>
 <v>LaserTag3000\userKitCtrlApp\CortexM3\ARM_GCC_541</v>
@@ -277,6 +329,7 @@
 <v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\practiceKitCtrlApp.hex</v>
 <v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\practiceKitCtrlApp.map</v>
 <v>LaserTag3000\practiceKitCtrlApp\practiceKitCtrlApp.gpdsc</v>
+<v>LaserTag3000\practiceKitCtrlApp\practiceKitCtrlApp.rpt</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStates>
@@ -313,6 +366,16 @@
 <v>LaserTag3000\practiceKitCtrlApp\TIA_v2_0.pdf</v>
 <v>LaserTag3000\practiceKitCtrlApp\Timer_v2_80.pdf</v>
 <v>LaserTag3000\practiceKitCtrlApp\ZeroTerminal.pdf</v>
+<v>LaserTag3000\timer_test</v>
+<v>LaserTag3000\timer_test\PSoC 5LP Architecture TRM</v>
+<v>LaserTag3000\timer_test\CY8C58LP Family Datasheet</v>
+<v>LaserTag3000\timer_test\System Reference Guides</v>
+<v>LaserTag3000\timer_test\System Reference Guides\cy_boot_v5_80</v>
+<v>LaserTag3000\timer_test\cy_clock_v2_20.pdf</v>
+<v>LaserTag3000\timer_test\cy_isr_v1_70.pdf</v>
+<v>LaserTag3000\timer_test\cy_pins_v2_20.pdf</v>
+<v>LaserTag3000\timer_test\Timer_v2_80.pdf</v>
+<v>LaserTag3000\timer_test\ZeroTerminal.pdf</v>
 <v>LaserTag3000\userKitCtrlApp</v>
 <v>LaserTag3000\userKitCtrlApp\PSoC 5LP Architecture TRM</v>
 <v>LaserTag3000\userKitCtrlApp\CY8C58LP Family Datasheet</v>
@@ -367,6 +430,16 @@
 <v>LaserTag3000\practiceKitCtrlApp\TIA_v2_0.pdf</v>
 <v>LaserTag3000\practiceKitCtrlApp\Timer_v2_80.pdf</v>
 <v>LaserTag3000\practiceKitCtrlApp\ZeroTerminal.pdf</v>
+<v>LaserTag3000\timer_test</v>
+<v>LaserTag3000\timer_test\PSoC 5LP Architecture TRM</v>
+<v>LaserTag3000\timer_test\CY8C58LP Family Datasheet</v>
+<v>LaserTag3000\timer_test\System Reference Guides</v>
+<v>LaserTag3000\timer_test\System Reference Guides\cy_boot_v5_80</v>
+<v>LaserTag3000\timer_test\cy_clock_v2_20.pdf</v>
+<v>LaserTag3000\timer_test\cy_isr_v1_70.pdf</v>
+<v>LaserTag3000\timer_test\cy_pins_v2_20.pdf</v>
+<v>LaserTag3000\timer_test\Timer_v2_80.pdf</v>
+<v>LaserTag3000\timer_test\ZeroTerminal.pdf</v>
 <v>LaserTag3000\userKitCtrlApp</v>
 <v>LaserTag3000\userKitCtrlApp\PSoC 5LP Architecture TRM</v>
 <v>LaserTag3000\userKitCtrlApp\CY8C58LP Family Datasheet</v>
@@ -378,15 +451,6 @@
 <v>LaserTag3000\userKitCtrlApp\cy_dma_v1_70</v>
 <v>LaserTag3000\userKitCtrlApp\cy_dma_v1_70\cy_dma_v1_70.pdf</v>
 <v>LaserTag3000\userKitCtrlApp\cy_isr_v1_70</v>
-<v>LaserTag3000\userKitCtrlApp\cy_isr_v1_70\cy_isr_v1_70.pdf</v>
-<v>LaserTag3000\userKitCtrlApp\cy_pins_v2_20</v>
-<v>LaserTag3000\userKitCtrlApp\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
-<v>LaserTag3000\userKitCtrlApp\cy_vref_v1_70</v>
-<v>LaserTag3000\userKitCtrlApp\cy_vref_v1_70\cy_vref_v1_70.pdf</v>
-<v>LaserTag3000\userKitCtrlApp\Filter_v2_30.pdf</v>
-<v>LaserTag3000\userKitCtrlApp\Gnd_v1_0.pdf</v>
-<v>LaserTag3000\userKitCtrlApp\Mixer_v2_0.pdf</v>
-<v>LaserTag3000\userKitCtrlApp\PhotoDiode_v1_0.pdf</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStatesV2>
