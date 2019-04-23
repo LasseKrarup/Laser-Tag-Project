@@ -29,8 +29,8 @@ void DMA_DelSig_Config()
     DMA_DelSig_Chan = DMA_DelSig_DmaInitialize(DMA_DelSig_BYTES_PER_BURST, DMA_DelSig_REQUEST_PER_BURST, 
         HI16(DMA_DelSig_SRC_BASE), HI16(DMA_DelSig_DST_BASE));
     DMA_DelSig_TD[0] = CyDmaTdAllocate();
-    CyDmaTdSetConfiguration(DMA_DelSig_TD[0], 2, CY_DMA_DISABLE_TD, CY_DMA_TD_INC_DST_ADR);
-    CyDmaTdSetAddress(DMA_DelSig_TD[0], LO16((uint32)ADC_DelSig_DEC_SAMP_PTR), LO16((uint32)Filter_STAGEA_PTR));
+    CyDmaTdSetConfiguration(DMA_DelSig_TD[0], 2, DMA_INVALID_TD, TD_INC_DST_ADR); // changed from CY_DMA_DISABLE_TD, CY_DMA_TD_INC_DST_ADR
+    CyDmaTdSetAddress(DMA_DelSig_TD[0], LO16((uint32)ADC_DelSig_DEC_SAMP_PTR), LO16((uint32)Filter_STAGEAM_PTR));   // changed from STAGEA
     CyDmaChSetInitialTd(DMA_DelSig_Chan, DMA_DelSig_TD[0]);
     CyDmaChEnable(DMA_DelSig_Chan, 1);
 }
@@ -52,24 +52,31 @@ void DMA_Filter_Config()
     DMA_Filter_Chan = DMA_Filter_DmaInitialize(DMA_Filter_BYTES_PER_BURST, DMA_Filter_REQUEST_PER_BURST, 
         HI16(DMA_Filter_SRC_BASE), HI16(DMA_Filter_DST_BASE));
     DMA_Filter_TD[0] = CyDmaTdAllocate();
-    CyDmaTdSetConfiguration(DMA_Filter_TD[0], 2, CY_DMA_DISABLE_TD, DMA_Filter__TD_TERMOUT_EN | CY_DMA_TD_INC_SRC_ADR);
-    CyDmaTdSetAddress(DMA_Filter_TD[0], LO16((uint32)Filter_HOLDA_PTR), LO16((uint32)&filterOutput));
+    CyDmaTdSetConfiguration(DMA_Filter_TD[0], 2, DMA_INVALID_TD, DMA_Filter__TD_TERMOUT_EN | CY_DMA_TD_INC_SRC_ADR); // changed from CY_DMA_DISABLE_TD
+    CyDmaTdSetAddress(DMA_Filter_TD[0], LO16((uint32)Filter_HOLDAM_PTR), LO16((uint32)&filterOutput));  // changed from HOLDA
     CyDmaChSetInitialTd(DMA_Filter_Chan, DMA_Filter_TD[0]);
     CyDmaChEnable(DMA_Filter_Chan, 1);    
 }
     
 void init(void)
 {    
-    // Start
+    // Start    
     TIA_Start();
+    
     Mixer_Start();
+    
     ADC_DelSig_Start();
     ADC_DelSig_SetCoherency(ADC_DelSig_COHER_MID);
     ADC_DelSig_StartConvert();
+    
     DMA_DelSig_Config();
+    
     Filter_Start();
     Filter_SetCoherency(Filter_CHANNEL_A, Filter_KEY_HIGH);
+    
     DMA_Filter_Config();
+    
+    Timer_mixerFreq_Start();
 }
 
 #endif /* PRACTICE_KIT_CTRL_H */ 
