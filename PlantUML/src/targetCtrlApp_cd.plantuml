@@ -1,6 +1,6 @@
 ' WORK IN PROGRESS
 @startuml practiceKitCtrlApp_cd
-
+scale 1.5
 skinparam {
     monochrome true
     dpi 300
