@@ -10,7 +10,7 @@
 #include "PracticeKitComUnitIF.h"
 #include "Receiver.h"
 
-static const float minLevelDetection = 1.0;   // Minimum level for detection
+static const float minLevelDetection = 1.0; // Minimum level for detection in volts
 float filterOutputVolt = 0;                 // Holds filter output in voltage
 uint16 currentLaserID = 0;                  // Holds current laser id
 
@@ -61,8 +61,22 @@ CY_ISR(isr_filter_handler)
 CY_ISR(isr_mixerFreq_handler)
 { 
     // test3++;
+    
+    //isr_filter_Disable();
+    // ADC_DelSig_Stop();
+    // Filter_Stop();
 
     currentLaserID = changeMixerFrequency(currentLaserID);
+    
+    // ADC_DelSig_Start();
+    // ADC_DelSig_SetCoherency(ADC_DelSig_COHER_MID);
+    // ADC_DelSig_StartConvert();
+    // 
+    // Filter_Start();
+    // Filter_SetCoherency(Filter_CHANNEL_A, Filter_KEY_HIGH);
+    
+    // Filter_Write24(Filter_CHANNEL_A, 0);
+    //isr_filter_Enable();
 }
 
 /* [] END OF FILE */

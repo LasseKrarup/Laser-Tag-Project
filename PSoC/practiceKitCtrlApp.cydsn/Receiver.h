@@ -39,6 +39,9 @@ int changeMixerFrequency(int currentLaserID)
         default:
             break;
     }
+    
+    // CyDelay(10);
+    
     return currentLaserID;
 }
 
