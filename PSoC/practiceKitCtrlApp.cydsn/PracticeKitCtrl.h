@@ -57,7 +57,7 @@ void DMA_Filter_Config()
     CyDmaChSetInitialTd(DMA_Filter_Chan, DMA_Filter_TD[0]);
     CyDmaChEnable(DMA_Filter_Chan, 1);    
 }
-    
+
 void init(void)
 {    
     // Start    
