@@ -30,14 +30,12 @@ loop
     [o-> main: <<filter event>>
     activate main
 
-    main -> main: update filterOutput
+    main -> main: Update filterOutputVolt
 
-    alt filterOutput > minLevelDetection
-        main -> main: disable all interrupts
+    alt filterOutputVolt > minLevelDetection || filterOutputVolt > -minLevelDetection
         main -> PracticeKitComUnitIF++: receiverHit(currentLaserID)
         deactivate PracticeKitComUnitIF
         main -> main: sleep (blocking)
-        main -> main: enable all interrupts
         deactivate main
     end
 
@@ -46,6 +44,9 @@ loop
     activate main
     main -> Receiver++: changeMixerFrequency(currentLaserID)
     return newLaserID
+    main -> main: Stop converting
+    main -> main: Reset filter
+    main -> main: Start converting
     deactivate main
     deactivate Receiver
 end
