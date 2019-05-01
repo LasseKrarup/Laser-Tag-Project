@@ -20,8 +20,8 @@ uint16 currentLaserID = 0;                  // Holds current laser id
 
 CY_ISR_PROTO(isr_filter_handler);           // Interrupt handling filter output
 CY_ISR_PROTO(isr_mixerFreq_handler);        // Interrupt handling change of mixer frequency
-CY_ISR_PROTO(isr_trigger_handler);
-CY_ISR_PROTO(isr_triggerBlocking_handler);
+CY_ISR_PROTO(isr_trigger_handler);          // Interrupt handling trigger
+CY_ISR_PROTO(isr_triggerBlocking_handler);  // Interrupt handling blocking of trigger
 
 int main(void)
 {
