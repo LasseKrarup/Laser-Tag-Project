@@ -2,7 +2,7 @@
  * main.c
  * 
  * @author  Frederik Sidenius Dam
- * @version 0.1
+ * @version 1.0
  */
 
 #include "project.h"
@@ -10,14 +10,14 @@
 #include "PracticeKitComUnitIF.h"
 #include "Receiver.h"
 
-#define FILTER_TAPS 2
+#define FILTER_TAPS 2   // Number of filter taps
 
 static const float minLevelDetection = 1.0; // Minimum level for detection in volts
 float filterOutputVolt = 0;                 // Holds filter output in voltage
 uint16 currentLaserID = 0;                  // Holds current laser id
 
-CY_ISR_PROTO(isr_filter_handler);
-CY_ISR_PROTO(isr_mixerFreq_handler);
+CY_ISR_PROTO(isr_filter_handler);       // Interrupt handling filter output
+CY_ISR_PROTO(isr_mixerFreq_handler);    // Interrupt handling change of mixer frequency
 
 int main(void)
 {
@@ -28,7 +28,6 @@ int main(void)
     isr_filter_StartEx(isr_filter_handler);         // Start filter isr
     isr_mixerFreq_StartEx(isr_mixerFreq_handler);   // Start mixerFreq isr
     
-    
     for(;;)
     {
         // Empty loop
@@ -37,18 +36,18 @@ int main(void)
 
 CY_ISR(isr_filter_handler)
 {
-    filterOutputVolt = ADC_DelSig_CountsTo_Volts(filterOutput);
+    filterOutputVolt = ADC_DelSig_CountsTo_Volts(filterOutput); // Convert filter output to volts
     
-    if ((filterOutputVolt > minLevelDetection) | (filterOutputVolt < -minLevelDetection))
+    if ((filterOutputVolt > minLevelDetection) || (filterOutputVolt < -minLevelDetection))
     {
-        receiverHit(currentLaserID);
-        CyDelay(5000);  // Blocking sleep in 5s
+        receiverHit(currentLaserID);    // Reciever is hit
+        //CyDelay(5000);                  // Blocking sleep
     }
 }
 
 CY_ISR(isr_mixerFreq_handler)
 {
-    currentLaserID = changeMixerFrequency(currentLaserID);
+    currentLaserID = changeMixerFrequency(currentLaserID);  // Change mixer frequency
     
     ADC_DelSig_StopConvert();   // Stop converting
     for (size_t i = 0; i < FILTER_TAPS; i++)

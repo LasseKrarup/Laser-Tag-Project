@@ -2,7 +2,7 @@
  * Receiver.h
  * 
  * @author  Frederik Sidenius Dam
- * @version 0.1
+ * @version 1.0
  */
 
 #ifndef RECEIVER_H

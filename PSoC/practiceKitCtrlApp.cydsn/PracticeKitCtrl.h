@@ -2,7 +2,7 @@
  * PracticeKitCtrl.h
  * 
  * @author  Frederik Sidenius Dam
- * @version 0.1
+ * @version 1.0
  */
 
 #ifndef PRACTICE_KIT_CTRL_H
@@ -55,11 +55,11 @@ void DMA_Filter_Config()
     CyDmaTdSetConfiguration(DMA_Filter_TD[0], 2, DMA_INVALID_TD, DMA_Filter__TD_TERMOUT_EN | CY_DMA_TD_INC_SRC_ADR); // changed from CY_DMA_DISABLE_TD
     CyDmaTdSetAddress(DMA_Filter_TD[0], LO16((uint32)Filter_HOLDAM_PTR), LO16((uint32)&filterOutput));  // changed from HOLDA
     CyDmaChSetInitialTd(DMA_Filter_Chan, DMA_Filter_TD[0]);
-    CyDmaChEnable(DMA_Filter_Chan, 1);    
+    CyDmaChEnable(DMA_Filter_Chan, 1);
 }
 
 void init(void)
-{    
+{
     // Start    
     TIA_Start();
     
