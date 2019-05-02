@@ -10,7 +10,8 @@
 
 #include "project.h"
 
-int16 filterOutput = 0;     // Holds last output from filter
+int16 filterOutput = 0;                                                                 // Holds last output from filter
+uint16 clockDividerTransmit[] = {1200, 1091, 1000, 923, 857, 800, 750, 706, 667, 632};  // Clock devider for frequencies 20 kHz to 38 kHz with 2 kHz steps
     
 void DMA_DelSig_Config()
 {
@@ -60,15 +61,6 @@ void DMA_Filter_Config()
     
 void init(uint16 unitId)
 {
-    switch(unitId)
-    {
-        case 0:
-            // Set transmitter frequency
-            break;
-        default:
-            break;
-    }
-    
     // Start    
     TIA_Start();
     
@@ -85,7 +77,7 @@ void init(uint16 unitId)
     
     DMA_Filter_Config();
     
-    Timer_mixerFreq_Start();
+    transmit_clock_SetDividerValue(clockDividerTransmit[unitId]);   // Set transmitting frequency
 }
 
 #endif /* USER_KIT_CTRL_H */ 

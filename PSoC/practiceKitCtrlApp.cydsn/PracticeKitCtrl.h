@@ -75,8 +75,6 @@ void init(void)
     Filter_SetCoherency(Filter_CHANNEL_A, Filter_KEY_HIGH);
     
     DMA_Filter_Config();
-    
-    Timer_mixerFreq_Start();
 }
 
 #endif /* PRACTICE_KIT_CTRL_H */ 

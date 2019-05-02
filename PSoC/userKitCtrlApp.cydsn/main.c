@@ -11,12 +11,13 @@
 #include "Receiver.h"
 #include "Transmitter.h"
 
+#define USER_KIT_ID 1   // UserKitID changed by programmer (1-10)
 #define FILTER_TAPS 2   // Number of filter taps
 
-static const int userKitID = 1;             // Hardcoded UserKitId
-static const float minLevelDetection = 1.0; // Minimum level for detection in volts
-float filterOutputVolt = 0;                 // Holds filter output in voltage
-uint16 currentLaserID = 0;                  // Holds current laser id
+static const int userKitID = USER_KIT_ID-1; // Hardcoded UserKitId 0-9
+static const float minLevelDetection = 1.0; // Minimum level for detection in Volt
+float filterOutputVolt = 0;                 // Holds filter output in Volt
+uint16 currentLaserID = 0;                  // Holds current laser id 0-9
 
 CY_ISR_PROTO(isr_filter_handler);           // Interrupt handling filter output
 CY_ISR_PROTO(isr_mixerFreq_handler);        // Interrupt handling change of mixer frequency
@@ -45,13 +46,13 @@ CY_ISR(isr_filter_handler)
 {
     filterOutputVolt = ADC_DelSig_CountsTo_Volts(filterOutput); // Convert filter output to volts
     
-    if ((filterOutputVolt > minLevelDetection) || (filterOutputVolt < -minLevelDetection))
+    if ((filterOutputVolt > minLevelDetection || filterOutputVolt < -minLevelDetection) && currentLaserID != userKitID) // Cannot shoot yourself
     {
         receiverHit(currentLaserID);    // Reciever is hit
         
-        PWM_hitIndicator_Start();       // Start hit indication
-        CyDelay(5000);                  // Blocking sleep
-        PWM_hitIndicator_Stop();        // Stop hit indication
+        PWM_hitIndicator_Start();   // Start hit indication
+        CyDelay(5000);              // Blocking sleep
+        PWM_hitIndicator_Stop();    // Stop hit indication
     }
 }
 
@@ -68,14 +69,14 @@ CY_ISR(isr_mixerFreq_handler)
 CY_ISR(isr_trigger_handler)
 {
     // Disable trigger interrupts
-    startTransmitting();
-    // Start triggerBlocking timer
+    transmit_clock_Start();         // Start transmitting
+    Timer_triggerBlocking_Start();  // Start triggerBlocking timer
 }
 
 CY_ISR(isr_triggerBlocking_handler)
 {
-    // Stop triggerBlocking timer
-    stopTransmitting();
+    Timer_triggerBlocking_Stop();   // Stop triggerBlocking timer
+    transmit_clock_Stop();          // Stop transmitting
     // Enable trigger interrupts
 }
 

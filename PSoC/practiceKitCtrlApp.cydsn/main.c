@@ -12,9 +12,9 @@
 
 #define FILTER_TAPS 2   // Number of filter taps
 
-static const float minLevelDetection = 1.0; // Minimum level for detection in volts
-float filterOutputVolt = 0;                 // Holds filter output in voltage
-uint16 currentLaserID = 0;                  // Holds current laser id
+static const float minLevelDetection = 1.0; // Minimum level for detection in Volt
+float filterOutputVolt = 0;                 // Holds filter output in Volt
+uint16 currentLaserID = 0;                  // Holds current laser id 0-9
 
 CY_ISR_PROTO(isr_filter_handler);       // Interrupt handling filter output
 CY_ISR_PROTO(isr_mixerFreq_handler);    // Interrupt handling change of mixer frequency
@@ -38,7 +38,7 @@ CY_ISR(isr_filter_handler)
 {
     filterOutputVolt = ADC_DelSig_CountsTo_Volts(filterOutput); // Convert filter output to volts
     
-    if ((filterOutputVolt > minLevelDetection) || (filterOutputVolt < -minLevelDetection))
+    if (filterOutputVolt > minLevelDetection || filterOutputVolt < -minLevelDetection)
     {
         receiverHit(currentLaserID);    // Reciever is hit
         //CyDelay(5000);                  // Blocking sleep
