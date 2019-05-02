@@ -11,7 +11,7 @@
 #include "Receiver.h"
 #include "Transmitter.h"
 
-#define USER_KIT_ID 1   // UserKitID changed by programmer (1-10)
+#define USER_KIT_ID 2   // UserKitID changed by programmer (1-10)
 #define FILTER_TAPS 2   // Number of filter taps
 
 static const int userKitID = USER_KIT_ID-1; // Hardcoded UserKitId 0-9
@@ -49,6 +49,7 @@ CY_ISR(isr_filter_handler)
     if ((filterOutputVolt > minLevelDetection || filterOutputVolt < -minLevelDetection) && currentLaserID != userKitID) // Cannot shoot yourself
     {
         receiverHit(currentLaserID);    // Reciever is hit
+        transmit_clock_Stop();          // Stop transmitting
         
         PWM_hitIndicator_Start();   // Start hit indication
         CyDelay(5000);              // Blocking sleep
@@ -68,7 +69,6 @@ CY_ISR(isr_mixerFreq_handler)
 
 CY_ISR(isr_trigger_handler)
 {
-    // Disable trigger interrupts
     transmit_clock_Start();         // Start transmitting
     Timer_triggerBlocking_Start();  // Start triggerBlocking timer
 }
@@ -77,7 +77,6 @@ CY_ISR(isr_triggerBlocking_handler)
 {
     Timer_triggerBlocking_Stop();   // Stop triggerBlocking timer
     transmit_clock_Stop();          // Stop transmitting
-    // Enable trigger interrupts
 }
 
 /* [] END OF FILE */
