@@ -1,21 +1,21 @@
 
-CREATE TABLE `game` (
+CREATE TABLE IF NOT EXISTS `game` (
   `id` int(11) NOT NULL,
   `gametime` varchar(255) DEFAULT NULL
 );
 
-CREATE TABLE `game_score` (
+CREATE TABLE IF NOT EXISTS `game_score` (
   `game` int(11) DEFAULT NULL,
   `score` int(11) DEFAULT NULL,
   `player` int(11) NOT NULL
 );
 
-CREATE TABLE `kits` (
+CREATE TABLE IF NOT EXISTS `kits` (
   `id` int(11) NOT NULL,
   `ipaddress` varchar(255) NOT NULL
 );
 
-CREATE TABLE `player` (
+CREATE TABLE IF NOT EXISTS `player` (
   `id` int(11) NOT NULL,
   `username` varchar(255) DEFAULT NULL,
   `kit` int(11) DEFAULT NULL,

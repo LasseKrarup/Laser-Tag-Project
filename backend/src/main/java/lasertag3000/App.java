@@ -27,8 +27,8 @@ public final class App {
         SQLConn.getInstance().addKit(InetAddress.getLocalHost(), 1);
         int player = SQLConn.getInstance().addPlayer("Leo", 1, game);
         SQLConn.getInstance().PlayerShot(player);
-        SQLConn.getInstance().removePlayer(player);
         SQLConn.getInstance().getKits();
+        SQLConn.getInstance().removePlayer(player);
         SQLConn.getInstance().removeKit(1);
         SQLConn.getInstance().StopGame(game, 20);
     }
