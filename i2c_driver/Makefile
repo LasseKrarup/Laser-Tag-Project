@@ -5,14 +5,13 @@
 #
 # Modified by: Lasse Krarup
 
-
 # ======== VARIABLES =========
 SOURCES = i2cdriver.c
 CXXFLAGS = -I. # used for custom .h files with #include <file.h> notation
 CXX = g++
 BUILD_DIR = build/$(ARCH)
 BIN_DIR = bin/$(ARCH)
-EXE = $(BIN_DIR)/$(SOURCES:.c=);
+EXE = $(BIN_DIR)/$(SOURCES:.c=)
 # ===== =============== ======
 
 ifeq ($(KERNELRELEASE),) #only build this way if KERNELRELEASE is not set. Otherwise it means we are already in the kernel directory.
@@ -32,7 +31,9 @@ endif
 all: directories $(EXE)
 
 $(EXE): $(OBJECTS) $(DEPS)
-	$(MAKE) ARCH=arm CROSS_COMPILE=$(CCPREFIX) -C $(KERNELDIR) M=$(PWD) modules
+	$(MAKE) ARCH=arm CROSS_COMPILE=$(CCPREFIX) -C $(KERNELDIR) M=$(PWD) modules -o $@
+	mv .*.cmd *.o *.symvers *.order *.mod.c build/
+	mv *.ko bin/
 
 # ===== CREATE DIRECTORIES ======
 .PHONY: directories
@@ -46,9 +47,9 @@ $(BIN_DIR):
 # ======== PHONY TARGETS ===========
 .PHONY: clean help distclean
 clean: #remove object and dependency files
-	rm -f $(BUILD_DIR)/*
+	rm -rf .*.cmd *.o *.symvers *.order
 distclean: #remove all created folders
-	rm -f -r -d build bin
+	rm -f -r -d build bin .tmp* *.mod.c *.ko
 help:
 	@echo "The following targets are available for this makefile:"
 	@echo "------------------------------------"
