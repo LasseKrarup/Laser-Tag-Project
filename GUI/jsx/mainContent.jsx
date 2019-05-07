@@ -22,7 +22,8 @@ class FormArea extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { activeIDs: [] };
+        // Players are sorted by id - their key is their ID
+        this.state = { players: { byId: {}, allIds: [] } };
 
         this.addPlayer = this.addPlayer.bind(this);
         this.removePlayer = this.removePlayer.bind(this);
@@ -32,10 +33,10 @@ class FormArea extends React.Component {
     addPlayer(event) {
         event.preventDefault();
 
-        let activeIDs = this.state.activeIDs;
+        let activeIDs = this.state.players.allIds;
 
-        const playerName = document.getElementById("playerNameInput").value;
-        const kitNumber = document.getElementById("kitNumberSelectAdd").value;
+        let playerName = document.getElementById("playerNameInput").value;
+        let kitNumber = document.getElementById("kitNumberSelectAdd").value;
 
         if (!activeIDs.includes(kitNumber)) {
             activeIDs.push(kitNumber);
@@ -48,7 +49,21 @@ class FormArea extends React.Component {
                 })
             );
 
-            this.setState({ activeIDs: activeIDs });
+            // Update state. Must be done immutably, hence the spread operators
+            this.setState({
+                ...this.state,
+                players: {
+                    ...this.state.players,
+                    byId: {
+                        ...this.state.players.byId,
+                        [kitNumber]: {
+                            id: kitNumber,
+                            name: playerName
+                        }
+                    },
+                    allIds: activeIDs
+                }
+            });
         } else {
             console.log(
                 "Player with ID " + kitNumber + " is already in the game"
@@ -59,10 +74,8 @@ class FormArea extends React.Component {
     removePlayer(event) {
         event.preventDefault();
 
-        let activeIDs = this.state.activeIDs;
-
-        const kitNumber = document.getElementById("kitNumberSelectRemove")
-            .value;
+        let activeIDs = this.state.players.allIds;
+        let kitNumber = document.getElementById("kitNumberSelectRemove").value;
 
         /*
             If the ID is in the list of active ID's,
@@ -80,7 +93,22 @@ class FormArea extends React.Component {
                 })
             );
 
-            this.setState({ activeIDs: activeIDs });
+            // Extract deleted player from state
+            let {
+                [kitNumber]: deleted,
+                ...remainingPlayers
+            } = this.state.players.byId;
+
+            console.log(remainingPlayers);
+
+            // Update state immutably
+            this.setState({
+                ...this.state,
+                players: {
+                    byId: remainingPlayers,
+                    allIds: activeIDs
+                }
+            });
         } else {
             console.log("Player with ID " + kitNumber + " is not in the game");
         }
@@ -92,7 +120,7 @@ class FormArea extends React.Component {
         const gametime = document.getElementById("gametime").value;
 
         if (gametime >= 10 && gametime <= 20) {
-            if (activeIDs.length > 1) {
+            if (this.state.players.allIds.length > 1) {
                 wsClient.send(
                     JSON.stringify({
                         action: "startGame",
@@ -108,6 +136,18 @@ class FormArea extends React.Component {
     }
 
     render() {
+        // Fill array of all possible kit numbers
+        let numbers = new Array(10);
+        for (i = 0; i < 10; i++) {
+            numbers = <option value={id}>#{id}</option>;
+        }
+
+        const activeIDs = this.state.players.allIds.map(id => {
+            <option value={id}>
+                #{id} - {this.state.players.byId[id]}
+            </option>;
+        });
+
         return (
             <div className="container">
                 <div className="row">
