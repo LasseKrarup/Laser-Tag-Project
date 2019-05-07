@@ -12,9 +12,9 @@
     
 #define FILTER_TAPS 2   // Number of filter taps
 
-uint16 clockDividerLO[] = {1188, 1081, 992, 916, 851, 795, 745, 702, 633, 628};   // Clock devider for frequencies 20.2 kHz to 38.2 kHz with 2 kHz steps
+uint16 clockDividerLO[] = {1188, 1081, 992, 916, 851, 795, 745, 702, 663, 628};   // Clock devider for frequencies 20.2 kHz to 38.2 kHz with 2 kHz steps
 
-int changeMixerFrequency(int currentLaserID)
+uint8 changeMixerFrequency(uint8 currentLaserID)
 {
     if (currentLaserID == 9)
         currentLaserID = 0; // Reset value
@@ -27,7 +27,7 @@ int changeMixerFrequency(int currentLaserID)
     for (size_t i = 0; i < FILTER_TAPS; i++)
         Filter_Write24(Filter_CHANNEL_A, 0);    // Reset filter with zeros
     ADC_DelSig_StartConvert();                  // Start converting
-        
+    
     return currentLaserID;
 }
 

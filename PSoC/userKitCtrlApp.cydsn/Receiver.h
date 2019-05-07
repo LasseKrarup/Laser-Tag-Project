@@ -12,7 +12,7 @@
     
 #define FILTER_TAPS 2   // Number of filter taps
 
-uint16 clockDividerLO[] = {1188, 1081, 992, 916, 851, 795, 745, 702, 633, 628};   // Clock devider for frequencies 20.2 kHz to 38.2 kHz with 2 kHz steps
+uint16 clockDividerLO[] = {1188, 1081, 992, 916, 851, 795, 745, 702, 663, 628};   // Clock devider for frequencies 20.2 kHz to 38.2 kHz with 2 kHz steps
 
 void receiverHit(void)
 {
@@ -23,7 +23,7 @@ void receiverHit(void)
     PWM_hitIndicator_Stop();    // Stop hit indication
 }
 
-int changeMixerFrequency(int currentLaserID)
+uint8 changeMixerFrequency(uint8 currentLaserID)
 {
     if (currentLaserID == 9)
         currentLaserID = 0; // Reset value
