@@ -1,4 +1,4 @@
-Loading plugins phase: Elapsed time ==> 0s.213ms
+Loading plugins phase: Elapsed time ==> 2s.810ms
 <CYPRESSTAG name="CyDsfit arguments...">
 cydsfit arguments: -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -.fdsreffile=referenced_files.txt -p C:\Users\fresi\Documents\GitHub\Laser-Tag-Project\PSoC\userKitCtrlApp.cydsn\userKitCtrlApp.cyprj -d CY8C5888LTI-LP097 -s C:\Users\fresi\Documents\GitHub\Laser-Tag-Project\PSoC\userKitCtrlApp.cydsn\Generated_Source\PSoC5 -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE
 </CYPRESSTAG>
@@ -8,10 +8,10 @@ ADD: fit.M0029: information: Voltage Reference Information: Vref 'Vdda/2' is con
  * C:\Users\fresi\Documents\GitHub\Laser-Tag-Project\PSoC\userKitCtrlApp.cydsn\TopDesign\TopDesign.cysch (Instance:vRef_3)
 
 </CYPRESSTAG>
-Elaboration phase: Elapsed time ==> 2s.668ms
+Elaboration phase: Elapsed time ==> 14s.627ms
 <CYPRESSTAG name="HDL generation results...">
 </CYPRESSTAG>
-HDL generation phase: Elapsed time ==> 0s.101ms
+HDL generation phase: Elapsed time ==> 0s.297ms
 <CYPRESSTAG name="Synthesis results...">
 
      | | | | | | |
@@ -45,7 +45,7 @@ Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=C:\Users\fresi
 ======================================================================
 
 vlogfe V6.3 IR 41:  Verilog parser
-Thu May 02 13:50:23 2019
+Tue May 07 11:17:50 2019
 
 
 ======================================================================
@@ -55,7 +55,7 @@ Options  :    -yv2 -q10 userKitCtrlApp.v
 ======================================================================
 
 vpp V6.3 IR 41:  Verilog Pre-Processor
-Thu May 02 13:50:23 2019
+Tue May 07 11:17:51 2019
 
 Flattening file 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\ZeroTerminal\ZeroTerminal.v'
 Flattening file 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_vref_v1_70\cy_vref_v1_70.v'
@@ -98,7 +98,7 @@ Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=C:\Users\fresi
 ======================================================================
 
 tovif V6.3 IR 41:  High-level synthesis
-Thu May 02 13:50:23 2019
+Tue May 07 11:17:52 2019
 
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\std.vhd'.
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\cypress.vhd'.
@@ -135,7 +135,7 @@ Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=C:\Users\fresi
 ======================================================================
 
 topld V6.3 IR 41:  Synthesis and optimization
-Thu May 02 13:50:24 2019
+Tue May 07 11:17:54 2019
 
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\std.vhd'.
 Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\cypress.vhd'.
@@ -372,11 +372,6 @@ Aliasing Net_12 to zero
 Aliasing \Timer_triggerBlocking:Net_260\ to zero
 Aliasing \Timer_triggerBlocking:Net_102\ to \ADC_DelSig:soc\
 Aliasing tmpOE__Transmit_out_net_0 to \ADC_DelSig:soc\
-Aliasing tmpOE__Pin_0_net_0 to \ADC_DelSig:soc\
-Aliasing tmpOE__Pin_1_net_0 to \ADC_DelSig:soc\
-Aliasing tmpOE__Pin_2_net_0 to \ADC_DelSig:soc\
-Aliasing tmpOE__Pin_3_net_0 to \ADC_DelSig:soc\
-Aliasing tmpOE__Pin_4_net_0 to \ADC_DelSig:soc\
 Aliasing \PWM_hitIndicator:PWMUDB:hwCapture\ to zero
 Aliasing \PWM_hitIndicator:PWMUDB:trig_out\ to \ADC_DelSig:soc\
 Aliasing Net_115 to zero
@@ -449,90 +444,85 @@ Removing Lhs of wire \Timer_triggerBlocking:Net_266\[114] = tmpOE__Rcv_in_net_0[
 Removing Rhs of wire Net_47[119] = \Timer_triggerBlocking:Net_51\[115]
 Removing Lhs of wire \Timer_triggerBlocking:Net_102\[120] = tmpOE__Rcv_in_net_0[89]
 Removing Lhs of wire tmpOE__Transmit_out_net_0[126] = tmpOE__Rcv_in_net_0[89]
-Removing Lhs of wire tmpOE__Pin_0_net_0[132] = tmpOE__Rcv_in_net_0[89]
-Removing Lhs of wire tmpOE__Pin_1_net_0[138] = tmpOE__Rcv_in_net_0[89]
-Removing Lhs of wire tmpOE__Pin_2_net_0[144] = tmpOE__Rcv_in_net_0[89]
-Removing Lhs of wire tmpOE__Pin_3_net_0[150] = tmpOE__Rcv_in_net_0[89]
-Removing Lhs of wire tmpOE__Pin_4_net_0[156] = tmpOE__Rcv_in_net_0[89]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:ctrl_enable\[175] = \PWM_hitIndicator:PWMUDB:control_7\[167]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:hwCapture\[185] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:hwEnable\[186] = \PWM_hitIndicator:PWMUDB:control_7\[167]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:trig_out\[190] = tmpOE__Rcv_in_net_0[89]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:runmode_enable\\R\[192] = zero[4]
-Removing Lhs of wire Net_115[193] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:runmode_enable\\S\[194] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:final_enable\[195] = \PWM_hitIndicator:PWMUDB:runmode_enable\[191]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:ltch_kill_reg\\R\[199] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:ltch_kill_reg\\S\[200] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:min_kill_reg\\R\[201] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:min_kill_reg\\S\[202] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:final_kill\[205] = tmpOE__Rcv_in_net_0[89]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:add_vi_vv_MODGEN_1_1\[209] = \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:s_1\[427]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:add_vi_vv_MODGEN_1_0\[211] = \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:s_0\[428]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:dith_count_1\\R\[212] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:dith_count_1\\S\[213] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:dith_count_0\\R\[214] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:dith_count_0\\S\[215] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:cs_addr_2\[217] = \PWM_hitIndicator:PWMUDB:tc_i\[197]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:cs_addr_1\[218] = \PWM_hitIndicator:PWMUDB:runmode_enable\[191]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:cs_addr_0\[219] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:compare1\[253] = \PWM_hitIndicator:PWMUDB:cmp1_less\[223]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:pwm1_i\[258] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:pwm2_i\[260] = zero[4]
-Removing Rhs of wire \PWM_hitIndicator:Net_96\[263] = \PWM_hitIndicator:PWMUDB:pwm_i_reg\[255]
-Removing Rhs of wire \PWM_hitIndicator:PWMUDB:pwm_temp\[266] = \PWM_hitIndicator:PWMUDB:cmp1\[267]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_23\[309] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_22\[310] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_21\[311] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_20\[312] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_19\[313] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_18\[314] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_17\[315] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_16\[316] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_15\[317] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_14\[318] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_13\[319] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_12\[320] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_11\[321] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_10\[322] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_9\[323] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_8\[324] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_7\[325] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_6\[326] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_5\[327] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_4\[328] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_3\[329] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_2\[330] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_1\[331] = \PWM_hitIndicator:PWMUDB:MODIN1_1\[332]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODIN1_1\[332] = \PWM_hitIndicator:PWMUDB:dith_count_1\[208]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_0\[333] = \PWM_hitIndicator:PWMUDB:MODIN1_0\[334]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODIN1_0\[334] = \PWM_hitIndicator:PWMUDB:dith_count_0\[210]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:g1:z1:s0:g1:u0:c_0\[466] = tmpOE__Rcv_in_net_0[89]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:g1:z1:s0:g1:u0:b_0\[467] = tmpOE__Rcv_in_net_0[89]
-Removing Rhs of wire Net_126[468] = \PWM_hitIndicator:Net_96\[263]
-Removing Lhs of wire tmpOE__Ind_out_net_0[476] = tmpOE__Rcv_in_net_0[89]
-Removing Lhs of wire tmpOE__I2C_req_net_0[483] = tmpOE__Rcv_in_net_0[89]
-Removing Rhs of wire \I2C:sda_x_wire\[488] = \I2C:Net_643_1\[489]
-Removing Rhs of wire \I2C:Net_697\[491] = \I2C:Net_643_2\[497]
-Removing Rhs of wire \I2C:Net_1109_0\[494] = \I2C:scl_yfb\[507]
-Removing Rhs of wire \I2C:Net_1109_1\[495] = \I2C:sda_yfb\[508]
-Removing Lhs of wire \I2C:scl_x_wire\[498] = \I2C:Net_643_0\[496]
-Removing Lhs of wire \I2C:Net_969\[499] = tmpOE__Rcv_in_net_0[89]
-Removing Lhs of wire \I2C:Net_968\[500] = tmpOE__Rcv_in_net_0[89]
-Removing Lhs of wire \I2C:tmpOE__Bufoe_scl_net_0\[510] = tmpOE__Rcv_in_net_0[89]
-Removing Lhs of wire \I2C:tmpOE__Bufoe_sda_net_0\[513] = tmpOE__Rcv_in_net_0[89]
-Removing Lhs of wire tmpOE__SCL_net_0[521] = tmpOE__Rcv_in_net_0[89]
-Removing Lhs of wire tmpOE__SDA_net_0[526] = tmpOE__Rcv_in_net_0[89]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:min_kill_reg\\D\[533] = tmpOE__Rcv_in_net_0[89]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:prevCapture\\D\[534] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:trig_last\\D\[535] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:ltch_kill_reg\\D\[538] = tmpOE__Rcv_in_net_0[89]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:pwm_i_reg\\D\[541] = \PWM_hitIndicator:PWMUDB:pwm_i\[256]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:pwm1_i_reg\\D\[542] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:pwm2_i_reg\\D\[543] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:ctrl_enable\[145] = \PWM_hitIndicator:PWMUDB:control_7\[137]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:hwCapture\[155] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:hwEnable\[156] = \PWM_hitIndicator:PWMUDB:control_7\[137]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:trig_out\[160] = tmpOE__Rcv_in_net_0[89]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:runmode_enable\\R\[162] = zero[4]
+Removing Lhs of wire Net_115[163] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:runmode_enable\\S\[164] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:final_enable\[165] = \PWM_hitIndicator:PWMUDB:runmode_enable\[161]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:ltch_kill_reg\\R\[169] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:ltch_kill_reg\\S\[170] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:min_kill_reg\\R\[171] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:min_kill_reg\\S\[172] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:final_kill\[175] = tmpOE__Rcv_in_net_0[89]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:add_vi_vv_MODGEN_1_1\[179] = \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:s_1\[397]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:add_vi_vv_MODGEN_1_0\[181] = \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:s_0\[398]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:dith_count_1\\R\[182] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:dith_count_1\\S\[183] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:dith_count_0\\R\[184] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:dith_count_0\\S\[185] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:cs_addr_2\[187] = \PWM_hitIndicator:PWMUDB:tc_i\[167]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:cs_addr_1\[188] = \PWM_hitIndicator:PWMUDB:runmode_enable\[161]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:cs_addr_0\[189] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:compare1\[223] = \PWM_hitIndicator:PWMUDB:cmp1_less\[193]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:pwm1_i\[228] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:pwm2_i\[230] = zero[4]
+Removing Rhs of wire \PWM_hitIndicator:Net_96\[233] = \PWM_hitIndicator:PWMUDB:pwm_i_reg\[225]
+Removing Rhs of wire \PWM_hitIndicator:PWMUDB:pwm_temp\[236] = \PWM_hitIndicator:PWMUDB:cmp1\[237]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_23\[279] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_22\[280] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_21\[281] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_20\[282] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_19\[283] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_18\[284] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_17\[285] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_16\[286] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_15\[287] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_14\[288] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_13\[289] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_12\[290] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_11\[291] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_10\[292] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_9\[293] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_8\[294] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_7\[295] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_6\[296] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_5\[297] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_4\[298] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_3\[299] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_2\[300] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_1\[301] = \PWM_hitIndicator:PWMUDB:MODIN1_1\[302]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODIN1_1\[302] = \PWM_hitIndicator:PWMUDB:dith_count_1\[178]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:a_0\[303] = \PWM_hitIndicator:PWMUDB:MODIN1_0\[304]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODIN1_0\[304] = \PWM_hitIndicator:PWMUDB:dith_count_0\[180]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:g1:z1:s0:g1:u0:c_0\[436] = tmpOE__Rcv_in_net_0[89]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:g1:z1:s0:g1:u0:b_0\[437] = tmpOE__Rcv_in_net_0[89]
+Removing Rhs of wire Net_126[438] = \PWM_hitIndicator:Net_96\[233]
+Removing Lhs of wire tmpOE__Ind_out_net_0[446] = tmpOE__Rcv_in_net_0[89]
+Removing Lhs of wire tmpOE__I2C_req_net_0[453] = tmpOE__Rcv_in_net_0[89]
+Removing Rhs of wire \I2C:sda_x_wire\[458] = \I2C:Net_643_1\[459]
+Removing Rhs of wire \I2C:Net_697\[461] = \I2C:Net_643_2\[467]
+Removing Rhs of wire \I2C:Net_1109_0\[464] = \I2C:scl_yfb\[477]
+Removing Rhs of wire \I2C:Net_1109_1\[465] = \I2C:sda_yfb\[478]
+Removing Lhs of wire \I2C:scl_x_wire\[468] = \I2C:Net_643_0\[466]
+Removing Lhs of wire \I2C:Net_969\[469] = tmpOE__Rcv_in_net_0[89]
+Removing Lhs of wire \I2C:Net_968\[470] = tmpOE__Rcv_in_net_0[89]
+Removing Lhs of wire \I2C:tmpOE__Bufoe_scl_net_0\[480] = tmpOE__Rcv_in_net_0[89]
+Removing Lhs of wire \I2C:tmpOE__Bufoe_sda_net_0\[483] = tmpOE__Rcv_in_net_0[89]
+Removing Lhs of wire tmpOE__SCL_net_0[491] = tmpOE__Rcv_in_net_0[89]
+Removing Lhs of wire tmpOE__SDA_net_0[496] = tmpOE__Rcv_in_net_0[89]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:min_kill_reg\\D\[503] = tmpOE__Rcv_in_net_0[89]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:prevCapture\\D\[504] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:trig_last\\D\[505] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:ltch_kill_reg\\D\[508] = tmpOE__Rcv_in_net_0[89]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:pwm_i_reg\\D\[511] = \PWM_hitIndicator:PWMUDB:pwm_i\[226]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:pwm1_i_reg\\D\[512] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:pwm2_i_reg\\D\[513] = zero[4]
 
 ------------------------------------------------------
-Aliased 0 equations, 104 wires.
+Aliased 0 equations, 99 wires.
 ------------------------------------------------------
 
 ----------------------------------------------------------
@@ -657,11 +647,11 @@ Aliasing \PWM_hitIndicator:PWMUDB:final_capture\ to zero
 Aliasing \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:g1:z1:s0:g1:u0:b_24\ to zero
 Aliasing \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:g1:z1:s0:g1:u0:b_16\ to zero
 Aliasing \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:g1:z1:s0:g1:u0:b_8\ to zero
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:final_capture\[221] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:g1:z1:s0:g1:u0:b_24\[437] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:g1:z1:s0:g1:u0:b_16\[447] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:g1:z1:s0:g1:u0:b_8\[457] = zero[4]
-Removing Lhs of wire \PWM_hitIndicator:PWMUDB:runmode_enable\\D\[536] = \PWM_hitIndicator:PWMUDB:control_7\[167]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:final_capture\[191] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:g1:z1:s0:g1:u0:b_24\[407] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:g1:z1:s0:g1:u0:b_16\[417] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:MODULE_1:g2:a0:g1:z1:s0:g1:u0:b_8\[427] = zero[4]
+Removing Lhs of wire \PWM_hitIndicator:PWMUDB:runmode_enable\\D\[506] = \PWM_hitIndicator:PWMUDB:control_7\[137]
 
 ------------------------------------------------------
 Aliased 0 equations, 5 wires.
@@ -694,14 +684,14 @@ CYPRESS_DIR    : C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\wa
 Warp Program   : C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\bin\warp.exe
 Warp Arguments : -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=C:\Users\fresi\Documents\GitHub\Laser-Tag-Project\PSoC\userKitCtrlApp.cydsn\userKitCtrlApp.cyprj -dcpsoc3 userKitCtrlApp.v -verilog
 </CYPRESSTAG>
-Warp synthesis phase: Elapsed time ==> 1s.356ms
+Warp synthesis phase: Elapsed time ==> 5s.433ms
 <CYPRESSTAG name="Fitter results...">
 <CYPRESSTAG name="Fitter startup details...">
-cyp3fit: V4.2.0.641, Family: PSoC3, Started at: Thursday, 02 May 2019 13:50:24
+cyp3fit: V4.2.0.641, Family: PSoC3, Started at: Tuesday, 07 May 2019 11:17:55
 Options: -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=C:\Users\fresi\Documents\GitHub\Laser-Tag-Project\PSoC\userKitCtrlApp.cydsn\userKitCtrlApp.cyprj -d CY8C5888LTI-LP097 userKitCtrlApp.v -verilog
 </CYPRESSTAG>
 <CYPRESSTAG name="Design parsing">
-Design parsing phase: Elapsed time ==> 0s.036ms
+Design parsing phase: Elapsed time ==> 0s.083ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Tech Mapping">
 <CYPRESSTAG name="Initial Mapping" icon="FILE_RPT_TECHM">
@@ -869,201 +859,6 @@ Design Equations
             pa_out => Transmit_out(0)__PA ,
             pin_input => Net_162_local ,
             pad => Transmit_out(0)_PAD );
-        Properties:
-        {
-        }
-
-    Pin : Name = Pin_0(0)
-        Attributes:
-            In Group/Port: True
-            In Sync Option: AUTO
-            Out Sync Option: NOSYNC
-            Interrupt generated: False
-            Interrupt mode: NONE
-            Drive mode: CMOS_OUT
-            VTrip: EITHER
-            Slew: FAST
-            Input Sync needed: False
-            Output Sync needed: False
-            SC shield enabled: False
-            POR State: ANY
-            LCD Mode: COMMON
-            Register Mode: RegComb
-            CaSense Mode: NEITHER
-            Treat as pin: True
-            Is OE Registered: False
-            Uses Analog: False
-            Can contain Digital: True
-            Is SIO: False
-            SIO Output Buf: NONREGULATED
-            SIO Input Buf: SINGLE_ENDED
-            SIO HiFreq: LOW
-            SIO Hyst: DISABLED
-            SIO Vtrip: MULTIPLIER_0_5
-            SIO Multiplier Index: 0
-            SIO RefSel: VCC_IO
-            Required Capabilities: DIGITAL
-            Initial Value: 0
-            IO Voltage: 0
-        PORT MAP (
-            pa_out => Pin_0(0)__PA ,
-            pad => Pin_0(0)_PAD );
-        Properties:
-        {
-        }
-
-    Pin : Name = Pin_1(0)
-        Attributes:
-            In Group/Port: True
-            In Sync Option: AUTO
-            Out Sync Option: NOSYNC
-            Interrupt generated: False
-            Interrupt mode: NONE
-            Drive mode: CMOS_OUT
-            VTrip: EITHER
-            Slew: FAST
-            Input Sync needed: False
-            Output Sync needed: False
-            SC shield enabled: False
-            POR State: ANY
-            LCD Mode: COMMON
-            Register Mode: RegComb
-            CaSense Mode: NEITHER
-            Treat as pin: True
-            Is OE Registered: False
-            Uses Analog: False
-            Can contain Digital: True
-            Is SIO: False
-            SIO Output Buf: NONREGULATED
-            SIO Input Buf: SINGLE_ENDED
-            SIO HiFreq: LOW
-            SIO Hyst: DISABLED
-            SIO Vtrip: MULTIPLIER_0_5
-            SIO Multiplier Index: 0
-            SIO RefSel: VCC_IO
-            Required Capabilities: DIGITAL
-            Initial Value: 0
-            IO Voltage: 0
-        PORT MAP (
-            pa_out => Pin_1(0)__PA ,
-            pad => Pin_1(0)_PAD );
-        Properties:
-        {
-        }
-
-    Pin : Name = Pin_2(0)
-        Attributes:
-            In Group/Port: True
-            In Sync Option: AUTO
-            Out Sync Option: NOSYNC
-            Interrupt generated: False
-            Interrupt mode: NONE
-            Drive mode: CMOS_OUT
-            VTrip: EITHER
-            Slew: FAST
-            Input Sync needed: False
-            Output Sync needed: False
-            SC shield enabled: False
-            POR State: ANY
-            LCD Mode: COMMON
-            Register Mode: RegComb
-            CaSense Mode: NEITHER
-            Treat as pin: True
-            Is OE Registered: False
-            Uses Analog: False
-            Can contain Digital: True
-            Is SIO: False
-            SIO Output Buf: NONREGULATED
-            SIO Input Buf: SINGLE_ENDED
-            SIO HiFreq: LOW
-            SIO Hyst: DISABLED
-            SIO Vtrip: MULTIPLIER_0_5
-            SIO Multiplier Index: 0
-            SIO RefSel: VCC_IO
-            Required Capabilities: DIGITAL
-            Initial Value: 0
-            IO Voltage: 0
-        PORT MAP (
-            pa_out => Pin_2(0)__PA ,
-            pad => Pin_2(0)_PAD );
-        Properties:
-        {
-        }
-
-    Pin : Name = Pin_3(0)
-        Attributes:
-            In Group/Port: True
-            In Sync Option: AUTO
-            Out Sync Option: NOSYNC
-            Interrupt generated: False
-            Interrupt mode: NONE
-            Drive mode: CMOS_OUT
-            VTrip: EITHER
-            Slew: FAST
-            Input Sync needed: False
-            Output Sync needed: False
-            SC shield enabled: False
-            POR State: ANY
-            LCD Mode: COMMON
-            Register Mode: RegComb
-            CaSense Mode: NEITHER
-            Treat as pin: True
-            Is OE Registered: False
-            Uses Analog: False
-            Can contain Digital: True
-            Is SIO: False
-            SIO Output Buf: NONREGULATED
-            SIO Input Buf: SINGLE_ENDED
-            SIO HiFreq: LOW
-            SIO Hyst: DISABLED
-            SIO Vtrip: MULTIPLIER_0_5
-            SIO Multiplier Index: 0
-            SIO RefSel: VCC_IO
-            Required Capabilities: DIGITAL
-            Initial Value: 0
-            IO Voltage: 0
-        PORT MAP (
-            pa_out => Pin_3(0)__PA ,
-            pad => Pin_3(0)_PAD );
-        Properties:
-        {
-        }
-
-    Pin : Name = Pin_4(0)
-        Attributes:
-            In Group/Port: True
-            In Sync Option: AUTO
-            Out Sync Option: NOSYNC
-            Interrupt generated: False
-            Interrupt mode: NONE
-            Drive mode: CMOS_OUT
-            VTrip: EITHER
-            Slew: FAST
-            Input Sync needed: False
-            Output Sync needed: False
-            SC shield enabled: False
-            POR State: ANY
-            LCD Mode: COMMON
-            Register Mode: RegComb
-            CaSense Mode: NEITHER
-            Treat as pin: True
-            Is OE Registered: False
-            Uses Analog: False
-            Can contain Digital: True
-            Is SIO: False
-            SIO Output Buf: NONREGULATED
-            SIO Input Buf: SINGLE_ENDED
-            SIO HiFreq: LOW
-            SIO Hyst: DISABLED
-            SIO Vtrip: MULTIPLIER_0_5
-            SIO Multiplier Index: 0
-            SIO RefSel: VCC_IO
-            Required Capabilities: DIGITAL
-            Initial Value: 0
-            IO Voltage: 0
-        PORT MAP (
-            pa_out => Pin_4(0)__PA ,
-            pad => Pin_4(0)_PAD );
         Properties:
         {
         }
@@ -1448,7 +1243,7 @@ Analog Clocks                 :    2 :    2 :    4 : 50.00 %
 CapSense Buffers              :    0 :    2 :    2 :  0.00 %
 Digital Filter Block          :    1 :    0 :    1 : 100.00 %
 Interrupts                    :    6 :   26 :   32 : 18.75 %
-IO                            :   15 :   33 :   48 : 31.25 %
+IO                            :   10 :   38 :   48 : 20.83 %
 Segment LCD                   :    0 :    1 :    1 :  0.00 %
 CAN 2.0b                      :    0 :    1 :    1 :  0.00 %
 I2C                           :    1 :    0 :    1 : 100.00 %
@@ -1472,18 +1267,13 @@ Analog (SC/CT) Blocks         :    2 :    2 :    4 : 50.00 %
 DAC                           :      :      :      :        
   VIDAC                       :    0 :    4 :    4 :  0.00 %
 </CYPRESSTAG>
-Technology Mapping: Elapsed time ==> 0s.094ms
-Tech Mapping phase: Elapsed time ==> 0s.240ms
+Technology Mapping: Elapsed time ==> 0s.173ms
+Tech Mapping phase: Elapsed time ==> 0s.459ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Analog Placement">
 Initial Analog Placement Results:
 IO_2@[IOP=(12)][IoId=(2)] : I2C_req(0) (fixed)
 IO_1@[IOP=(2)][IoId=(1)] : Ind_out(0) (fixed)
-IO_3@[IOP=(2)][IoId=(3)] : Pin_0(0) (fixed)
-IO_4@[IOP=(2)][IoId=(4)] : Pin_1(0) (fixed)
-IO_5@[IOP=(2)][IoId=(5)] : Pin_2(0) (fixed)
-IO_6@[IOP=(2)][IoId=(6)] : Pin_3(0) (fixed)
-IO_7@[IOP=(2)][IoId=(7)] : Pin_4(0) (fixed)
 IO_3@[IOP=(3)][IoId=(3)] : Rcv_in(0) (fixed)
 IO_0@[IOP=(12)][IoId=(0)] : SCL(0) (fixed)
 IO_1@[IOP=(12)][IoId=(1)] : SDA(0) (fixed)
@@ -1493,16 +1283,11 @@ DSM[0]@[FFB(DSM,0)] : \ADC_DelSig:DSM\
 SC[3]@[FFB(SC,3)] : \Mixer:SC\
 SC[0]@[FFB(SC,0)] : \TIA:SC\
 Vref[1]@[FFB(Vref,1)] : vRef_1
-Log: apr.M0058: The analog placement iterative improvement is 38% done. (App=cydsfit)
-Log: apr.M0058: The analog placement iterative improvement is 100% done. (App=cydsfit)
+Log: apr.M0058: The analog placement iterative improvement is 34% done. (App=cydsfit)
+Log: apr.M0058: The analog placement iterative improvement is 90% done. (App=cydsfit)
 Analog Placement Results:
 IO_2@[IOP=(12)][IoId=(2)] : I2C_req(0) (fixed)
 IO_1@[IOP=(2)][IoId=(1)] : Ind_out(0) (fixed)
-IO_3@[IOP=(2)][IoId=(3)] : Pin_0(0) (fixed)
-IO_4@[IOP=(2)][IoId=(4)] : Pin_1(0) (fixed)
-IO_5@[IOP=(2)][IoId=(5)] : Pin_2(0) (fixed)
-IO_6@[IOP=(2)][IoId=(6)] : Pin_3(0) (fixed)
-IO_7@[IOP=(2)][IoId=(7)] : Pin_4(0) (fixed)
 IO_3@[IOP=(3)][IoId=(3)] : Rcv_in(0) (fixed)
 IO_0@[IOP=(12)][IoId=(0)] : SCL(0) (fixed)
 IO_1@[IOP=(12)][IoId=(1)] : SDA(0) (fixed)
@@ -1513,10 +1298,10 @@ SC[2]@[FFB(SC,2)] : \Mixer:SC\
 SC[3]@[FFB(SC,3)] : \TIA:SC\
 Vref[1]@[FFB(Vref,1)] : vRef_1
 
-Analog Placement phase: Elapsed time ==> 2s.094ms
+Analog Placement phase: Elapsed time ==> 4s.859ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Analog Routing">
-Analog Routing phase: Elapsed time ==> 0s.017ms
+Analog Routing phase: Elapsed time ==> 0s.033ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Analog Code Generation">
 ============ Analog Final Answer Routes ============
@@ -1531,9 +1316,9 @@ Map of net to items {
   }
   Net: Net_19 {
     sc_2_vout
-    agl6_x_sc_2_vout
-    agl6
-    agl6_x_dsm_0_vplus
+    agl4_x_sc_2_vout
+    agl4
+    agl4_x_dsm_0_vplus
     dsm_0_vplus
   }
   Net: Net_74 {
@@ -1576,9 +1361,9 @@ Map of item to net {
   agr7_x_p3_3                                      -> Net_1
   p3_3                                             -> Net_1
   sc_2_vout                                        -> Net_19
-  agl6_x_sc_2_vout                                 -> Net_19
-  agl6                                             -> Net_19
-  agl6_x_dsm_0_vplus                               -> Net_19
+  agl4_x_sc_2_vout                                 -> Net_19
+  agl4                                             -> Net_19
+  agl4_x_dsm_0_vplus                               -> Net_19
   dsm_0_vplus                                      -> Net_19
   common_Vdda/2                                    -> Net_74
   common_Vdda/2_x_comp_vref_vdda                   -> Net_74
@@ -1607,11 +1392,11 @@ Dump of CyP35AnalogRoutingResultsDB
 IsVddaHalfUsedForComp = True
 IsVddaHalfUsedForSar0 = False
 IsVddaHalfUsedForSar1 = False
-Analog Code Generation phase: Elapsed time ==> 0s.325ms
+Analog Code Generation phase: Elapsed time ==> 0s.862ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Digital Placement">
 <CYPRESSTAG name="Detailed placement messages">
-I2076: Total run-time: 0.7 sec.
+I2076: Total run-time: 1.8 sec.
 
 </CYPRESSTAG>
 <CYPRESSTAG name="PLD Packing">
@@ -1635,14 +1420,14 @@ PLD Packing Summary
 <CYPRESSTAG name="Packed PLD Contents">
 Packed PLD Contents not displayed at this verbose level.</CYPRESSTAG>
 </CYPRESSTAG>
-PLD Packing: Elapsed time ==> 0s.000ms
+PLD Packing: Elapsed time ==> 0s.017ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Partitioning">
 <CYPRESSTAG name="Initial Partitioning Summary">
 Initial Partitioning Summary not displayed at this verbose level.</CYPRESSTAG>
 <CYPRESSTAG name="Final Partitioning Summary">
 Final Partitioning Summary not displayed at this verbose level.</CYPRESSTAG>
-Partitioning: Elapsed time ==> 0s.027ms
+Partitioning: Elapsed time ==> 0s.106ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Final Placement Summary">
 
@@ -1988,206 +1773,6 @@ Pin : Name = Ind_out(0)
         pa_out => Ind_out(0)__PA ,
         pin_input => Net_126 ,
         pad => Ind_out(0)_PAD );
-    Properties:
-    {
-    }
-
-[IoId=3]: 
-Pin : Name = Pin_0(0)
-    Attributes:
-        In Group/Port: True
-        In Sync Option: AUTO
-        Out Sync Option: NOSYNC
-        Interrupt generated: False
-        Interrupt mode: NONE
-        Drive mode: CMOS_OUT
-        VTrip: EITHER
-        Slew: FAST
-        Input Sync needed: False
-        Output Sync needed: False
-        SC shield enabled: False
-        POR State: ANY
-        LCD Mode: COMMON
-        Register Mode: RegComb
-        CaSense Mode: NEITHER
-        Treat as pin: True
-        Is OE Registered: False
-        Uses Analog: False
-        Can contain Digital: True
-        Is SIO: False
-        SIO Output Buf: NONREGULATED
-        SIO Input Buf: SINGLE_ENDED
-        SIO HiFreq: LOW
-        SIO Hyst: DISABLED
-        SIO Vtrip: MULTIPLIER_0_5
-        SIO Multiplier Index: 0
-        SIO RefSel: VCC_IO
-        Required Capabilities: DIGITAL
-        Initial Value: 0
-        IO Voltage: 0
-    PORT MAP (
-        pa_out => Pin_0(0)__PA ,
-        pad => Pin_0(0)_PAD );
-    Properties:
-    {
-    }
-
-[IoId=4]: 
-Pin : Name = Pin_1(0)
-    Attributes:
-        In Group/Port: True
-        In Sync Option: AUTO
-        Out Sync Option: NOSYNC
-        Interrupt generated: False
-        Interrupt mode: NONE
-        Drive mode: CMOS_OUT
-        VTrip: EITHER
-        Slew: FAST
-        Input Sync needed: False
-        Output Sync needed: False
-        SC shield enabled: False
-        POR State: ANY
-        LCD Mode: COMMON
-        Register Mode: RegComb
-        CaSense Mode: NEITHER
-        Treat as pin: True
-        Is OE Registered: False
-        Uses Analog: False
-        Can contain Digital: True
-        Is SIO: False
-        SIO Output Buf: NONREGULATED
-        SIO Input Buf: SINGLE_ENDED
-        SIO HiFreq: LOW
-        SIO Hyst: DISABLED
-        SIO Vtrip: MULTIPLIER_0_5
-        SIO Multiplier Index: 0
-        SIO RefSel: VCC_IO
-        Required Capabilities: DIGITAL
-        Initial Value: 0
-        IO Voltage: 0
-    PORT MAP (
-        pa_out => Pin_1(0)__PA ,
-        pad => Pin_1(0)_PAD );
-    Properties:
-    {
-    }
-
-[IoId=5]: 
-Pin : Name = Pin_2(0)
-    Attributes:
-        In Group/Port: True
-        In Sync Option: AUTO
-        Out Sync Option: NOSYNC
-        Interrupt generated: False
-        Interrupt mode: NONE
-        Drive mode: CMOS_OUT
-        VTrip: EITHER
-        Slew: FAST
-        Input Sync needed: False
-        Output Sync needed: False
-        SC shield enabled: False
-        POR State: ANY
-        LCD Mode: COMMON
-        Register Mode: RegComb
-        CaSense Mode: NEITHER
-        Treat as pin: True
-        Is OE Registered: False
-        Uses Analog: False
-        Can contain Digital: True
-        Is SIO: False
-        SIO Output Buf: NONREGULATED
-        SIO Input Buf: SINGLE_ENDED
-        SIO HiFreq: LOW
-        SIO Hyst: DISABLED
-        SIO Vtrip: MULTIPLIER_0_5
-        SIO Multiplier Index: 0
-        SIO RefSel: VCC_IO
-        Required Capabilities: DIGITAL
-        Initial Value: 0
-        IO Voltage: 0
-    PORT MAP (
-        pa_out => Pin_2(0)__PA ,
-        pad => Pin_2(0)_PAD );
-    Properties:
-    {
-    }
-
-[IoId=6]: 
-Pin : Name = Pin_3(0)
-    Attributes:
-        In Group/Port: True
-        In Sync Option: AUTO
-        Out Sync Option: NOSYNC
-        Interrupt generated: False
-        Interrupt mode: NONE
-        Drive mode: CMOS_OUT
-        VTrip: EITHER
-        Slew: FAST
-        Input Sync needed: False
-        Output Sync needed: False
-        SC shield enabled: False
-        POR State: ANY
-        LCD Mode: COMMON
-        Register Mode: RegComb
-        CaSense Mode: NEITHER
-        Treat as pin: True
-        Is OE Registered: False
-        Uses Analog: False
-        Can contain Digital: True
-        Is SIO: False
-        SIO Output Buf: NONREGULATED
-        SIO Input Buf: SINGLE_ENDED
-        SIO HiFreq: LOW
-        SIO Hyst: DISABLED
-        SIO Vtrip: MULTIPLIER_0_5
-        SIO Multiplier Index: 0
-        SIO RefSel: VCC_IO
-        Required Capabilities: DIGITAL
-        Initial Value: 0
-        IO Voltage: 0
-    PORT MAP (
-        pa_out => Pin_3(0)__PA ,
-        pad => Pin_3(0)_PAD );
-    Properties:
-    {
-    }
-
-[IoId=7]: 
-Pin : Name = Pin_4(0)
-    Attributes:
-        In Group/Port: True
-        In Sync Option: AUTO
-        Out Sync Option: NOSYNC
-        Interrupt generated: False
-        Interrupt mode: NONE
-        Drive mode: CMOS_OUT
-        VTrip: EITHER
-        Slew: FAST
-        Input Sync needed: False
-        Output Sync needed: False
-        SC shield enabled: False
-        POR State: ANY
-        LCD Mode: COMMON
-        Register Mode: RegComb
-        CaSense Mode: NEITHER
-        Treat as pin: True
-        Is OE Registered: False
-        Uses Analog: False
-        Can contain Digital: True
-        Is SIO: False
-        SIO Output Buf: NONREGULATED
-        SIO Input Buf: SINGLE_ENDED
-        SIO HiFreq: LOW
-        SIO Hyst: DISABLED
-        SIO Vtrip: MULTIPLIER_0_5
-        SIO Multiplier Index: 0
-        SIO RefSel: VCC_IO
-        Required Capabilities: DIGITAL
-        Initial Value: 0
-        IO Voltage: 0
-    PORT MAP (
-        pa_out => Pin_4(0)__PA ,
-        pad => Pin_4(0)_PAD );
     Properties:
     {
     }
@@ -2553,11 +2138,6 @@ Port | Pin | Fixed |      Type |       Drive Mode |            Name | Connection
 -----+-----+-------+-----------+------------------+-----------------+-------------------------------------------
    2 |   0 |     * |      NONE |    RES_PULL_DOWN |      Trig_in(0) | FB(Net_39)
      |   1 |     * |      NONE |         CMOS_OUT |      Ind_out(0) | In(Net_126)
-     |   3 |     * |      NONE |         CMOS_OUT |        Pin_0(0) | 
-     |   4 |     * |      NONE |         CMOS_OUT |        Pin_1(0) | 
-     |   5 |     * |      NONE |         CMOS_OUT |        Pin_2(0) | 
-     |   6 |     * |      NONE |         CMOS_OUT |        Pin_3(0) | 
-     |   7 |     * |      NONE |         CMOS_OUT |        Pin_4(0) | 
 -----+-----+-------+-----------+------------------+-----------------+-------------------------------------------
    3 |   3 |     * |      NONE |      HI_Z_ANALOG |       Rcv_in(0) | Analog(Net_1)
 -----+-----+-------+-----------+------------------+-----------------+-------------------------------------------
@@ -2568,33 +2148,33 @@ Port | Pin | Fixed |      Type |       Drive Mode |            Name | Connection
 </CYPRESSTAG>
 </CYPRESSTAG>
 </CYPRESSTAG>
-Digital component placer commit/Report: Elapsed time ==> 0s.035ms
-Digital Placement phase: Elapsed time ==> 1s.319ms
+Digital component placer commit/Report: Elapsed time ==> 0s.087ms
+Digital Placement phase: Elapsed time ==> 3s.132ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Digital Routing">
 "C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\bin/sjrouter.exe" --xml-path "C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\dev\psoc5/psoc5lp/route_arch-rrg.cydata" --vh2-path "userKitCtrlApp_r.vh2" --pcf-path "userKitCtrlApp.pco" --des-name "userKitCtrlApp" --dsf-path "userKitCtrlApp.dsf" --sdc-path "userKitCtrlApp.sdc" --lib-path "userKitCtrlApp_r.lib"
 Routing successful.
-Digital Routing phase: Elapsed time ==> 1s.665ms
+Digital Routing phase: Elapsed time ==> 3s.531ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Bitstream Generation">
-Bitstream Generation phase: Elapsed time ==> 0s.298ms
+Bitstream Generation phase: Elapsed time ==> 0s.746ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Bitstream Verification">
-Bitstream Verification phase: Elapsed time ==> 0s.052ms
+Bitstream Verification phase: Elapsed time ==> 0s.174ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Static timing analysis">
 Timing report is in userKitCtrlApp_timing.html.
-Static timing analysis phase: Elapsed time ==> 0s.477ms
+Static timing analysis phase: Elapsed time ==> 0s.944ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Data reporting">
 Data reporting phase: Elapsed time ==> 0s.000ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Database update...">
-Design database save phase: Elapsed time ==> 0s.261ms
+Design database save phase: Elapsed time ==> 0s.431ms
 </CYPRESSTAG>
-cydsfit: Elapsed time ==> 6s.851ms
+cydsfit: Elapsed time ==> 15s.369ms
 </CYPRESSTAG>
-Fitter phase: Elapsed time ==> 6s.852ms
-API generation phase: Elapsed time ==> 2s.834ms
-Dependency generation phase: Elapsed time ==> 0s.039ms
-Cleanup phase: Elapsed time ==> 0s.001ms
+Fitter phase: Elapsed time ==> 15s.379ms
+API generation phase: Elapsed time ==> 7s.676ms
+Dependency generation phase: Elapsed time ==> 0s.126ms
+Cleanup phase: Elapsed time ==> 0s.020ms

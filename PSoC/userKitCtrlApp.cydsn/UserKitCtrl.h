@@ -12,7 +12,7 @@
 
 int16 filterOutput = 0;                                                                 // Holds last output from filter
 uint16 clockDividerTransmit[] = {1200, 1091, 1000, 923, 857, 800, 750, 706, 667, 632};  // Clock devider for frequencies 20 kHz to 38 kHz with 2 kHz steps
-    
+
 void DMA_DelSig_Config()
 {
     /* Variable declarations for DMA_DelSig */
@@ -58,8 +58,8 @@ void DMA_Filter_Config()
     CyDmaChSetInitialTd(DMA_Filter_Chan, DMA_Filter_TD[0]);
     CyDmaChEnable(DMA_Filter_Chan, 1);
 }
-    
-void init(uint16 unitId)
+
+void initUserKitCtrl(uint8 unitId)
 {
     // Start    
     TIA_Start();
@@ -78,6 +78,8 @@ void init(uint16 unitId)
     DMA_Filter_Config();
     
     transmit_clock_SetDividerValue(clockDividerTransmit[unitId]);   // Set transmitting frequency
+    
+    I2C_Start();
 }
 
 #endif /* USER_KIT_CTRL_H */ 

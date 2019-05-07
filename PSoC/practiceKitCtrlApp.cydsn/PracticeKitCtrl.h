@@ -58,7 +58,7 @@ void DMA_Filter_Config()
     CyDmaChEnable(DMA_Filter_Chan, 1);
 }
 
-void init(void)
+void initPracticeKitCtrl(void)
 {
     // Start    
     TIA_Start();
@@ -75,6 +75,8 @@ void init(void)
     Filter_SetCoherency(Filter_CHANNEL_A, Filter_KEY_HIGH);
     
     DMA_Filter_Config();
+    
+    I2C_Start();
 }
 
 #endif /* PRACTICE_KIT_CTRL_H */ 
