@@ -8,14 +8,18 @@
 #ifndef TRANSMITTER_H
 #define TRANSMITTER_H
 
+#include "project.h"
+    
 void startTransmitting(void)
 {
-    // Start PWM
+    transmit_clock_Start();         // Start transmitting
+    Timer_triggerBlocking_Start();  // Start triggerBlocking timer
 }
 
 void stopTransmitting(void)
 {
-    // Stop PWM
+    Timer_triggerBlocking_Stop();   // Stop triggerBlocking timer
+    transmit_clock_Stop();          // Stop transmitting
 }
 
 #endif /* TRANSMITTER_H */ 
