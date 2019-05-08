@@ -19,36 +19,29 @@ participant PraticeKitCtrl <<controller>>
 participant PracticeKitComUnitIF <<boundary>>
 participant Receiver <<controller>>
 
-main -> PraticeKitCtrl++: init()
+main -> PraticeKitCtrl++: initPracticeKitCtrl()
 deactivate PraticeKitCtrl
 
 loop
 
     note over main : empty loop
 
-    else Interrupt from filter
+    else Interrupt from isr_filter
     [o-> main: <<filter event>>
     activate main
 
     main -> main: Update filterOutputVolt
 
     alt filterOutputVolt > minLevelDetection || filterOutputVolt > -minLevelDetection
-        main -> PracticeKitComUnitIF++: receiverHit(currentLaserID)
+        main -> PracticeKitComUnitIF++: sendHitInd(currentLaserID)
         deactivate PracticeKitComUnitIF
-        main -> main: sleep (blocking)
-        deactivate main
     end
 
-    else Interrupt from mixerFrequencyTimer
-    [o-> main: <<mixerFrequencyTimer event>>
+    else Interrupt from isr_mixerFreq
+    [o-> main: <<mixerFreq event>>
     activate main
     main -> Receiver++: changeMixerFrequency(currentLaserID)
     return newLaserID
-    main -> main: Stop converting
-    main -> main: Reset filter
-    main -> main: Start converting
-    deactivate main
-    deactivate Receiver
 end
 
 @enduml

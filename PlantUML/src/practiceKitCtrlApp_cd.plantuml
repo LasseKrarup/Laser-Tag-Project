@@ -15,15 +15,14 @@ hide empty members
 frame "cd userKitCtrlApp" {
 
     class main <<utility>> {
-        currentLaserID : int
     }
 
     class PracticeKitCtrl <<controller>> {
-        init() : void
+        initPracticeKitCtrl() : void
     }
 
     class PracticeKitComUnitIF <<boundary>> {
-        receiverHit(currentLaserID : int) : void
+        sendHitInd(currentLaserID : int) : void
     }
 
     class Receiver <<controller>> {
