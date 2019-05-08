@@ -29,21 +29,8 @@ area acu
 
 
 area data_b
-ChA_FIRST:dw 10198
-dw 53089
-dw 164776
-dw 371258
-dw 665797
-dw 989690
-dw 1246088
-dw 1343960
-dw 1246088
-dw 989690
-dw 665797
-dw 371258
-dw 164776
-dw 53089
-ChA_LAST: dw 10198
+ChA_FIRST:dw 4367661
+ChA_LAST: dw 4367661
 
 
 

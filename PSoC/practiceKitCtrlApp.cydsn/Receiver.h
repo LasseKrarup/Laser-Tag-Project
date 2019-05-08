@@ -2,43 +2,32 @@
  * Receiver.h
  * 
  * @author  Frederik Sidenius Dam
- * @version 0.1
+ * @version 1.0
  */
 
 #ifndef RECEIVER_H
 #define RECEIVER_H
     
 #include "project.h"
-
-uint16 clockDevider[] = {1188, 1081, 992, 916, 851};
     
-int changeMixerFrequency(int currentLaserID)
+#define FILTER_TAPS 2   // Number of filter taps
+
+uint16 clockDividerLO[] = {1188, 1081, 992, 916, 851, 795, 745, 702, 663, 628};   // Clock devider for frequencies 20.2 kHz to 38.2 kHz with 2 kHz steps
+
+uint8 changeMixerFrequency(uint8 currentLaserID)
 {
-    switch(currentLaserID)
-    {
-        case 0:
-            currentLaserID++;
-            Clock_LO_SetDividerValue(clockDevider[currentLaserID]);
-            break;
-        case 1:
-            currentLaserID++;
-            Clock_LO_SetDividerValue(clockDevider[currentLaserID]);
-            break;
-        case 2:
-            currentLaserID++;
-            Clock_LO_SetDividerValue(clockDevider[currentLaserID]);
-            break;
-        case 3:
-            currentLaserID++;
-            Clock_LO_SetDividerValue(clockDevider[currentLaserID]);
-            break;
-        case 4:
-            currentLaserID = 0;
-            Clock_LO_SetDividerValue(clockDevider[currentLaserID]);
-            break;
-        default:
-            break;
-    }
+    if (currentLaserID == 9)
+        currentLaserID = 0; // Reset value
+    else
+        currentLaserID++;
+    
+    Clock_LO_SetDividerValue(clockDividerLO[currentLaserID]);
+    
+    ADC_DelSig_StopConvert();   // Stop converting
+    for (size_t i = 0; i < FILTER_TAPS; i++)
+        Filter_Write24(Filter_CHANNEL_A, 0);    // Reset filter with zeros
+    ADC_DelSig_StartConvert();                  // Start converting
+    
     return currentLaserID;
 }
 

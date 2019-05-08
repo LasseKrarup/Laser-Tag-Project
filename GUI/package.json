@@ -4,12 +4,22 @@
     "description": "The front end for the Laser Tag application",
     "main": "main.js",
     "scripts": {
-        "start": "electron ."
+        "start": "electron .",
+        "watch-jsx": "babel --watch jsx --out-dir scripts"
     },
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "electron": "^4.0.6"
+        "@babel/cli": "^7.4.4",
+        "@babel/core": "^7.4.4",
+        "@babel/preset-env": "^7.4.4",
+        "@babel/preset-react": "^7.0.0",
+        "babel-loader": "^8.0.5",
+        "electron": "^4.0.6",
+        "react": "^16.8.6",
+        "react-dom": "^16.8.6",
+        "webpack": "^4.30.0",
+        "webpack-cli": "^3.3.1"
     },
     "dependencies": {
         "bootstrap": "^4.3.1"

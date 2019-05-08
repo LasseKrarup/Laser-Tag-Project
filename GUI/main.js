@@ -1,5 +1,6 @@
 const electron = require("electron");
 const url = require("url");
+const os = require("os");
 const path = require("path");
 
 const { app, BrowserWindow, Menu, ipcMain, globalShortcut } = electron;
@@ -42,6 +43,16 @@ app.on("ready", () => {
 
     const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
     Menu.setApplicationMenu(mainMenu);
+
+    // React Developer Tools
+    if (process.env.NODE_ENV != "production") {
+        BrowserWindow.addDevToolsExtension(
+            path.join(
+                os.homedir(),
+                "/AppData/Local/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/3.6.0_0"
+            )
+        );
+    }
 });
 
 /* ~~~~~~ TOGGLE MENU OVERLAY ~~~~~~ */
