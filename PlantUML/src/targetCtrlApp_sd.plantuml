@@ -16,7 +16,7 @@ mainframe **sd** targetCtrlApp
 
 participant main <<utility>>
 participant MotorControl <<controller>>
-participant SonarDriver
+participant SonarDriver <<controller>>
 
 [o-> main: <<start practice>>
 activate main
@@ -36,7 +36,8 @@ loop
         deactivate MotorControl
         main -> main: Sample delay
 
-        alt TimeOut interrupt
+        alt 
+            [o-> main: <<TimeOut interrupt>>
             main -> main: Generate position
 
         end
@@ -49,7 +50,7 @@ loop
 
     else Practice over
     
-    [o-> main: Practice over
+    [o-> main: <<Practice over>>
     activate main
     loop
         main -> MotorControl: get position control(zero position)
