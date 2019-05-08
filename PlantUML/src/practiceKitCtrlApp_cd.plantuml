@@ -21,7 +21,7 @@ frame "cd userKitCtrlApp" {
         initPracticeKitCtrl() : void
     }
 
-    class PracticeKitComUnitIF <<boundary>> {
+    class ComUnitIF <<boundary>> {
         sendHitInd(currentLaserID : int) : void
     }
 
@@ -32,6 +32,6 @@ frame "cd userKitCtrlApp" {
 
 main -- PracticeKitCtrl
 main -- Receiver
-main -- PracticeKitComUnitIF
+main -- ComUnitIF
 
 @enduml

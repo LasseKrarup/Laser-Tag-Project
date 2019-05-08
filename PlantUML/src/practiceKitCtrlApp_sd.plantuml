@@ -16,7 +16,7 @@ mainframe **sd** praticeKitCtrlApp
 
 participant main <<utility>>
 participant PraticeKitCtrl <<controller>>
-participant PracticeKitComUnitIF <<boundary>>
+participant ComUnitIF <<boundary>>
 participant Receiver <<controller>>
 
 main -> PraticeKitCtrl++: initPracticeKitCtrl()
@@ -33,8 +33,9 @@ loop
     main -> main: Update filterOutputVolt
 
     alt filterOutputVolt > minLevelDetection || filterOutputVolt > -minLevelDetection
-        main -> PracticeKitComUnitIF++: sendHitInd(currentLaserID)
-        deactivate PracticeKitComUnitIF
+        main -> ComUnitIF++: sendHitInd(currentLaserID)
+        deactivate main
+        deactivate ComUnitIF
     end
 
     else Interrupt from isr_mixerFreq
@@ -42,6 +43,7 @@ loop
     activate main
     main -> Receiver++: changeMixerFrequency(currentLaserID)
     return newLaserID
+    deactivate main
 end
 
 @enduml
