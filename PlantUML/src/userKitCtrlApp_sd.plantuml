@@ -16,61 +16,56 @@ mainframe **sd** userKitCtrlApp
 
 participant main <<utility>>
 participant UserKitCtrl <<controller>>
-participant UserKitComUnitIF <<boundary>>
+participant ComUnitIF <<boundary>>
 participant Transmitter <<controller>>
 participant Receiver <<controller>>
 
-main -> UserKitCtrl++: init(userkitID : int)
+main -> UserKitCtrl++: initUserKitCtrl(userkitID : int)
 deactivate UserKitCtrl
+main -> ComUnitIF++: initComUnitIF(userkitID : int)
+deactivate ComUnitIF
 
 loop
 
     note over main : empty loop
 
-    else Interrupt from filter
+    else Interrupt from isr_filter
     [o-> main: <<filter event>>
     activate main
 
-    main -> main: update filterOutput
+    main -> main: update filterOutputVolt
 
-    alt filterOutput > minLevelDetection
-        main -> main: disable all interrupts
-        main -> UserKitComUnitIF++: receiverHit(currentLaserID)
-        deactivate UserKitComUnitIF
-        main -> main: sleep (blocking)
-        main -> main: enable all interrupts
+    alt (filterOutputVolt > minLevelDetection || filterOutputVolt > -minLevelDetection) && currentLaserID != userkitID
+        main -> ComUnitIF++: sendHitInd(currentLaserID)
+        deactivate ComUnitIF
+        main -> Receiver++: receiverHit()
+        deactivate Receiver
         deactivate main
     end
 
-
-    else Interrupt from mixerFrequencyTimer
-    [o-> main: <<mixerFrequencyTimer event>>
+    else Interrupt from isr_mixerFreq
+    [o-> main: <<mixerFreq event>>
     activate main
     main -> Receiver++: changeMixerFrequency(currentLaserID)
     return newLaserID
     deactivate main
     deactivate Receiver
 
-    else Interrupt from trigger
+    else Interrupt from isr_trigger
     [o-> main: <<trigger event>>
     activate main
-    main -> main: disable interrupts from trigger
     main -> Transmitter++: startTransmitting()
     deactivate Transmitter
-    main -> main: start triggerBlocking timer
     deactivate main
 
-    else Interrupt from triggerBlockingTimer
-    [o-> main: <<triggerBlockingTimer event>>
+    else Interrupt from isr_triggerBlocking
+    [o-> main: <<triggerBlocking event>>
     activate main
 
-    main -> main: stop triggerBlocking timer
     main -> Transmitter++: stopTransmitting()
     deactivate Transmitter
-    main -> main: enable interrupts from trigger
     deactivate main
 
 end
-
 
 @enduml
