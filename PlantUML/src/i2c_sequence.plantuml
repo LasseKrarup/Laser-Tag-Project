@@ -1,0 +1,29 @@
+@startuml i2c_sequence
+
+hide footbox
+
+skinparam {
+    monochrome true
+    dpi 300
+    padding 5
+    sequenceMessageAlign center
+    packageStyle frame
+    shadowing false
+    'backgroundColor transparent
+    
+}
+
+mainframe **sd** i2c_driver
+
+' participant RPiApp
+' participant i2c_driver
+' participant i2cSenderThread
+' participant i2cReceiverThread
+' participant interrupt_module
+
+loop until interrupt
+    i2cSenderThread -> interrupt_module : Read
+end
+
+
+@enduml
