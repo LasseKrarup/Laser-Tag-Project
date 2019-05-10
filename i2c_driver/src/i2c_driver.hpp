@@ -5,24 +5,24 @@
 #include <pthread.h>
 #include <queue>
 
+#define MAX_MQ_SIZE 10
+
 class i2cDriver {
 public:
-  i2cDriver();
+  i2cDriver(int slaveAddress);
   void send(char &buf);
   char receive();
   unsigned char getDataReadyFlag();
 
 private:
   std::queue<char> dataQueue;
-  void i2cReaderEventHandler();
-  void i2cSenderEventHandler();
+  static void *i2cReaderEventHandler(void *);
+  static void *i2cSenderEventHandler(void *);
   pthread_t i2cReaderThread;
   pthread_t i2cSenderThread;
-  MsgQueue i2cReaderMsgQ;
   MsgQueue i2cSenderMsgQ;
   void i2cSendByte(char byte);
   void i2cReceiveByte();
-  unsigned char slaveRequest = 0;
   unsigned char dataReadyFlag = 0;
 };
 
