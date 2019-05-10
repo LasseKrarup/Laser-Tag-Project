@@ -14,6 +14,12 @@ else
 EXECUTABLE	:= main
 endif
 
+ifeq (${ARCH},target)
+CXX=arm-rpizw-g++
+BUILD_DIR=build/rpi/
+BIN_DIR=bin/rpi/
+endif
+
 all: $(BIN)/$(EXECUTABLE)
 
 clean:
