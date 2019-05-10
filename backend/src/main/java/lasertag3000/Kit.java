@@ -10,125 +10,139 @@ public class Kit {
     private Socket _socket;
     private boolean _active;
     private int _gameid;
+    private Boolean connected;
+    private PrintWriter pwrite;
 
     public Kit(int id, InetAddress ip) {
         _id = id;
         _ip = ip;
         _gameid = 0;
+        connected = false;
         new Thread(() -> this.connSocket()).start();
+        new Thread(() -> this.messageReciever()).start();
     }
 
     private void connSocket() {
         while (true) {
-            if (_socket == null) {
-                Socket socket = null;
-                while (!socket.isConnected()) {
+            try {
+                if ((_socket == null || _socket.isClosed()) || !connected && _ip.isReachable(500)) {
                     try {
-                        if (_ip.isReachable(500)) {
-                            try {
-                                socket = new Socket(_ip, Config.getInstance().KitPort());
-                            } catch (IOException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            }
-                            _socket = socket;
-                        }
-                        Thread.sleep(10000);
-                    } catch (IOException | InterruptedException e) {
+                        _socket = new Socket(_ip, Config.getInstance().KitPort());
+                        connected = true;
+                    } catch (IOException e) {
                         // TODO Auto-generated catch block
-                        e.printStackTrace();
+                        System.out.println("couldnt connect to socket " + e.getMessage());
+                        if (_socket != null) {
+                            _socket.close();
+                        }
                     }
                 }
-            } /*else if (!_socket.isConnected() | _socket.isClosed()) {
-                try {
-                    _socket.close();
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                _socket = null;
-            }*/
-            //TODO check if connection got interrupted and set socket to null
-        }
-    }
-
-    public void sendMessage(String message) {
-        PrintWriter pwrite = null;
-        OutputStream ostream = null;
-        try {
-            ostream = _socket.getOutputStream();
-            pwrite = new PrintWriter(ostream, true);
-            pwrite.println(message);
-
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } 
-        finally {
-            if(pwrite != null){
-                pwrite.close();
-            }
-            if(ostream != null){
-                try {
-                    ostream.close();
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-            
-        }
-    }
-
-    public void messageReciever(){
-        InputStream istream = null;
-        BufferedReader receiveRead = null;
-        try{
-            istream = _socket.getInputStream();
-            receiveRead = new BufferedReader(new InputStreamReader(istream));
-            
-            while(true){
-                while(_active){
-                    String receiveMessage;
-                    if((receiveMessage = receiveRead.readLine()) != null) //receive from server
-                    {
-                        int id = 0;
-                        //TODO get user id and send to database
-                        SQLConn.getInstance().PlayerShot(id);
-                    }   
-                }
-                wait();
-            }
-        }
-        catch(IOException | InterruptedException e) {
-            //TODO Handle exception
-        }
-        finally{
-            try {
-                if(istream != null){    istream.close();    }
-                if(receiveRead != null){    receiveRead.close();    }
-            } catch (IOException e) {
+                Thread.sleep(1000);
+            } catch (IOException | InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+        } /*
+           * else if (!_socket.isConnected() | _socket.isClosed()) { try {
+           * _socket.close(); } catch (IOException e) { // TODO Auto-generated catch block
+           * e.printStackTrace(); } _socket = null; }
+           */
+        // TODO check if connection got interrupted and set socket to null
+    }
+
+    public boolean sendMessage(String message) {
+        if (_socket != null && !_socket.isClosed()) {
+            try {
+                if (pwrite == null) {
+                    pwrite = new PrintWriter(_socket.getOutputStream(), true);
+                }
+                pwrite.print("test");
+                pwrite.flush();
+
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                connected = false;
+                e.printStackTrace();
+            } finally {
+                /*
+                 * if (pwrite != null) { pwrite.close(); } if (ostream != null) { try {
+                 * ostream.close(); } catch (IOException e) { // TODO Auto-generated catch block
+                 * e.printStackTrace(); } }
+                 */
+
+            }
+            return true;
+        } else {
+            return false;
         }
 
     }
 
-    public int getID(){
+    public void messageReciever() {
+        while (true) {
+            InputStream istream = null;
+            BufferedReader receiveRead = null;
+            try {
+                while (_socket != null && !_socket.isClosed()) {
+                    if (istream == null) {
+                        istream = _socket.getInputStream();
+                    }
+                    if (receiveRead == null) {
+                        receiveRead = new BufferedReader(new InputStreamReader(istream));
+                    }
+
+                    while (connected) {
+                        char[] message = new char[1];
+                        if (receiveRead.read(message) != -1) {
+                            System.out.println(message[0]);
+                        } else {
+                            connected = false;
+                        }
+
+                        // SQLConn.getInstance().PlayerShot(Character.valueOf(message[0]));
+
+                    }
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                // TODO Handle exception
+
+            } finally {
+                try {
+                    if (istream != null) {
+                        istream.close();
+                    }
+                    if (receiveRead != null) {
+                        receiveRead.close();
+                    }
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+    public int getID() {
         return _id;
     }
 
-    public InetAddress getIP(){
+    public InetAddress getIP() {
         return _ip;
     }
 
-    public void enable(int gameid){
+    public void enable(int gameid) {
         _gameid = gameid;
         _active = true;
     }
 
-    public void disable(){
+    public void disable() {
         _active = false;
+    }
+
+    public boolean isConnected() {
+        return connected;
     }
 }

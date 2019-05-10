@@ -17,42 +17,40 @@ public final class App {
      * @throws UnknownHostException
      */
     public static void main(String[] args) throws UnknownHostException {
-        System.out.println("Hello World!");
+        System.out.println("Lasertag backend app starting");
         Config.getInstance();
         SQLConn.getInstance();
-        //getKits();
         GUICom guiCom = new GUICom();
         guiCom.start();
-        int game = SQLConn.getInstance().addGame();
-        SQLConn.getInstance().addKit(InetAddress.getLocalHost(), 1);
-        int player = SQLConn.getInstance().addPlayer("Leo", 1, game);
-        SQLConn.getInstance().PlayerShot(player);
-        SQLConn.getInstance().getKits();
-        SQLConn.getInstance().removePlayer(player);
-        SQLConn.getInstance().removeKit(1);
-        SQLConn.getInstance().StopGame(game, 20);
+        getKits();
     }
 
+    //get kits from database
     private static void getKits() {
-        String[][] kits = SQLConn.getInstance().getKits();
-        if(_kits == null){
-            _kits = new Kit[kits.length];
-        }
-        for (int i = 0; i < kits.length; i++) {
-            int id = Integer.parseInt(kits[i][0]);
-            InetAddress ip = null;
-            try {
-                ip = InetAddress.getByName(kits[i][1]);
-            } catch (UnknownHostException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            getKitObject(i, id, ip);
-        }
-    }
 
-    private static void getKitObject(int i, int id, InetAddress ip){
-        _kits[i] =  new Kit(id, ip);
+        //get kit options in array
+        String[][] kits = SQLConn.getInstance().getKits();
+        if (_kits == null) {
+            _kits = new Kit[10];
+        }
+        
+        if(kits != null){
+
+            //create kit object for every kit in database
+            for (int i = 0; i < kits.length; i++) {
+                int id = Integer.parseInt(kits[i][0]);
+                InetAddress ip = null;
+                try {
+                    ip = InetAddress.getByName(kits[i][1]);
+                } catch (UnknownHostException e) {
+                    // TODO Auto-generated catch block
+                    System.out.println(e.getMessage());
+                    e.printStackTrace();
+                }
+                _kits[id-1] = new Kit(id, ip);
+            }
+        }
+
     }
 
 }
