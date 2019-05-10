@@ -5,17 +5,20 @@
 #include <pthread.h>
 #include <queue>
 #include <stdio.h>
-#include <string>
 
 class MsgQueue {
 public:
   MsgQueue(unsigned long maxSize);
-  void send(std::string);
+  void send(unsigned long id, Message *msg = NULL);
   Message *receive(unsigned long &id);
   ~MsgQueue();
 
 private:
-  std::queue<char> msgContainer;
+  struct MsgStruct {
+    unsigned long id;
+    Message *msg;
+  } msgStruct;
+  std::queue<struct MsgStruct> msgContainer;
   unsigned long maxSize = 0;
   pthread_cond_t msgQueueNotFull;
   pthread_cond_t msgQueueNotEmpty;
