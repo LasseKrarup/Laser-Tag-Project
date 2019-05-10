@@ -13,7 +13,7 @@ skinparam {
     
 }
 
-mainframe **sd** i2c_driver
+mainframe **sd** i2c_driver - slave read requests
 
 ' participant RPiApp
 ' participant i2c_driver
@@ -22,8 +22,34 @@ mainframe **sd** i2c_driver
 ' participant interrupt_module
 
 loop until interrupt
-    i2cSenderThread -> interrupt_module : Read
+    i2cReaderThread -> interrupt_module : Read
+    activate i2cReaderThread
+    activate interrupt_module
 end
 
+interrupt_module --> i2cReaderThread
+deactivate interrupt_module
+
+i2cReaderThread -> SenderMsgQueue : I2C_SLAVE_REQ
+deactivate i2cReaderThread
+
+loop true
+    i2cSenderThread -> SenderMsgQueue : pop
+    activate i2cSenderThread
+    activate SenderMsgQueue
+    SenderMsgQueue --> i2cSenderThread : Message
+    deactivate SenderMsgQueue
+
+    alt ID=I2C_SLAVE_REQ
+        i2cSenderThread -> i2cdev : read
+        activate i2cdev
+        i2cdev --> i2cSenderThread : data
+        deactivate i2cdev
+
+        i2cSenderThread -> i2cSenderThread : place in dataqueue
+        deactivate i2cSenderThread
+    end
+
+end
 
 @enduml
