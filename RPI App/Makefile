@@ -3,7 +3,7 @@ C_FLAGS := -std=c++17 -Wall -Wextra
 
 BIN		:= bin
 SRC		:= src
-INCLUDE	:= include
+INCLUDE	:= include -I ../i2c_driver/src
 LIB		:= -lpthread -pthread
 
 LIBRARIES	:=
@@ -23,4 +23,4 @@ run: all
 	./$(BIN)/$(EXECUTABLE)
 
 $(BIN)/$(EXECUTABLE): $(SRC)/*
-	$(CC) $(C_FLAGS) -I$(INCLUDE) -L$(LIB) $^ -o $@ $(LIBRARIES)
+	$(CC) $(C_FLAGS) -I $(INCLUDE) -L $(LIB) $^ ../i2c_driver/src/i2c_driver.cpp ../i2c_driver/src/MsgQueue.cpp -o $@ $(LIBRARIES)

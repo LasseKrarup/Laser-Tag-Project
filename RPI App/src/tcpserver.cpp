@@ -3,17 +3,19 @@
 
 pthread_mutex_t *tcpserver::queue_lock;
 pthread_cond_t *tcpserver::queue_sig;
-std::queue<std::string> *tcpserver::_queue;
+std::queue<char> *tcpserver::_queue;
+i2cDriver * i2c;
 int tcpserver::_socket;
 bool tcpserver::active;
 int tcpidle = 10;
 int tcpinterval = 10;
 
-tcpserver::tcpserver(pthread_mutex_t *m, std::queue<std::string> *q, pthread_cond_t *c)
+tcpserver::tcpserver(pthread_mutex_t *m, std::queue<char> *q, pthread_cond_t *c, i2cDriver *d)
 {
     _queue = q;
     queue_lock = m;
     queue_sig = c;
+    i2c = d;
 }
 
 tcpserver::~tcpserver() {}
@@ -31,7 +33,7 @@ void *tcpserver::recievethread(void *)
         else
         {
             std::cout << "message recieved" << std::endl;
-            std::cout << buffer << std::endl;
+            i2c->send(*buffer);
             //TODO seend data to
         }
     }
@@ -45,9 +47,9 @@ void *tcpserver::sendthread(void *)
         pthread_mutex_lock(queue_lock);
         while (!_queue->empty())
         {
-            std::string message = _queue->front();
+            char message = _queue->front();
             _queue->pop();
-            send(_socket, message.data(), message.length(), 0);
+            send(_socket, &message, 1, 0);
             std::cout << "send message" << std::endl;
         }
         pthread_cond_wait(queue_sig, queue_lock);
