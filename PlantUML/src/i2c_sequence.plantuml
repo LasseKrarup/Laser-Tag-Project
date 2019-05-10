@@ -47,6 +47,7 @@ loop true
         deactivate i2cdev
 
         i2cSenderThread -> i2cSenderThread : place in dataqueue
+        i2cSenderThread -> i2cSenderThread : set data-ready flag
         deactivate i2cSenderThread
     end
 
