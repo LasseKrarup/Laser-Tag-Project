@@ -93,30 +93,49 @@ header {
     }
 }
 
-ul {
-    display: block;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    height: 100%;
+#playerList {
+    small {
+        text-transform: uppercase;
+        font-size: 0.6em;
+    }
+    ol {
+        li {
+            // list-style-type: none;
+            font-size: 2em;
+        }
+    }
 
-    li {
-        transition: all 0.2s ease;
-        margin: 0;
-        padding: $lipad;
-        text-align: center;
+    .points {
+        margin-left: 40px;
+    }
+}
+
+.menu {
+    ul {
         display: block;
-        //vertical-align: middle;
-        line-height: 75px;
-        box-sizing: border-box; //calculate size including padding, margin and borders etc.
-        height: calc(100% / $numli) + 1px;
+        padding: 0;
+        margin: 0;
         width: 100%;
-        border: 2px solid gray;
-        opacity: 0.8;
+        height: 100%;
 
-        &:hover {
-            opacity: 1;
-            cursor: pointer;
+        li {
+            transition: all 0.2s ease;
+            margin: 0;
+            padding: $lipad;
+            text-align: center;
+            display: block;
+            //vertical-align: middle;
+            line-height: 75px;
+            box-sizing: border-box; //calculate size including padding, margin and borders etc.
+            height: 200px;
+            width: 100%;
+            border: 2px solid gray;
+            opacity: 0.8;
+
+            &:hover {
+                opacity: 1;
+                cursor: pointer;
+            }
         }
     }
 }

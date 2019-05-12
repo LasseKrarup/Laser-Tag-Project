@@ -15,8 +15,6 @@ wsClient.addEventListener("message", event => {
     console.log(JSON.parse(event.data));
 });
 
-// REMINDER: Handle socket close at some point!!!
-
 ipcRenderer.on("sendToServer", (event, msg) => {
     wsClient.send(JSON.stringify(msg));
 });

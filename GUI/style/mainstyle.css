@@ -10652,7 +10652,20 @@ header a:hover {
   color: #826bff;
 }
 
-ul {
+#playerList small {
+  text-transform: uppercase;
+  font-size: 0.6em;
+}
+
+#playerList ol li {
+  font-size: 2em;
+}
+
+#playerList .points {
+  margin-left: 40px;
+}
+
+.menu ul {
   display: block;
   padding: 0;
   margin: 0;
@@ -10660,7 +10673,7 @@ ul {
   height: 100%;
 }
 
-ul li {
+.menu ul li {
   -webkit-transition: all 0.2s ease;
   transition: all 0.2s ease;
   margin: 0;
@@ -10670,13 +10683,13 @@ ul li {
   line-height: 75px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  height: calc(100% / $numli)1px;
+  height: 200px;
   width: 100%;
   border: 2px solid gray;
   opacity: 0.8;
 }
 
-ul li:hover {
+.menu ul li:hover {
   opacity: 1;
   cursor: pointer;
 }

@@ -121,7 +121,7 @@ class App extends React.Component {
         return (
             <div className="container">
                 <div className="row">
-                    <div className="col-6">
+                    <div className="col-2">
                         <FormArea
                             players={this.state.players}
                             addPlayer={this.addPlayer}
@@ -129,7 +129,7 @@ class App extends React.Component {
                             startGame={this.startGame}
                         />
                     </div>
-                    <div className="col-6">
+                    <div className="col-8 ml-auto">
                         <PlayerList players={this.state.players} />
                     </div>
                 </div>
@@ -139,24 +139,57 @@ class App extends React.Component {
 }
 
 class PlayerList extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.sortHighscore = this.sortHighscore.bind(this);
+    }
+
+    sortHighscore(players) {
+        let playerArray = [];
+        for (let idx in players) {
+            //convert to array for sorting
+            playerArray.push([
+                players[idx].id,
+                players[idx].name,
+                players[idx].score
+            ]);
+        }
+
+        let sorted = playerArray.sort((a, b) => {
+            return b[0] - a[0]; // change to 2 to sort by score
+        });
+
+        return sorted;
+    }
+
     render() {
+        let playersSortedByHighscore = this.sortHighscore(
+            this.props.players.byId
+        );
+
         return (
             <div id="playerList">
                 <h1>Active players</h1>
-                <ul>
-                    {this.props.players.allIds.map(value => {
-                        const player = this.props.players.byId[value];
-                        console.log(player, idx);
+                <ol>
+                    {playersSortedByHighscore.map((player, idx) => {
+                        /*  The players have been changed to an array for sorting.
+                            That means:
+                            player[0] = id
+                            player[1] = name
+                            player[2] = score
+                        */
                         return (
                             <li key={idx}>
-                                <strong>
-                                    {player.id} - {player.name}
-                                </strong>
-                                &#9; {player.score} pts
+                                <span>
+                                    <strong>{player[1]}</strong>{" "}
+                                    <small>kit {player[0]}</small>
+                                </span>
+                                <span className="points">{player[2]} pts</span>
                             </li>
                         );
                     })}
-                </ul>
+                </ol>
             </div>
         );
     }
@@ -200,11 +233,15 @@ class FormArea extends React.Component {
                 }
             });
 
+        let sortedIds = this.props.players.allIds.sort((a, b) => {
+            return a - b;
+        });
+
         return (
             <div id="formArea">
                 <div className="row">
-                    <h4>Add player</h4>
                     <form onSubmit={this.handleAddPlayer} id="addPlayerForm">
+                        <h4>Add player</h4>
                         <div className="form-group">
                             <label>Player: </label>
                             <input
@@ -215,7 +252,6 @@ class FormArea extends React.Component {
                                 placeholder="Name of player"
                             />
                         </div>
-
                         <div className="form-group">
                             <label>Kit ID:</label>
                             <select
@@ -235,12 +271,14 @@ class FormArea extends React.Component {
                     </form>
                 </div>
 
+                <hr />
+
                 <div className="row">
-                    <h4>Remove player</h4>
                     <form
                         onSubmit={this.handleRemovePlayer}
                         id="removePlayerForm"
                     >
+                        <h4>Remove player</h4>
                         <div className="form-group">
                             <label>Kit ID:</label>
                             <select
@@ -248,7 +286,7 @@ class FormArea extends React.Component {
                                 name="kitnumber"
                                 id="kitNumberSelectRemove"
                             >
-                                {this.props.players.allIds.map((id, idx) => {
+                                {sortedIds.map((id, idx) => {
                                     return (
                                         <option key={idx} value={id}>
                                             {id} -{" "}
@@ -267,9 +305,11 @@ class FormArea extends React.Component {
                     </form>
                 </div>
 
+                <hr />
+
                 <div className="row start-game-form">
-                    <h4>Start game</h4>
                     <form className="align-bottom">
+                        <h4>Start game</h4>
                         <div className="form-group">
                             <label>Gametime: </label>
                             <input

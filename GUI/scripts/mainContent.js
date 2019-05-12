@@ -108,14 +108,14 @@ class App extends React.Component {
     }, React.createElement("div", {
       className: "row"
     }, React.createElement("div", {
-      className: "col-6"
+      className: "col-2"
     }, React.createElement(FormArea, {
       players: this.state.players,
       addPlayer: this.addPlayer,
       removePlayer: this.removePlayer,
       startGame: this.startGame
     })), React.createElement("div", {
-      className: "col-6"
+      className: "col-8 ml-auto"
     }, React.createElement(PlayerList, {
       players: this.state.players
     }))));
@@ -124,15 +124,41 @@ class App extends React.Component {
 }
 
 class PlayerList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.sortHighscore = this.sortHighscore.bind(this);
+  }
+
+  sortHighscore(players) {
+    let playerArray = [];
+
+    for (let idx in players) {
+      //convert to array for sorting
+      playerArray.push([players[idx].id, players[idx].name, players[idx].score]);
+    }
+
+    let sorted = playerArray.sort((a, b) => {
+      return b[0] - a[0]; // change to 2 to sort by score
+    });
+    return sorted;
+  }
+
   render() {
+    let playersSortedByHighscore = this.sortHighscore(this.props.players.byId);
     return React.createElement("div", {
       id: "playerList"
-    }, React.createElement("h1", null, "Active players"), React.createElement("ul", null, this.props.players.allIds.map(value => {
-      const player = this.props.players.byId[value];
-      console.log(player, idx);
+    }, React.createElement("h1", null, "Active players"), React.createElement("ol", null, playersSortedByHighscore.map((player, idx) => {
+      /*  The players have been changed to an array for sorting.
+          That means:
+          player[0] = id
+          player[1] = name
+          player[2] = score
+      */
       return React.createElement("li", {
         key: idx
-      }, React.createElement("strong", null, player.id, " - ", player.name), player.score, " pts");
+      }, React.createElement("span", null, React.createElement("strong", null, player[1]), " ", React.createElement("small", null, "kit ", player[0])), React.createElement("span", {
+        className: "points"
+      }, player[2], " pts"));
     })));
   }
 
@@ -171,14 +197,17 @@ class FormArea extends React.Component {
         }, idx + 1));
       }
     });
+    let sortedIds = this.props.players.allIds.sort((a, b) => {
+      return a - b;
+    });
     return React.createElement("div", {
       id: "formArea"
     }, React.createElement("div", {
       className: "row"
-    }, React.createElement("h4", null, "Add player"), React.createElement("form", {
+    }, React.createElement("form", {
       onSubmit: this.handleAddPlayer,
       id: "addPlayerForm"
-    }, React.createElement("div", {
+    }, React.createElement("h4", null, "Add player"), React.createElement("div", {
       className: "form-group"
     }, React.createElement("label", null, "Player: "), React.createElement("input", {
       className: "form-control",
@@ -196,18 +225,18 @@ class FormArea extends React.Component {
       type: "submit",
       className: "btn btn-primary",
       value: "Add player"
-    }))), React.createElement("div", {
+    }))), React.createElement("hr", null), React.createElement("div", {
       className: "row"
-    }, React.createElement("h4", null, "Remove player"), React.createElement("form", {
+    }, React.createElement("form", {
       onSubmit: this.handleRemovePlayer,
       id: "removePlayerForm"
-    }, React.createElement("div", {
+    }, React.createElement("h4", null, "Remove player"), React.createElement("div", {
       className: "form-group"
     }, React.createElement("label", null, "Kit ID:"), React.createElement("select", {
       className: "form-control",
       name: "kitnumber",
       id: "kitNumberSelectRemove"
-    }, this.props.players.allIds.map((id, idx) => {
+    }, sortedIds.map((id, idx) => {
       return React.createElement("option", {
         key: idx,
         value: id
@@ -216,11 +245,11 @@ class FormArea extends React.Component {
       type: "submit",
       className: "btn btn-primary",
       value: "Remove player"
-    }))), React.createElement("div", {
+    }))), React.createElement("hr", null), React.createElement("div", {
       className: "row start-game-form"
-    }, React.createElement("h4", null, "Start game"), React.createElement("form", {
+    }, React.createElement("form", {
       className: "align-bottom"
-    }, React.createElement("div", {
+    }, React.createElement("h4", null, "Start game"), React.createElement("div", {
       className: "form-group"
     }, React.createElement("label", null, "Gametime: "), React.createElement("input", {
       type: "number",
