@@ -1,31 +1,24 @@
-#include <errno.h>
-#include <fcntl.h>
 #include <i2c_driver.hpp>
-#include <linux/i2c-dev.h>
-#include <sys/ioctl.h>
-#include <unistd.h>
 
 /* i2cDriver() - Constructor of i2cDriver.
-No parameters required.
-It should not be necessary to join threads,
-as it is unreachable code */
-i2cDriver::i2cDriver(int slaveAddress) : i2cSenderMsgQ(MAX_MQ_SIZE) {
+Enter the address of the slave as the sole parameter*/
+i2cDriver::i2cDriver(int slaveAddress)
+    : i2cSenderMsgQ(MAX_MQ_SIZE), slaveAddress(slaveAddress) {
   pthread_create(&i2cSenderThread, NULL, i2cSenderEventHandler, (void *)this);
   pthread_create(&i2cReaderThread, NULL, i2cReaderEventHandler,
                  (void *)&i2cSenderMsgQ);
+}
 
-  // Set slave address
-  int fd = open("/dev/i2c-1", O_RDONLY);
-  if (ioctl(fd, I2C_SLAVE, slaveAddress) < 0) {
-    printf("Error opening i2c-1: %d\n", errno);
-  }
-  close(fd);
+i2cDriver::~i2cDriver() {
+  pthread_join(i2cSenderThread, NULL);
+  pthread_join(i2cReaderThread, NULL);
 }
 
 /* Public methods */
 
 /* Sends data to the i2cdev device driver */
 void i2cDriver::send(char &buf) {
+  printf("Entering send()\n");
   i2cMessage *msg = new i2cMessage;
 
   msg->data = buf;
@@ -37,8 +30,14 @@ void i2cDriver::send(char &buf) {
 Only call this method if the data-ready flag is high.
 You can check this flag with getDataReadyFlag() */
 char i2cDriver::receive() {
-  char data = dataQueue.front();
-  dataQueue.pop();
+  printf("Entering receive()\n");
+  char data = 0;
+  if (dataQueue.size() > 0) {
+    dataQueue.pop();
+    data = dataQueue.front();
+  } else
+    printf("No data in data queue\n");
+
   if (dataQueue.empty())
     dataReadyFlag = 0;
   return data;
@@ -50,10 +49,12 @@ unsigned char i2cDriver::getDataReadyFlag() { return dataReadyFlag; }
 /* Event handler to the i2cReaderThread. This is automatically
 called by the constructor and should never be called explicitly */
 void *i2cDriver::i2cReaderEventHandler(void *arg) {
+  printf("Entering i2cReaderEventHandler\n");
   MsgQueue *mqPtr = (MsgQueue *)arg;
   int fd = open("/dev/interrupt_module_dev", O_RDONLY);
   if (fd < 0) {
-    printf("i2c_driver: Error in i2cReaderEventHandler. Errno: %d\n", errno);
+    printf("i2c_driver: Error in i2cReaderEventHandler. Errno: %s\n",
+           strerror(errno));
   }
 
   while (1) {
@@ -67,6 +68,7 @@ void *i2cDriver::i2cReaderEventHandler(void *arg) {
 /* Event handler to the i2cSenderThread. This is automatically
 called by the constructor and should never be called explicitly */
 void *i2cDriver::i2cSenderEventHandler(void *arg) {
+  printf("Entering i2cSenderEventHandler\n");
   i2cDriver *thisPtr = (i2cDriver *)arg;
 
   unsigned long id;
@@ -98,12 +100,18 @@ void *i2cDriver::i2cSenderEventHandler(void *arg) {
 explicitly, as it is used under the hood by i2cSenderEventHandler.
 Use send() instead. */
 void i2cDriver::i2cSendByte(char byte) {
+  printf("Entering i2cSendByte\n");
   int fd = open("/dev/i2c-1", O_WRONLY);
   if (fd < 0) {
-    printf("i2c_driver: Error in i2cSendByte. Errno: %d\n", errno);
+    printf("i2c_driver: Error in i2cSendByte. Errno: %s\n", strerror(errno));
+  }
+  // Set slave address
+  if (ioctl(fd, I2C_SLAVE, slaveAddress) < 0) {
+    printf("Error setting slave address: %s\n", strerror(errno));
   }
   if (write(fd, &byte, 1) < 0) {
-    printf("i2c_driver: Error in reading from i2c-dev1. Errno: %d\n", errno);
+    printf("i2c_driver: Error in writing to i2c-1. Errno: %s\n",
+           strerror(errno));
   };
   close(fd);
 }
@@ -112,13 +120,19 @@ void i2cDriver::i2cSendByte(char byte) {
 explicitly, as it is used under the hood by i2cSenderEventHandler.
 Use receive() instead. */
 char i2cDriver::i2cReceiveByte() {
+  printf("Entering i2cReceiveByte\n");
   char byte;
   int fd = open("/dev/i2c-1", O_RDONLY);
   if (fd < 0) {
-    printf("i2c_driver: Error in i2cReceiveByte. Errno: %d\n", errno);
+    printf("i2c_driver: Error in i2cReceiveByte. Errno: %s\n", strerror(errno));
+  }
+  // Set slave address
+  if (ioctl(fd, I2C_SLAVE, slaveAddress) < 0) {
+    printf("Error setting slave address: %s\n", strerror(errno));
   }
   if (read(fd, &byte, 1) < 0) {
-    printf("i2c_driver: Error in reading from i2c-dev1. Errno: %d\n", errno);
+    printf("i2c_driver: Error in reading from i2c-1. Errno: %s\n",
+           strerror(errno));
   };
   close(fd);
 
