@@ -3,20 +3,6 @@ const React = require("react");
 const ReactDOM = require("react-dom");
 
 class App extends React.Component {
-  render() {
-    return React.createElement("div", null, React.createElement(FormArea, null), React.createElement(PlayerList, null));
-  }
-
-}
-
-class PlayerList extends React.Component {
-  render() {
-    return React.createElement("h1", null, "Active players");
-  }
-
-}
-
-class FormArea extends React.Component {
   constructor(props) {
     super(props); // Players are sorted by id - their key is their ID
 
@@ -31,8 +17,8 @@ class FormArea extends React.Component {
     this.startGame = this.startGame.bind(this);
   }
 
-  addPlayer(event) {
-    event.preventDefault();
+  addPlayer() {
+    console.log("Add player");
     let activeIDs = this.state.players.allIds;
     let playerName = document.getElementById("playerNameInput").value;
     let kitNumber = document.getElementById("kitNumberSelectAdd").value;
@@ -50,7 +36,8 @@ class FormArea extends React.Component {
           byId: { ...this.state.players.byId,
             [kitNumber]: {
               id: kitNumber,
-              name: playerName
+              name: playerName,
+              score: 0
             }
           },
           allIds: activeIDs
@@ -121,9 +108,75 @@ class FormArea extends React.Component {
     }, React.createElement("div", {
       className: "row"
     }, React.createElement("div", {
-      className: "col"
+      className: "col-6"
+    }, React.createElement(FormArea, {
+      players: this.state.players,
+      addPlayer: this.addPlayer,
+      removePlayer: this.removePlayer,
+      startGame: this.startGame
+    })), React.createElement("div", {
+      className: "col-6"
+    }, React.createElement(PlayerList, {
+      players: this.state.players
+    }))));
+  }
+
+}
+
+class PlayerList extends React.Component {
+  render() {
+    return React.createElement("div", {
+      id: "playerList"
+    }, React.createElement("h1", null, "Active players"), React.createElement("ul", null, this.props.players.allIds.map(value => {
+      const player = this.props.players.byId[value];
+      console.log(player, idx);
+      return React.createElement("li", {
+        key: idx
+      }, React.createElement("strong", null, player.id, " - ", player.name), player.score, " pts");
+    })));
+  }
+
+}
+
+class FormArea extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleAddPlayer = this.handleAddPlayer.bind(this);
+    this.handleRemovePlayer = this.handleRemovePlayer.bind(this);
+    this.handleStartGame = this.handleStartGame.bind(this);
+  }
+
+  handleAddPlayer(event) {
+    event.preventDefault();
+    console.log("Handle add player");
+    this.props.addPlayer(event);
+  }
+
+  handleRemovePlayer(event) {
+    this.props.removePlayer(event);
+  }
+
+  handleStartGame(event) {
+    this.props.startGame(event);
+  }
+
+  render() {
+    // Fill array of all non-active kit numbers
+    let nonActiveIds = new Array();
+    Array(10).fill(0).forEach((val, idx) => {
+      if (!this.props.players.allIds.includes((idx + 1).toString())) {
+        nonActiveIds.push(React.createElement("option", {
+          key: idx,
+          value: idx + 1
+        }, idx + 1));
+      }
+    });
+    return React.createElement("div", {
+      id: "formArea"
+    }, React.createElement("div", {
+      className: "row"
     }, React.createElement("h4", null, "Add player"), React.createElement("form", {
-      onSubmit: this.addPlayer,
+      onSubmit: this.handleAddPlayer,
       id: "addPlayerForm"
     }, React.createElement("div", {
       className: "form-group"
@@ -139,34 +192,14 @@ class FormArea extends React.Component {
       className: "form-control",
       name: "kitnumber",
       id: "kitNumberSelectAdd"
-    }, React.createElement("option", {
-      value: "1"
-    }, "1"), React.createElement("option", {
-      value: "2"
-    }, "2"), React.createElement("option", {
-      value: "3"
-    }, "3"), React.createElement("option", {
-      value: "4"
-    }, "4"), React.createElement("option", {
-      value: "5"
-    }, "5"), React.createElement("option", {
-      value: "6"
-    }, "6"), React.createElement("option", {
-      value: "7"
-    }, "7"), React.createElement("option", {
-      value: "8"
-    }, "8"), React.createElement("option", {
-      value: "9"
-    }, "9"), React.createElement("option", {
-      value: "10"
-    }, "10"))), React.createElement("input", {
+    }, nonActiveIds)), React.createElement("input", {
       type: "submit",
       className: "btn btn-primary",
       value: "Add player"
     }))), React.createElement("div", {
-      className: "col"
+      className: "row"
     }, React.createElement("h4", null, "Remove player"), React.createElement("form", {
-      onSubmit: this.removePlayer,
+      onSubmit: this.handleRemovePlayer,
       id: "removePlayerForm"
     }, React.createElement("div", {
       className: "form-group"
@@ -174,32 +207,17 @@ class FormArea extends React.Component {
       className: "form-control",
       name: "kitnumber",
       id: "kitNumberSelectRemove"
-    }, React.createElement("option", {
-      value: "1"
-    }, "1"), React.createElement("option", {
-      value: "2"
-    }, "2"), React.createElement("option", {
-      value: "3"
-    }, "3"), React.createElement("option", {
-      value: "4"
-    }, "4"), React.createElement("option", {
-      value: "5"
-    }, "5"), React.createElement("option", {
-      value: "6"
-    }, "6"), React.createElement("option", {
-      value: "7"
-    }, "7"), React.createElement("option", {
-      value: "8"
-    }, "8"), React.createElement("option", {
-      value: "9"
-    }, "9"), React.createElement("option", {
-      value: "10"
-    }, "10"))), React.createElement("input", {
+    }, this.props.players.allIds.map((id, idx) => {
+      return React.createElement("option", {
+        key: idx,
+        value: id
+      }, id, " -", " ", this.props.players.byId[id].name);
+    }))), React.createElement("input", {
       type: "submit",
       className: "btn btn-primary",
       value: "Remove player"
     }))), React.createElement("div", {
-      className: "col start-game-form"
+      className: "row start-game-form"
     }, React.createElement("h4", null, "Start game"), React.createElement("form", {
       className: "align-bottom"
     }, React.createElement("div", {
@@ -212,8 +230,8 @@ class FormArea extends React.Component {
       placeholder: "Enter the gametime..."
     })), React.createElement("button", {
       className: "btn btn-primary",
-      onClick: this.startGame
-    }, "Start game")))));
+      onClick: this.handleStartGame
+    }, "Start game"))));
   }
 
 }
