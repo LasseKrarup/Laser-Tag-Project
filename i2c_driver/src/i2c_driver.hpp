@@ -22,7 +22,7 @@ private:
   pthread_t i2cSenderThread;
   MsgQueue i2cSenderMsgQ;
   void i2cSendByte(char byte);
-  void i2cReceiveByte();
+  char i2cReceiveByte();
   unsigned char dataReadyFlag = 0;
 };
 
