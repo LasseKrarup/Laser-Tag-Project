@@ -15,10 +15,41 @@ class App extends React.Component {
     this.addPlayer = this.addPlayer.bind(this);
     this.removePlayer = this.removePlayer.bind(this);
     this.startGame = this.startGame.bind(this);
+    this.handleUpdateHighscore = this.handleUpdateHighscore.bind(this);
+  } // Listen for incoming websocket messages in lifetime method
+
+
+  componentDidMount() {
+    wsClient.addEventListener("message", msg => {
+      msg = JSON.parse(msg.data);
+
+      switch (msg.action) {
+        case "highscoreUpdate":
+          console.log("Highscore update received from server");
+          this.handleUpdateHighscore(msg);
+          break;
+
+        default:
+          console.log("Unknown message received from server");
+          break;
+      }
+    });
+  }
+
+  handleUpdateHighscore(msg) {
+    this.setState({ ...this.state,
+      players: { ...this.state.players,
+        byId: { ...this.state.players.byId,
+          [msg.id]: { ...this.state.players.byId[msg.id],
+            score: msg.score
+          }
+        },
+        allIds: activeIDs
+      }
+    });
   }
 
   addPlayer() {
-    console.log("Add player");
     let activeIDs = this.state.players.allIds;
     let playerName = document.getElementById("playerNameInput").value;
     let kitNumber = document.getElementById("kitNumberSelectAdd").value;
@@ -70,8 +101,7 @@ class App extends React.Component {
       let {
         [kitNumber]: deleted,
         ...remainingPlayers
-      } = this.state.players.byId;
-      console.log(remainingPlayers); // Update state immutably
+      } = this.state.players.byId; // Update state immutably
 
       this.setState({ ...this.state,
         players: {
@@ -174,7 +204,6 @@ class FormArea extends React.Component {
 
   handleAddPlayer(event) {
     event.preventDefault();
-    console.log("Handle add player");
     this.props.addPlayer(event);
   }
 
