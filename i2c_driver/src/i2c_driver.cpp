@@ -17,7 +17,7 @@ i2cDriver::i2cDriver(int slaveAddress) : i2cSenderMsgQ(MAX_MQ_SIZE) {
   // Set slave address
   int fd = open("/dev/i2c-1", O_RDONLY);
   if (ioctl(fd, I2C_SLAVE, slaveAddress) < 0) {
-    printf("Error: %d", errno);
+    printf("Error opening i2c-1: %d\n", errno);
   }
   close(fd);
 }
@@ -98,7 +98,7 @@ void *i2cDriver::i2cSenderEventHandler(void *arg) {
 explicitly, as it is used under the hood by i2cSenderEventHandler.
 Use send() instead. */
 void i2cDriver::i2cSendByte(char byte) {
-  int fd = open("/dev/i2c-dev1", O_WRONLY);
+  int fd = open("/dev/i2c-1", O_WRONLY);
   if (fd < 0) {
     printf("i2c_driver: Error in i2cSendByte. Errno: %d\n", errno);
   }
@@ -113,7 +113,7 @@ explicitly, as it is used under the hood by i2cSenderEventHandler.
 Use receive() instead. */
 char i2cDriver::i2cReceiveByte() {
   char byte;
-  int fd = open("/dev/i2c-dev1", O_RDONLY);
+  int fd = open("/dev/i2c-1", O_RDONLY);
   if (fd < 0) {
     printf("i2c_driver: Error in i2cReceiveByte. Errno: %d\n", errno);
   }

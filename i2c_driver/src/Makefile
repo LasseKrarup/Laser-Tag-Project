@@ -7,6 +7,11 @@ SOURCES = test_main.cpp i2c_driver.cpp MsgQueue.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 DEPS = $(SOURCES:.cpp=.d)
 
+ifeq (${ARCH},target)
+CXX=arm-poky-linux-gnueabi-g++
+EXE=i2c_driver_crosscompiled
+endif
+
 .PHONY: all
 all: $(EXE)
 
