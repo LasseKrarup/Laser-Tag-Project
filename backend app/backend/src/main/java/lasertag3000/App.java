@@ -20,8 +20,7 @@ public final class App {
         System.out.println("Lasertag backend app starting");
         Config.getInstance();
         SQLConn.getInstance();
-        GUICom guiCom = new GUICom();
-        guiCom.start();
+        GUICom.getInstance().start();
         getKits();
     }
 

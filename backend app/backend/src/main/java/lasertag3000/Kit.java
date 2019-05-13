@@ -80,45 +80,47 @@ public class Kit {
 
     public void messageReciever() {
         while (true) {
-            InputStream istream = null;
-            BufferedReader receiveRead = null;
-            try {
-                while (_socket != null && !_socket.isClosed()) {
-                    if (istream == null) {
-                        istream = _socket.getInputStream();
-                    }
-                    if (receiveRead == null) {
-                        receiveRead = new BufferedReader(new InputStreamReader(istream));
-                    }
-
-                    while (connected) {
-                        char[] message = new char[1];
-                        if (receiveRead.read(message) != -1) {
-                            System.out.println(message[0]);
-                        } else {
-                            connected = false;
+            if (_active) {
+                InputStream istream = null;
+                BufferedReader receiveRead = null;
+                try {
+                    while (_socket != null && !_socket.isClosed()) {
+                        if (istream == null) {
+                            istream = _socket.getInputStream();
+                        }
+                        if (receiveRead == null) {
+                            receiveRead = new BufferedReader(new InputStreamReader(istream));
                         }
 
-                        // SQLConn.getInstance().PlayerShot(Character.valueOf(message[0]));
+                        while (connected) {
+                            char[] message = new char[1];
+                            if (receiveRead.read(message) != -1) {
+                                System.out.println(message[0]);
+                            } else {
+                                connected = false;
+                            }
 
-                    }
-                }
+                            // SQLConn.getInstance().PlayerShot(Character.valueOf(message[0]));
 
-            } catch (IOException e) {
-                e.printStackTrace();
-                // TODO Handle exception
+                        }
+                    }
 
-            } finally {
-                try {
-                    if (istream != null) {
-                        istream.close();
-                    }
-                    if (receiveRead != null) {
-                        receiveRead.close();
-                    }
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
+                    // TODO Handle exception
+
+                } finally {
+                    try {
+                        if (istream != null) {
+                            istream.close();
+                        }
+                        if (receiveRead != null) {
+                            receiveRead.close();
+                        }
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                 }
             }
         }
