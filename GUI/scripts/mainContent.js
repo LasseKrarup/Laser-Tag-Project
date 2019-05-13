@@ -391,7 +391,7 @@ class GameTimer extends React.Component {
     let min = this.props.minutes;
     let sec = this.props.seconds;
     return React.createElement("div", {
-      className: min > 2 ? "lowTime" : ""
+      className: (min > 2 ? "lowTime " : "") + "gameTimer"
     }, min < 10 ? "0" + min : min, ":", sec < 10 ? "0" + sec : sec);
   }
 
