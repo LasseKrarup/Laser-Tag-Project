@@ -59,7 +59,7 @@ class App extends React.Component {
                     ...this.state.players.byId,
                     [msg.id]: {
                         ...this.state.players.byId[msg.id],
-                        score: msg.score
+                        score: parseInt(msg.score)
                     }
                 }
             }
@@ -421,8 +421,8 @@ class FormArea extends React.Component {
                                 {sortedIds.map((id, idx) => {
                                     return (
                                         <option key={idx} value={id}>
-                                            {id} -{" "}
-                                            {this.props.players.byId[id].name}
+                                            {this.props.players.byId[id].name} -{" "}
+                                            kit {id}
                                         </option>
                                     );
                                 })}
@@ -471,7 +471,7 @@ class GameTimer extends React.Component {
         let sec = this.props.seconds;
 
         return (
-            <div className={(min > 2 ? "lowTime " : "") + "gameTimer"}>
+            <div className={(min < 2 ? "lowTime " : "") + "gameTimer"}>
                 {min < 10 ? "0" + min : min}:{sec < 10 ? "0" + sec : sec}
             </div>
         );

@@ -62,7 +62,7 @@ class App extends React.Component {
       players: { ...this.state.players,
         byId: { ...this.state.players.byId,
           [msg.id]: { ...this.state.players.byId[msg.id],
-            score: msg.score
+            score: parseInt(msg.score)
           }
         }
       }
@@ -361,7 +361,7 @@ class FormArea extends React.Component {
       return React.createElement("option", {
         key: idx,
         value: id
-      }, id, " -", " ", this.props.players.byId[id].name);
+      }, this.props.players.byId[id].name, " -", " ", "kit ", id);
     }))), React.createElement("input", {
       type: "submit",
       className: "btn btn-primary",
@@ -391,7 +391,7 @@ class GameTimer extends React.Component {
     let min = this.props.minutes;
     let sec = this.props.seconds;
     return React.createElement("div", {
-      className: (min > 2 ? "lowTime " : "") + "gameTimer"
+      className: (min < 2 ? "lowTime " : "") + "gameTimer"
     }, min < 10 ? "0" + min : min, ":", sec < 10 ? "0" + sec : sec);
   }
 
