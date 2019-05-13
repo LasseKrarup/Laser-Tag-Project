@@ -84,9 +84,7 @@ class App extends React.Component {
         let activeIDs = this.state.players.allIds;
 
         let playerName = document.getElementById("playerNameInput").value;
-        let kitNumber = parseInt(
-            document.getElementById("kitNumberSelectAdd").value
-        );
+        let kitNumber = document.getElementById("kitNumberSelectAdd").value;
 
         if (!activeIDs.includes(kitNumber)) {
             activeIDs.push(kitNumber);
@@ -129,9 +127,7 @@ class App extends React.Component {
         event.preventDefault();
 
         let activeIDs = this.state.players.allIds;
-        let kitNumber = parseInt(
-            document.getElementById("kitNumberSelectRemove").value
-        );
+        let kitNumber = document.getElementById("kitNumberSelectRemove").value;
 
         /*
             If the ID is in the list of active ID's,
@@ -174,7 +170,7 @@ class App extends React.Component {
     startGame(event) {
         event.preventDefault();
 
-        const gametime = parseInt(document.getElementById("gametime").value);
+        const gametime = document.getElementById("gametime").value;
 
         if (this.state.time.minutes == 0 && this.state.time.seconds == 0) {
             if (gametime >= 10 && gametime <= 20) {
@@ -355,7 +351,7 @@ class FormArea extends React.Component {
         Array(10)
             .fill(0)
             .forEach((val, idx) => {
-                if (!this.props.players.allIds.includes(idx + 1)) {
+                if (!this.props.players.allIds.includes((idx + 1).toString())) {
                     nonActiveIds.push(
                         <option key={idx} value={idx + 1}>
                             {idx + 1}
