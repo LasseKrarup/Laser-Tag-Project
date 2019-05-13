@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=B612");
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500");
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors
@@ -10665,7 +10666,7 @@ header a:hover {
   margin-left: 40px;
 }
 
-.menu ul {
+ul {
   display: block;
   padding: 0;
   margin: 0;
@@ -10673,7 +10674,7 @@ header a:hover {
   height: 100%;
 }
 
-.menu ul li {
+ul li {
   -webkit-transition: all 0.2s ease;
   transition: all 0.2s ease;
   margin: 0;
@@ -10683,18 +10684,71 @@ header a:hover {
   line-height: 75px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  height: 200px;
+  height: calc(100% / $numli)1px;
   width: 100%;
   border: 2px solid gray;
   opacity: 0.8;
 }
 
-.menu ul li:hover {
+ul li:hover {
   opacity: 1;
   cursor: pointer;
 }
 
 .start-game-form input {
   width: 70%;
+}
+
+.customModal {
+  border-radius: 1em;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  opacity: 1;
+  z-index: 20;
+  padding: 2em;
+  margin: 0;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 80%;
+  background-color: #007bff;
+}
+
+@media only screen and (min-width: 768px) {
+  .customModal {
+    width: 40%;
+  }
+}
+
+.btn-close {
+  opacity: 0.5;
+}
+
+.btn-close:hover {
+  opacity: 1;
+}
+
+.btn-topright {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.visible {
+  visibility: visible;
+}
+
+.hidden {
+  visibility: hidden;
 }
 /*# sourceMappingURL=mainstyle.css.map */

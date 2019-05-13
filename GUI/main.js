@@ -120,7 +120,11 @@ ipcMain.on("stopGame", event => {
         action: "stopGame"
     });
 
-    menuOverlay.close(); //close menu
+    mainWindow.webContents.send("stopGame");
+
+    if (menuExists) {
+        menuOverlay.close(); //close menu
+    }
 });
 
 // Catch 'start game'

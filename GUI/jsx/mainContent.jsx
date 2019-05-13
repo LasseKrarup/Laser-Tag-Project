@@ -6,15 +6,23 @@ class App extends React.Component {
         super(props);
 
         // Players are sorted by id - their key is their ID
-        this.state = { players: { byId: {}, allIds: [] } };
+        this.state = {
+            players: { byId: {}, allIds: [] },
+            time: { minutes: 0, seconds: 0 },
+            modal: { visible: false, message: "" }
+        };
+
+        this.interval;
 
         this.addPlayer = this.addPlayer.bind(this);
         this.removePlayer = this.removePlayer.bind(this);
         this.startGame = this.startGame.bind(this);
         this.handleUpdateHighscore = this.handleUpdateHighscore.bind(this);
+        this.handleStartTimer = this.handleStartTimer.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
     }
 
-    // Listen for incoming websocket messages in lifetime method
+    // Listen for incoming messages in lifetime method
     componentDidMount() {
         wsClient.addEventListener("message", msg => {
             msg = JSON.parse(msg.data);
@@ -27,6 +35,19 @@ class App extends React.Component {
                     console.log("Unknown message received from server");
                     break;
             }
+        });
+
+        // Stop timer
+        ipcRenderer.on("stopGame", () => {
+            console.log("Stop game from react");
+            clearInterval(this.interval);
+            this.setState({
+                ...this.state,
+                time: {
+                    minutes: 0,
+                    seconds: 0
+                }
+            });
         });
     }
 
@@ -41,10 +62,23 @@ class App extends React.Component {
                         ...this.state.players.byId[msg.id],
                         score: msg.score
                     }
-                },
-                allIds: activeIDs
+                }
             }
         });
+    }
+
+    toggleModal(message = "") {
+        if (this.state.modal.visible) {
+            this.setState({
+                ...this.state,
+                modal: { ...this.state.modal, visible: false }
+            });
+        } else {
+            this.setState({
+                ...this.state,
+                modal: { message: message, visible: true }
+            });
+        }
     }
 
     addPlayer() {
@@ -133,21 +167,64 @@ class App extends React.Component {
 
         const gametime = document.getElementById("gametime").value;
 
-        if (gametime >= 10 && gametime <= 20) {
-            if (this.state.players.allIds.length > 1) {
-                wsClient.send(
-                    JSON.stringify({
-                        action: "startGame",
-                        time: gametime
-                    })
-                );
+        if (this.state.time.minutes == 0 && this.state.time.seconds == 0) {
+            if (gametime >= 10 && gametime <= 20) {
+                if (this.state.players.allIds.length > 1) {
+                    wsClient.send(
+                        JSON.stringify({
+                            action: "startGame",
+                            time: gametime
+                        })
+                    );
+                    this.setState(
+                        {
+                            ...this.state,
+                            time: { ...this.state.time, minutes: gametime }
+                        },
+                        this.handleStartTimer()
+                    );
+                } else {
+                    console.log("Not enough players");
+                }
             } else {
-                console.log("Not enough players");
+                console.log("Gametime not withing range");
+                this.toggleModal("Gametime not within range!");
             }
         } else {
-            console.log("Gametime not withing range");
+            this.toggleModal("A game is already running!");
         }
     }
+
+    handleStartTimer() {
+        console.log("handleStartTimer()");
+        this.interval = setInterval(() => {
+            if (this.state.time.seconds == 0) {
+                // Tick minutes
+                this.setState({
+                    ...this.state,
+                    time: {
+                        minutes: this.state.time.minutes - 1,
+                        seconds: 59
+                    }
+                });
+            } else {
+                // Tick seconds
+                this.setState({
+                    ...this.state,
+                    time: {
+                        ...this.state.time,
+                        seconds: this.state.time.seconds - 1
+                    }
+                });
+            }
+
+            if (this.state.time.minutes == 0 && this.state.time.seconds == 0) {
+                clearInterval(this.interval);
+                ipcRenderer.send("stopGame");
+            }
+        }, 1000);
+    }
+
     render() {
         return (
             <div className="container">
@@ -158,12 +235,18 @@ class App extends React.Component {
                             addPlayer={this.addPlayer}
                             removePlayer={this.removePlayer}
                             startGame={this.startGame}
+                            handleModal={this.toggleModal}
+                            modal={this.state.modal}
                         />
                     </div>
                     <div className="col-8 ml-auto">
                         <PlayerList players={this.state.players} />
                     </div>
                 </div>
+                <GameTimer
+                    minutes={this.state.time.minutes}
+                    seconds={this.state.time.seconds}
+                />
             </div>
         );
     }
@@ -233,6 +316,7 @@ class FormArea extends React.Component {
         this.handleAddPlayer = this.handleAddPlayer.bind(this);
         this.handleRemovePlayer = this.handleRemovePlayer.bind(this);
         this.handleStartGame = this.handleStartGame.bind(this);
+        this.handleModal = this.handleModal.bind(this);
     }
 
     handleAddPlayer(event) {
@@ -246,6 +330,10 @@ class FormArea extends React.Component {
 
     handleStartGame(event) {
         this.props.startGame(event);
+    }
+
+    handleModal() {
+        this.props.handleModal();
     }
 
     render() {
@@ -269,6 +357,11 @@ class FormArea extends React.Component {
 
         return (
             <div id="formArea">
+                <Modal
+                    isVisible={this.props.modal.visible}
+                    message={this.props.modal.message}
+                    toggleModal={this.props.handleModal}
+                />
                 <div className="row">
                     <form onSubmit={this.handleAddPlayer} id="addPlayerForm">
                         <h4>Add player</h4>
@@ -357,6 +450,48 @@ class FormArea extends React.Component {
                             Start game
                         </button>
                     </form>
+                </div>
+            </div>
+        );
+    }
+}
+
+class GameTimer extends React.Component {
+    render() {
+        let min = this.props.minutes;
+        let sec = this.props.seconds;
+
+        return (
+            <div className={min > 2 ? "lowTime" : ""}>
+                {min < 10 ? "0" + min : min}:{sec < 10 ? "0" + sec : sec}
+            </div>
+        );
+    }
+}
+
+class Modal extends React.Component {
+    render() {
+        return (
+            <div className="modalContainer">
+                <div
+                    className={
+                        "overlay " +
+                        (this.props.isVisible ? "visible" : "hidden")
+                    }
+                />
+                <div
+                    className={
+                        "customModal " +
+                        (this.props.isVisible ? "visible" : "hidden")
+                    }
+                >
+                    {this.props.message}
+                    <button
+                        className="btn btn-danger btn-topright"
+                        onClick={this.props.toggleModal}
+                    >
+                        &times;
+                    </button>
                 </div>
             </div>
         );
