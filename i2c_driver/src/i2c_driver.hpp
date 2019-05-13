@@ -20,7 +20,6 @@ public:
   void send(char &buf);
   char receive();
   unsigned char getDataReadyFlag();
-  char i2cReceiveByte();
 
 private:
   std::queue<char> dataQueue;
@@ -30,6 +29,7 @@ private:
   pthread_t i2cSenderThread;
   MsgQueue i2cSenderMsgQ;
   void i2cSendByte(char byte);
+  char i2cReceiveByte();
   unsigned char dataReadyFlag = 0;
   int slaveAddress = 0;
 };
