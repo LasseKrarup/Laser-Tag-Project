@@ -7,6 +7,7 @@ var wsClient = new WebSocket("ws://localhost:9000"); //open on localhost port 90
 wsClient.addEventListener("open", event => {
     //send message on connection opened
     console.log("Connected to ws server");
+    wsClient.send(JSON.stringify({ action: "stopGame" }));
 });
 
 wsClient.addEventListener("message", event => {
