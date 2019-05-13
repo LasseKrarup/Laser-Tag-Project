@@ -1,9 +1,7 @@
 package lasertag3000;
 
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,6 +12,7 @@ public class Game {
     private int _id;
     private List<Player> _players = new ArrayList<Player>();
     private int _duration;
+    private boolean _active = false;
 
     //default constructor
     public Game() {
@@ -49,13 +48,13 @@ public class Game {
         //TODO: Log
     }
 
-    public void removePlayer(String name) {
+    public void removePlayer(int kit) {
 
         //find player in list
         Iterator<Player> itr = _players.iterator();
         while(itr.hasNext()){
             Player p;
-            if((p = itr.next()).getName() == name){
+            if((p = itr.next()).getKit().getID() == kit){
 
                 //remove player from database and list
                 SQLConn.getInstance().removePlayer(p.getID());
@@ -85,7 +84,13 @@ public class Game {
     }
 
     public void stopGame() {
+        if(_active){
         this.notifyAll();
+        }
+        else{
+            App.game = new Game();
+        }
+
     }
 
     public void stopGame(int delay) {
@@ -109,6 +114,21 @@ public class Game {
             itr.next().getKit().disable();
         }
 
-        App.game = null;
+        App.game = new Game();
+    }
+
+    public void shot(int id){
+        int player_id = 0;
+        Iterator<Player> itr = _players.iterator();
+        while(itr.hasNext()){
+            Player p;
+            if((p = itr.next()).getKit().getID() == id){
+
+                int score = SQLConn.getInstance().PlayerShot(p.getID());
+                GUICom.getInstance().updateHighscore(id, score);
+                return;
+            }
+        }
+        
     }
 }

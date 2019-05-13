@@ -324,9 +324,10 @@ public final class SQLConn {
         }
     }
 
-    public void PlayerShot(int id){
+    public int PlayerShot(int id){
 
         //Prepare query and connection
+        int points = 0;
         String query = "SELECT * FROM `game_score` WHERE `game_score`.`player` = "+id;
         Statement statement = null;
         Connection con = getConnection();
@@ -341,7 +342,8 @@ public final class SQLConn {
 
             //update score field in database
             if(res.next()){
-                res.updateInt("score", res.getInt("score")+1);
+                points = res.getInt("score")+1;
+                res.updateInt("score", points);
             }
             res.updateRow();
 
@@ -361,6 +363,7 @@ public final class SQLConn {
                 System.out.println(e.getMessage());
             }
         }
+        return points;
     }
 
     public void StopGame(int game, int time){

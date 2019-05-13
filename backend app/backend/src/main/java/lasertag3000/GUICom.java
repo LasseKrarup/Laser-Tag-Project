@@ -13,6 +13,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,7 +21,9 @@ import java.util.regex.Pattern;
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 
-public class GUICom extends Thread {
+public final class GUICom extends Thread {
+
+    private static volatile GUICom instance = new GUICom();
 
     //Variables for GUICom
     private int port;
@@ -94,11 +97,15 @@ public class GUICom extends Thread {
         }
     }
 
-    public GUICom() {
+    public static GUICom getInstance() {
+        return instance;
+    }
+
+    private GUICom() {
         port = Config.getInstance().ServerPort();
     }
 
-    public void Send(String message){
+    private void Send(String message){
         try {
             //TODO make strings to send to gui
             bout.write(encode("testmessage"));
@@ -179,7 +186,7 @@ public class GUICom extends Thread {
     }
 
     //encode string to websocket message
-    public byte[] encode(String message) {
+    private byte[] encode(String message) {
         int datalength = message.getBytes().length;
         ArrayList<Byte> list = new ArrayList<Byte>();
 
@@ -224,7 +231,6 @@ public class GUICom extends Thread {
     private void messageInterpreter(String message){
         Gson gson = new Gson();
         LinkedTreeMap map = gson.fromJson(message, LinkedTreeMap.class);
-
         //get action option from json object
         String action = (String) map.get("action");
         switch(action) {
@@ -235,14 +241,26 @@ public class GUICom extends Thread {
                 App.game.addPlayer((String) map.get("name"), (Integer) map.get("id"));
             break;
             case "removePlayer":
-                App.game.removePlayer((String) map.get("name"));
+                App.game.removePlayer((Integer) map.get("id"));
             break;
+            case "startGame":
+                App.game.startGame((Integer) map.get("time"));
+                break;
             case "stopGame":
                 App.game.stopGame();
             break;
             //TODO add all options
         }
 
+    }
+
+    public void updateHighscore(int kitid, int score){
+        Gson gson = new Gson();
+        HashMap<String, String> jsonmap = new HashMap<>();
+        jsonmap.put("action", "highscoreUpdate");
+        jsonmap.put("id", String.valueOf(kitid));
+        jsonmap.put("score", String.valueOf(score));
+        Send(gson.toJson(jsonmap));
     }
 
 }
