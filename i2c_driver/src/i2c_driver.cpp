@@ -18,7 +18,6 @@ i2cDriver::~i2cDriver() {
 
 /* Sends data to the i2cdev device driver */
 void i2cDriver::send(char &buf) {
-  printf("Entering send()\n");
   i2cMessage *msg = new i2cMessage;
 
   msg->data = buf;
@@ -30,11 +29,10 @@ void i2cDriver::send(char &buf) {
 Only call this method if the data-ready flag is high.
 You can check this flag with getDataReadyFlag() */
 char i2cDriver::receive() {
-  printf("Entering receive()\n");
   char data = 0;
   if (dataQueue.size() > 0) {
-    dataQueue.pop();
     data = dataQueue.front();
+    dataQueue.pop();
   } else
     printf("No data in data queue\n");
 
@@ -49,7 +47,6 @@ unsigned char i2cDriver::getDataReadyFlag() { return dataReadyFlag; }
 /* Event handler to the i2cReaderThread. This is automatically
 called by the constructor and should never be called explicitly */
 void *i2cDriver::i2cReaderEventHandler(void *arg) {
-  printf("Entering i2cReaderEventHandler\n");
   MsgQueue *mqPtr = (MsgQueue *)arg;
   int fd = open("/dev/interrupt_module_dev", O_RDONLY);
   if (fd < 0) {
@@ -68,7 +65,6 @@ void *i2cDriver::i2cReaderEventHandler(void *arg) {
 /* Event handler to the i2cSenderThread. This is automatically
 called by the constructor and should never be called explicitly */
 void *i2cDriver::i2cSenderEventHandler(void *arg) {
-  printf("Entering i2cSenderEventHandler\n");
   i2cDriver *thisPtr = (i2cDriver *)arg;
 
   unsigned long id;
@@ -100,7 +96,6 @@ void *i2cDriver::i2cSenderEventHandler(void *arg) {
 explicitly, as it is used under the hood by i2cSenderEventHandler.
 Use send() instead. */
 void i2cDriver::i2cSendByte(char byte) {
-  printf("Entering i2cSendByte\n");
   int fd = open("/dev/i2c-1", O_WRONLY);
   if (fd < 0) {
     printf("i2c_driver: Error in i2cSendByte. Errno: %s\n", strerror(errno));
@@ -120,7 +115,6 @@ void i2cDriver::i2cSendByte(char byte) {
 explicitly, as it is used under the hood by i2cSenderEventHandler.
 Use receive() instead. */
 char i2cDriver::i2cReceiveByte() {
-  printf("Entering i2cReceiveByte\n");
   char byte;
   int fd = open("/dev/i2c-1", O_RDONLY);
   if (fd < 0) {
