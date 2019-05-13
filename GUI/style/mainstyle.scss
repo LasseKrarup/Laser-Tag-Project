@@ -146,6 +146,7 @@ ul {
 }
 
 .customModal {
+    font-size: 2em;
     border-radius: 1em;
     position: fixed;
     top: 50%;
@@ -155,10 +156,7 @@ ul {
     padding: 2em;
     margin: 0;
     transform: translate(-50%, -50%);
-    width: 80%;
-    @media only screen and (min-width: 768px) {
-        width: 40%;
-    }
+    width: 40%;
     background-color: $primary;
 }
 

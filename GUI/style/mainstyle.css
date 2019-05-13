@@ -10700,6 +10700,7 @@ ul li:hover {
 }
 
 .customModal {
+  font-size: 2em;
   border-radius: 1em;
   position: fixed;
   top: 50%;
@@ -10710,14 +10711,8 @@ ul li:hover {
   margin: 0;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
-  width: 80%;
+  width: 40%;
   background-color: #007bff;
-}
-
-@media only screen and (min-width: 768px) {
-  .customModal {
-    width: 40%;
-  }
 }
 
 .btn-close {

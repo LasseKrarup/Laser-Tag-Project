@@ -39,7 +39,6 @@ class App extends React.Component {
 
         // Stop timer
         ipcRenderer.on("stopGame", () => {
-            console.log("Stop game from react");
             clearInterval(this.interval);
             this.setState({
                 ...this.state,
@@ -118,6 +117,9 @@ class App extends React.Component {
             console.log(
                 "Player with ID " + kitNumber + " is already in the game"
             );
+            this.toggleModal(
+                "Player with ID " + kitNumber + " is already in the game"
+            );
         }
     }
 
@@ -159,6 +161,9 @@ class App extends React.Component {
             });
         } else {
             console.log("Player with ID " + kitNumber + " is not in the game");
+            this.toggleModal(
+                "Player with ID " + kitNumber + " is not in the game"
+            );
         }
     }
 
@@ -185,12 +190,16 @@ class App extends React.Component {
                     );
                 } else {
                     console.log("Not enough players");
+                    this.toggleModal(
+                        "Not enough players. Don't you have any friends? You need at least 2 people to play"
+                    );
                 }
             } else {
                 console.log("Gametime not withing range");
                 this.toggleModal("Gametime not within range!");
             }
         } else {
+            console.log("A game is already running!");
             this.toggleModal("A game is already running!");
         }
     }
@@ -271,7 +280,7 @@ class PlayerList extends React.Component {
         }
 
         let sorted = playerArray.sort((a, b) => {
-            return b[0] - a[0]; // change to 2 to sort by score
+            return b[2] - a[2]; // change to 2 to sort by score
         });
 
         return sorted;
