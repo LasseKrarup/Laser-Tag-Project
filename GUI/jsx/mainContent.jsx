@@ -86,7 +86,12 @@ class App extends React.Component {
         let playerName = document.getElementById("playerNameInput").value;
         let kitNumber = document.getElementById("kitNumberSelectAdd").value;
 
-        if (!activeIDs.includes(kitNumber)) {
+        if (activeIDs.length >= 10) {
+            console.log("Player list full");
+            this.toggleModal(
+                "You can't play Laser Tag with more than 10 people. Do you even have more than 10 friends? No? Didn't think so."
+            );
+        } else if (!activeIDs.includes(kitNumber)) {
             activeIDs.push(kitNumber);
 
             wsClient.send(
@@ -162,7 +167,7 @@ class App extends React.Component {
         } else {
             console.log("Player with ID " + kitNumber + " is not in the game");
             this.toggleModal(
-                "Player with ID " + kitNumber + " is not in the game"
+                "Player is not in the game. You can't remove someone who doesn't exist, dum-dum."
             );
         }
     }
@@ -195,8 +200,8 @@ class App extends React.Component {
                     );
                 }
             } else {
-                console.log("Gametime not withing range");
-                this.toggleModal("Gametime not within range!");
+                console.log("Game time not withing range");
+                this.toggleModal("Game time not within range!");
             }
         } else {
             console.log("A game is already running!");
@@ -443,13 +448,13 @@ class FormArea extends React.Component {
                     <form className="align-bottom">
                         <h4>Start game</h4>
                         <div className="form-group">
-                            <label>Gametime: </label>
+                            <label>Game time: </label>
                             <input
                                 type="number"
                                 min="10"
                                 max="20"
                                 id="gametime"
-                                placeholder="Enter the gametime..."
+                                placeholder="Enter the game time..."
                             />
                         </div>
                         <button
