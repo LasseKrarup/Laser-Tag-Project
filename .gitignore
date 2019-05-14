@@ -11,3 +11,7 @@ Export
 Generated_Source
 BUILD.log
 
+# Build crap
+*.o
+*.d
+*.symvers

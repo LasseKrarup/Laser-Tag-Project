@@ -15,8 +15,8 @@ skinparam {
 mainframe **sd** targetCtrlApp
 
 participant main <<utility>>
-participant TargetCtrl <<controller>>
-participant SonarDriver
+participant MotorControl <<controller>>
+participant SonarDriver <<controller>>
 
 [o-> main: <<start practice>>
 activate main
@@ -29,15 +29,20 @@ loop
         activate SonarDriver
         return currentPosition
         deactivate SonarDriver
-        main -> TargetCtrl: Get position control(position, currentPosition)
-        activate TargetCtrl
+        main -> MotorControl: Get position control(distance)
+        activate MotorControl
+        MotorControl -> MotorControl: Move to position
         return positionCtrl
-        deactivate TargetCtrl
-        main -> main: Move to position
+        deactivate MotorControl
         main -> main: Sample delay
+
+        alt 
+            [o-> main: <<TimeOut interrupt>>
+            main -> main: Generate position
+
+        end
     end
-    main -> main: Wait 2 seconds
-    TargetCtrl -[hidden]> main
+    MotorControl -[hidden]> main
 
     deactivate main
 
@@ -45,17 +50,17 @@ loop
 
     else Practice over
     
-    [o-> main: Practice over
+    [o-> main: <<Practice over>>
     activate main
     loop
-        main -> TargetCtrl: get position control(zero position)
-        activate TargetCtrl
+        main -> MotorControl: get position control(zero position)
+        activate MotorControl
         return positionCtrl
-        deactivate TargetCtrl
+        deactivate MotorControl
         main -> main: Move to position
         main -> main: Sample delay
-        TargetCtrl -[hidden]> main
-        deactivate TargetCtrl
+        MotorControl -[hidden]> main
+        deactivate MotorControl
         deactivate main
     end
 end

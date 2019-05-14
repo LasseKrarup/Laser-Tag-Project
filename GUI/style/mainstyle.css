@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=B612");
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500");
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors
@@ -10574,8 +10575,7 @@ body {
   height: 100%;
   width: 100%;
   font-family: "B612", sans-serif;
-  color: #16161b;
-  background-color: #cacbf5;
+  color: #fff;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -10594,7 +10594,7 @@ form {
   opacity: 1;
   width: 100%;
   height: 20px;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   -webkit-app-region: drag;
@@ -10623,12 +10623,17 @@ form {
 }
 
 header {
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   margin-bottom: 30px;
   display: block;
   padding: 30px 0;
   text-align: center;
-  background-color: #16161b;
-  color: #d8d1ff;
+  background-color: #071606;
+  color: #fff;
 }
 
 header #titletext {
@@ -10649,15 +10654,35 @@ header a {
 }
 
 header a:hover {
-  color: #826bff;
+  color: #cccccc;
+}
+
+#playerList {
+  position: relative;
+}
+
+#playerList small {
+  text-transform: uppercase;
+  font-size: 0.6em;
+}
+
+#playerList ol li {
+  font-size: 2em;
+}
+
+#playerList .points {
+  margin-left: 40px;
 }
 
 ul {
+  background-color: #121d12;
   display: block;
   padding: 0;
   margin: 0;
   width: 100%;
   height: 100%;
+  -webkit-box-shadow: 20px 20px;
+          box-shadow: 20px 20px;
 }
 
 ul li {
@@ -10672,7 +10697,7 @@ ul li {
           box-sizing: border-box;
   height: calc(100% / $numli)1px;
   width: 100%;
-  border: 2px solid gray;
+  border: 2px solid rgba(50, 50, 50, 0.7);
   opacity: 0.8;
 }
 
@@ -10683,5 +10708,92 @@ ul li:hover {
 
 .start-game-form input {
   width: 70%;
+}
+
+.customModal {
+  font-size: 2em;
+  border-radius: 1em;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  opacity: 1;
+  z-index: 20;
+  padding: 2em;
+  margin: 0;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 40%;
+  background-color: #007bff;
+}
+
+.btn-close {
+  opacity: 0.5;
+}
+
+.btn-close:hover {
+  opacity: 1;
+}
+
+.btn-topright {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.visible {
+  visibility: visible;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+#react-container {
+  margin-top: 150px;
+}
+
+#background-container {
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+#background-container:before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: -100px;
+  background: url(../img/laser.jpg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  -webkit-transform: rotate(5deg);
+          transform: rotate(5deg);
+  z-index: -1;
+  width: 150%;
+  height: 150%;
+}
+
+.gameTimer {
+  position: fixed;
+  padding: 30px 30px;
+  top: 0;
+  right: 0;
+  font-size: 2em;
+  z-index: 11;
+}
+
+.lowTime {
+  color: #c90000;
 }
 /*# sourceMappingURL=mainstyle.css.map */

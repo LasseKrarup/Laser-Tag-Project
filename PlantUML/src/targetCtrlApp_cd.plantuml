@@ -16,14 +16,23 @@ hide empty members
 frame "cd targetCtrlApp" {
 
     class main <<utility>> {
-        
+        initMain(void): void
     }
 
-    class PracticeKitCtrl <<controller>> {
-        init() : void
+    class MotorControl <<controller>> {
+        setPoint : uint16_t
+        motorControlInit(void) : void
+        motorChangeSetPoint(uint16_t newSetPoint) : void
+        getPositionControl(uint16_t distance): int
+    }
+
+    class SonarDriver <<controller>> {
+        sonarStart(void) : void
+        sonarGetPosition(uint16_t sampleTimeUs) : int
     }
 }
 
-main -- PracticeKitCtrl
+main -- MotorControl
+main -- SonarDriver
 
 @enduml

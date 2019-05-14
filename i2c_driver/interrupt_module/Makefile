@@ -6,7 +6,7 @@
 # Modified by: Lasse Krarup
 
 # ======== VARIABLES =========
-SOURCES = i2cdriver.c
+SOURCES = interrupt_module.c
 CXXFLAGS = -I. # used for custom .h files with #include <file.h> notation
 CXX = g++
 BUILD_DIR = build/$(ARCH)

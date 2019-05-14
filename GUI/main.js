@@ -92,8 +92,6 @@ function toggleMenuOverlay(err) {
 
 // Catch 'add players'
 ipcMain.on("addPlayer", (event, msg) => {
-    console.log(msg);
-
     mainWindow.webContents.send("sendToServer", {
         action: "addPlayer",
         ...msg
@@ -120,13 +118,15 @@ ipcMain.on("stopGame", event => {
         action: "stopGame"
     });
 
-    menuOverlay.close(); //close menu
+    mainWindow.webContents.send("stopGame");
+
+    if (menuExists) {
+        menuOverlay.close(); //close menu
+    }
 });
 
 // Catch 'start game'
 ipcMain.on("startGame", (event, msg) => {
-    console.log(msg);
-
     mainWindow.webContents.send("sendToServer", {
         action: "startGame",
         ...msg
@@ -137,7 +137,9 @@ ipcMain.on("startGame", (event, msg) => {
 
 // Catch quit
 ipcMain.on("quit", event => {
-    console.log("caught quit");
+    mainWindow.webContents.send("sendToServer", {
+        action: "stopGame"
+    });
 
     app.quit();
 });
