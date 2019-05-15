@@ -91,7 +91,10 @@ class App extends React.Component {
     let playerName = document.getElementById("playerNameInput").value;
     let kitNumber = document.getElementById("kitNumberSelectAdd").value;
 
-    if (!activeIDs.includes(kitNumber)) {
+    if (activeIDs.length >= 10) {
+      console.log("Player list full");
+      this.toggleModal("You can't play Laser Tag with more than 10 people. Do you even have more than 10 friends? No? Didn't think so.");
+    } else if (!activeIDs.includes(kitNumber)) {
       activeIDs.push(kitNumber);
       wsClient.send(JSON.stringify({
         action: "addPlayer",
@@ -149,7 +152,7 @@ class App extends React.Component {
       });
     } else {
       console.log("Player with ID " + kitNumber + " is not in the game");
-      this.toggleModal("Player with ID " + kitNumber + " is not in the game");
+      this.toggleModal("Player is not in the game. You can't remove someone who doesn't exist, dum-dum.");
     }
   }
 
@@ -174,8 +177,8 @@ class App extends React.Component {
           this.toggleModal("Not enough players. Don't you have any friends? You need at least 2 people to play");
         }
       } else {
-        console.log("Gametime not withing range");
-        this.toggleModal("Gametime not within range!");
+        console.log("Game time not withing range");
+        this.toggleModal("Game time not within range!");
       }
     } else {
       console.log("A game is already running!");
@@ -372,12 +375,12 @@ class FormArea extends React.Component {
       className: "align-bottom"
     }, React.createElement("h4", null, "Start game"), React.createElement("div", {
       className: "form-group"
-    }, React.createElement("label", null, "Gametime: "), React.createElement("input", {
+    }, React.createElement("label", null, "Game time: "), React.createElement("input", {
       type: "number",
       min: "10",
       max: "20",
       id: "gametime",
-      placeholder: "Enter the gametime..."
+      placeholder: "Enter the game time..."
     })), React.createElement("button", {
       className: "btn btn-primary",
       onClick: this.handleStartGame

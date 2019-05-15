@@ -16,13 +16,15 @@ wss.on("connection", function connection(ws) {
         // ws.send(message); // echo back to client
 
         // Send a high score update (for testing)
-        ws.send(
-            JSON.stringify({
-                action: "highscoreUpdate",
-                id: parsedMsg.id,
-                score: mockScore
-            })
-        );
+        if (parsedMsg.action == "addPlayer") {
+            ws.send(
+                JSON.stringify({
+                    action: "highscoreUpdate",
+                    id: parsedMsg.id,
+                    score: mockScore
+                })
+            );
+        }
         mockScore = Math.floor(Math.random() * 100);
     });
 

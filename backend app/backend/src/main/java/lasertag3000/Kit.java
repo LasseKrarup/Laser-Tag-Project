@@ -11,7 +11,7 @@ public class Kit {
     private boolean _active;
     private int _gameid;
     private Boolean connected;
-    private PrintWriter pwrite;
+    private OutputStream _out;
 
     public Kit(int id, InetAddress ip) {
         _id = id;
@@ -50,14 +50,16 @@ public class Kit {
         // TODO check if connection got interrupted and set socket to null
     }
 
-    public boolean sendMessage(String message) {
+    public boolean sendMessage(char message) {
         if (_socket != null && !_socket.isClosed()) {
             try {
-                if (pwrite == null) {
-                    pwrite = new PrintWriter(_socket.getOutputStream(), true);
+                if (_out == null) {
+                    _out = _socket.getOutputStream();
                 }
-                pwrite.print("test");
-                pwrite.flush();
+                int asci = message;
+                
+                _out.write(asci);
+                _out.flush();
 
             } catch (IOException e) {
                 // TODO Auto-generated catch block
@@ -80,7 +82,6 @@ public class Kit {
 
     public void messageReciever() {
         while (true) {
-            if (_active) {
                 InputStream istream = null;
                 BufferedReader receiveRead = null;
                 try {
@@ -93,9 +94,9 @@ public class Kit {
                         }
 
                         while (connected) {
-                            char[] message = new char[1];
-                            if (receiveRead.read(message) != -1) {
-                                System.out.println(message[0]);
+                            int message;
+                            if ((message = receiveRead.read()) != -1) {
+                                System.out.println(String.valueOf(message));
                             } else {
                                 connected = false;
                             }
@@ -122,7 +123,6 @@ public class Kit {
                         e.printStackTrace();
                     }
                 }
-            }
         }
 
     }
@@ -138,6 +138,8 @@ public class Kit {
     public void enable(int gameid) {
         _gameid = gameid;
         _active = true;
+        sendMessage('A');
+
     }
 
     public void disable() {
