@@ -30,7 +30,8 @@ static struct class *my_class = NULL;
 
 DECLARE_WAIT_QUEUE_HEAD(wq);
 
-static irqreturn_t isr_handler(int irq, void *dev_id) {
+static irqreturn_t isr_handler(int irq, void *dev_id)
+{
   printk("interrupt_module: IRQ event\n"); // should be removed for production
 
   waitcondition = 1;
@@ -42,37 +43,43 @@ static irqreturn_t isr_handler(int irq, void *dev_id) {
 /*                  MODULE INIT FUNCTION
     ====================================================
     ==================================================== */
-static int __init initfunc(void) {
+static int __init initfunc(void)
+{
   // Request GPIO
   err = gpio_request(GPIO_NUM, "INTERRUPT_IN");
-  if (err < 0) {
+  if (err < 0)
+  {
     printk(KERN_INFO "Error requesting GPIO\n");
     goto out;
   }
 
   // Set GPIO Direction to input (interrupt is expected from PSoC)
   err = gpio_direction_input(GPIO_NUM);
-  if (err < 0) {
+  if (err < 0)
+  {
     printk(KERN_INFO "Error setting GPIO direction\n");
     goto err_gpio_dir;
   }
 
   // Allocating Device Numbers
   err = alloc_chrdev_region(&devno, 0, 1, "interrupt_module_chrdev");
-  if (err < 0) {
+  if (err < 0)
+  {
     printk(KERN_ALERT "Failed to allocate chrdev region\n");
     goto err_alloc_chrdev_region;
   }
 
   // Create class
   my_class = class_create(THIS_MODULE, "interrupt_module_class");
-  if (my_class == NULL) {
+  if (my_class == NULL)
+  {
     printk(KERN_ALERT "Failed to create class\n");
     goto err_class_create;
   };
 
   // Create device
-  if (device_create(my_class, NULL, devno, NULL, "interrupt_module_dev") < 0) {
+  if (device_create(my_class, NULL, devno, NULL, "interrupt_module_dev") < 0)
+  {
     printk(KERN_ALERT "Failed to create device\n");
     goto err_dev_create;
   };
@@ -82,14 +89,16 @@ static int __init initfunc(void) {
 
   // Add cdev
   err = cdev_add(&character_device, devno, 1); // 1 minor number
-  if (err < 0) {
+  if (err < 0)
+  {
     printk(KERN_ALERT "Failed to add cdev\n");
     goto err_cdev_add;
   }
 
-  err = request_irq(gpio_to_irq(GPIO_NUM), isr_handler, IRQF_TRIGGER_RISING,
+  err = request_irq(gpio_to_irq(GPIO_NUM), isr_handler, IRQF_TRIGGER_FALLING,
                     "i2c_irq", NULL);
-  if (err < 0) {
+  if (err < 0)
+  {
     printk(KERN_ALERT "Failed to request IRQ\n");
     goto err_irq_request;
   }
@@ -122,7 +131,8 @@ out:
 /*                  MODULE EXIT FUNCTION
     ====================================================
     ==================================================== */
-static void __exit exitfunc(void) {
+static void __exit exitfunc(void)
+{
   free_irq(gpio_to_irq(GPIO_NUM), NULL); // Free IRQ
   cdev_del(&character_device);           // Delete Cdev
   device_destroy(my_class, devno);       // Destroy device
@@ -134,7 +144,8 @@ static void __exit exitfunc(void) {
 /*                  FILEOPS OPEN FUNCTION
     ====================================================
     ==================================================== */
-static int open_func(struct inode *i, struct file *f) {
+static int open_func(struct inode *i, struct file *f)
+{
   printk(KERN_INFO "interrupt_module: open()\n");
   return 0;
 }
@@ -142,7 +153,8 @@ static int open_func(struct inode *i, struct file *f) {
 /*                  FILEOPS RELEASE FUNCTION
     ====================================================
     ==================================================== */
-static int release_func(struct inode *i, struct file *f) {
+static int release_func(struct inode *i, struct file *f)
+{
   printk(KERN_INFO "interrupt_module: close()\n");
   return 0;
 }
@@ -151,7 +163,8 @@ static int release_func(struct inode *i, struct file *f) {
     ====================================================
     ==================================================== */
 static ssize_t read_func(struct file *f, char __user *buf, size_t len,
-                         loff_t *off) {
+                         loff_t *off)
+{
   printk(KERN_INFO "interrupt_module: read() call\n");
   waitcondition = 0; // reset wait condition
   wait_event_interruptible(
@@ -168,7 +181,8 @@ static ssize_t read_func(struct file *f, char __user *buf, size_t len,
     ===================================================
     ==================================================== */
 static ssize_t write_func(struct file *f, const char __user *buf, size_t len,
-                          loff_t *off) {
+                          loff_t *off)
+{
   printk(KERN_INFO "interrupt_module: write()\n");
   return len;
 }
