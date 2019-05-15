@@ -27,7 +27,7 @@ public final class GUICom extends Thread {
 
     //Variables for GUICom
     private int port;
-    private BufferedOutputStream bout;
+    private volatile BufferedOutputStream bout;
     private ServerSocket socket;
     private Socket sock;
     private InputStream in;
@@ -108,7 +108,7 @@ public final class GUICom extends Thread {
     private void Send(String message){
         try {
             //TODO make strings to send to gui
-            bout.write(encode("testmessage"));
+            bout.write(encode(message));
             bout.flush();
         } catch (IOException e) {
             // TODO Auto-generated catch block

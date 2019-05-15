@@ -7,16 +7,15 @@ import java.net.Socket;
 public class Kit {
     private int _id;
     private InetAddress _ip;
-    private Socket _socket;
-    private boolean _active;
+    private volatile Socket _socket;
+    private volatile boolean _active;
     private int _gameid;
-    private Boolean connected;
+    private volatile Boolean connected;
     private OutputStream _out;
 
     public Kit(int id, InetAddress ip) {
         _id = id;
         _ip = ip;
-        _gameid = 0;
         connected = false;
         new Thread(() -> this.connSocket()).start();
         new Thread(() -> this.messageReciever()).start();
@@ -57,7 +56,7 @@ public class Kit {
                     _out = _socket.getOutputStream();
                 }
                 int asci = message;
-                
+
                 _out.write(asci);
                 _out.flush();
 
@@ -81,48 +80,48 @@ public class Kit {
     }
 
     public void messageReciever() {
+        InputStream istream = null;;
+        BufferedReader receiveRead = null;
         while (true) {
-                InputStream istream = null;
-                BufferedReader receiveRead = null;
-                try {
-                    while (_socket != null && !_socket.isClosed()) {
-                        if (istream == null) {
-                            istream = _socket.getInputStream();
-                        }
-                        if (receiveRead == null) {
-                            receiveRead = new BufferedReader(new InputStreamReader(istream));
-                        }
-
-                        while (connected) {
-                            int message;
-                            if ((message = receiveRead.read()) != -1) {
-                                System.out.println(String.valueOf(message));
-                            } else {
-                                connected = false;
+            try {
+                while (_socket != null && !_socket.isClosed()) {
+                    if (istream == null) {
+                        istream = _socket.getInputStream();
+                    }
+                    if (receiveRead == null) {
+                        receiveRead = new BufferedReader(new InputStreamReader(istream));
+                    }
+                    int message = 0;
+                    while (message != -1) {
+                        if(istream.available() > 0){
+                            message = receiveRead.read();
+                            message = Character.getNumericValue(message);
+                            System.out.println(message);
+                            if (App.game != null & _active) {
+                                App.game.shot(message);
                             }
-
-                            // SQLConn.getInstance().PlayerShot(Character.valueOf(message[0]));
-
                         }
                     }
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    // TODO Handle exception
-
-                } finally {
-                    try {
-                        if (istream != null) {
-                            istream.close();
-                        }
-                        if (receiveRead != null) {
-                            receiveRead.close();
-                        }
-                    } catch (IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
                 }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                // TODO Handle exception
+
+            } finally {
+                try {
+                    if (istream != null) {
+                        istream.close();
+                    }
+                    if (receiveRead != null) {
+                        receiveRead.close();
+                    }
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
         }
 
     }
@@ -135,11 +134,8 @@ public class Kit {
         return _ip;
     }
 
-    public void enable(int gameid) {
-        _gameid = gameid;
+    public void enable() {
         _active = true;
-        sendMessage('A');
-
     }
 
     public void disable() {

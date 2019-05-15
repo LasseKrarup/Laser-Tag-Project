@@ -7,8 +7,8 @@ import java.net.UnknownHostException;
 
 public final class App {
 
-    public static Kit[] _kits;
-    public static Game game;
+    public volatile static Kit[] _kits;
+    public volatile static Game game;
 
     /**
      * Says hello to the world.
