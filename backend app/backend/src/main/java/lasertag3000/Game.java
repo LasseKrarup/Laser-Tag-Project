@@ -42,6 +42,7 @@ public class Game {
         }
         else{
             //log kit not online
+            System.out.println("Couldnt add player becouse kit doesnt exist");
             return false;
         }
         return true;
@@ -76,16 +77,17 @@ public class Game {
         while (itr.hasNext()) {
             Player player = itr.next();
             player.getKit().enable(_id);
-            player.getKit().notify();
         }
-
+        _active = true;
         //Start new thread that waits until time is up or interrupted
         new Thread(() -> stopGame(time)).start();
     }
 
     public void stopGame() {
         if(_active){
-        this.notifyAll();
+            synchronized(this){
+                this.notifyAll();
+            }
         }
         else{
             App.game = new Game();
@@ -97,12 +99,15 @@ public class Game {
 
         //Start timer
         LocalDateTime startTime = LocalDateTime.now();
+        synchronized(this){        
         try {
             wait(60 * 1000 * delay);
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
 
         //Write game duration to database
         Duration time = Duration.between(startTime, LocalDateTime.now());
@@ -118,15 +123,17 @@ public class Game {
     }
 
     public void shot(int id){
-        int player_id = 0;
-        Iterator<Player> itr = _players.iterator();
-        while(itr.hasNext()){
-            Player p;
-            if((p = itr.next()).getKit().getID() == id){
-
-                int score = SQLConn.getInstance().PlayerShot(p.getID());
-                GUICom.getInstance().updateHighscore(id, score);
-                return;
+        if(_active){
+            int player_id = 0;
+            Iterator<Player> itr = _players.iterator();
+            while(itr.hasNext()){
+                Player p;
+                if((p = itr.next()).getKit().getID() == id){
+    
+                    int score = SQLConn.getInstance().PlayerShot(p.getID());
+                    GUICom.getInstance().updateHighscore(id, score);
+                    return;
+                }
             }
         }
         

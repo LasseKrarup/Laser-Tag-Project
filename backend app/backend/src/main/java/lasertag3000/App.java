@@ -18,10 +18,9 @@ public final class App {
      */
     public static void main(String[] args) throws UnknownHostException {
         System.out.println("Lasertag backend app starting");
-        Config.getInstance();
-        SQLConn.getInstance();
-        GUICom.getInstance().start();
         getKits();
+        GUICom.getInstance().start();
+        //getKits();
     }
 
     //get kits from database

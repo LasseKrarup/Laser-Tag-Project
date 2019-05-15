@@ -238,16 +238,18 @@ public final class GUICom extends Thread {
                 if(App.game == null){
                     App.game = new Game();
                 }
-                App.game.addPlayer((String) map.get("name"), (Integer) map.get("id"));
+                App.game.addPlayer((String) map.get("name"),  Integer.valueOf((String) map.get("id")));
             break;
             case "removePlayer":
-                App.game.removePlayer((Integer) map.get("id"));
+                App.game.removePlayer(Integer.valueOf((String) map.get("id")));
             break;
             case "startGame":
-                App.game.startGame((Integer) map.get("time"));
+                App.game.startGame(Integer.valueOf((String) map.get("time")));
                 break;
             case "stopGame":
-                App.game.stopGame();
+                if(App.game != null){
+                    App.game.stopGame();
+                }
             break;
             //TODO add all options
         }
