@@ -16,7 +16,7 @@ uint16 clockDividerLO[] = {1188, 1081, 992, 916, 851, 795, 745, 702, 663, 628}; 
 
 void receiverHit(void)
 {
-    //CyDelay(10);    // Avoid clock stretching on I2C
+    I2C_req_Write(1);   // Set I2C_req high
     
     transmit_clock_Stop();          // Stop transmitting
         
