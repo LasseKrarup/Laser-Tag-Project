@@ -19,7 +19,7 @@ class App extends React.Component {
         visible: false,
         message: ""
       },
-      countdown: 6,
+      countdown: 5,
       showCountdown: false
     };
     this.interval;
@@ -31,7 +31,6 @@ class App extends React.Component {
     this.handleStartPractice = this.handleStartPractice.bind(this);
     this.handleStartTimer = this.handleStartTimer.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
-    this.showCountdown = this.showCountdown.bind(this);
   } // Listen for incoming messages in lifetime method
 
 
@@ -82,40 +81,44 @@ class App extends React.Component {
   }
 
   handleStartPractice() {
-    this.setState({ ...this.state,
-      time: {
-        minutes: 1,
-        seconds: 0
-      }
-    }, this.showCountdown());
-  }
+    if (this.state.players.allIds.length != 0) {
+      this.setState({ ...this.state,
+        time: {
+          minutes: 1,
+          seconds: 0
+        },
+        countdown: 5,
+        showCountdown: true
+      }, () => {
+        this.countdownInterval = setInterval(() => {
+          this.setState({ ...this.state,
+            countdown: this.state.countdown - 1
+          });
 
-  showCountdown() {
-    this.setState({ ...this.state,
-      countdown: 6
-    }, () => {
-      this.countdownInterval = setInterval(() => {
-        this.setState({ ...this.state,
-          countdown: this.state.countdown - 1
-        });
+          if (this.state.countdown == 0) {
+            clearInterval(this.countdownInterval);
+            this.setState({ ...this.state,
+              showCountdown: false
+            }); // Add fake player (practice kit)
 
-        if (this.state.countdown == 0) {
-          clearInterval(this.countdownInterval); // Add fake player (practice kit)
+            wsClient.send(JSON.stringify({
+              action: "addPlayer",
+              name: "Practice Kit",
+              id: "11"
+            })); // Send start game
 
-          wsClient.send(JSON.stringify({
-            action: "addPlayer",
-            name: "Practice Kit",
-            id: "11"
-          })); // Send start game
-
-          wsClient.send(JSON.stringify({
-            action: "startGame",
-            time: "1"
-          }));
-          this.handleStartTimer();
-        }
-      }, 1000);
-    });
+            wsClient.send(JSON.stringify({
+              action: "startGame",
+              time: "1"
+            }));
+            this.handleStartTimer();
+          }
+        }, 1000);
+      });
+    } else {
+      console.log("No players added - can't start practice");
+      this.toggleModal("Oh no! You haven't added any players, so your precious high score won't be saved anywhere. Turn off the practice kit, add a player and turn the practice kit back on!");
+    }
   }
 
   toggleModal(message = "") {
@@ -236,7 +239,6 @@ class App extends React.Component {
   }
 
   handleStartTimer() {
-    console.log("handleStartTimer()");
     this.interval = setInterval(() => {
       if (this.state.time.seconds == 0) {
         // Tick minutes
@@ -265,7 +267,10 @@ class App extends React.Component {
   render() {
     return React.createElement("div", {
       className: "container"
-    }, React.createElement("div", {
+    }, React.createElement(Countdown, {
+      isVisible: this.state.showCountdown,
+      message: this.state.countdown
+    }), React.createElement("div", {
       className: "row"
     }, React.createElement("div", {
       className: "col-2"
@@ -443,7 +448,7 @@ class GameTimer extends React.Component {
     let min = this.props.minutes;
     let sec = this.props.seconds;
     return React.createElement("div", {
-      className: (min < 2 ? "lowTime " : "") + "gameTimer"
+      className: "gameTimer" + (min < 2 ? " lowTime " : "") + (min == 0 && sec == 0 ? " hidden" : " visible")
     }, min < 10 ? "0" + min : min, ":", sec < 10 ? "0" + sec : sec);
   }
 
@@ -461,6 +466,23 @@ class Modal extends React.Component {
       className: "btn btn-danger btn-topright",
       onClick: this.props.toggleModal
     }, "\xD7")));
+  }
+
+}
+
+class Countdown extends React.Component {
+  render() {
+    return React.createElement("div", {
+      className: "modalContainer"
+    }, React.createElement("div", {
+      className: "overlay " + (this.props.isVisible ? "visible" : "hidden")
+    }), React.createElement("div", {
+      className: "customCountdown " + (this.props.isVisible ? "visible" : "hidden")
+    }, React.createElement("div", {
+      className: "countdown-content"
+    }, React.createElement("span", null, "Practice starts in..."), React.createElement("br", null), React.createElement("span", {
+      className: "countdown-text"
+    }, this.props.message))));
   }
 
 }

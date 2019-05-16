@@ -10726,6 +10726,27 @@ ul li:hover {
   background-color: #007bff;
 }
 
+.customCountdown {
+  border-radius: 1em;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  opacity: 1;
+  z-index: 20;
+  padding: 2em;
+  margin: 0;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 40%;
+  background-color: #007bff;
+  text-align: center;
+}
+
+.customCountdown .countdown-text {
+  font-size: 6em;
+  color: red;
+}
+
 .btn-close {
   opacity: 0.5;
 }
