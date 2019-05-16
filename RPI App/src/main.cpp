@@ -3,7 +3,7 @@
 #include <fstream>
 
 int main(){
-    i2cDriver i2c(1);
+    i2cDriver i2c(0x08);
 
     pthread_cond_t cond;
     pthread_mutex_t mutex;

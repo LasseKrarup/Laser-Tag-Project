@@ -1018,7 +1018,7 @@
       </field>
     </register>
   </block>
-  <block name="C_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="C" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Mixer" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="ZeroTerminal_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="SC" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -1564,6 +1564,6 @@
   <block name="vRef_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="PWR" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="GND_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="R_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="R" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Photodiode" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
 </blockRegMap>
