@@ -14,6 +14,13 @@
 
 uint16 clockDividerLO[] = {1188, 1081, 992, 916, 851, 795, 745, 702, 663, 628};   // Clock devider for frequencies 20.2 kHz to 38.2 kHz with 2 kHz steps
 
+void receiverHit(void)
+{
+    Ind_out_Write(1);   // Turn on LED
+    CyDelay(500);       // Wait 500 ms
+    Ind_out_Write(0);   // Turn of LED
+}
+
 uint8 changeMixerFrequency(uint8 currentLaserID)
 {
     if (currentLaserID == 9)

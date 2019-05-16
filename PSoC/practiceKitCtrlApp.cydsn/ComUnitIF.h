@@ -19,19 +19,32 @@ void initComUnitIF(uint8 userKitID)
     userKitID = userKitID + 48; // Add ASCII offset to get the chars '0'-'9'
     i2cbuf[0] = userKitID;  // Write userKitID to i2c buffer
     
-    I2C_req_Write(1);   // Request I2C from ComUint (the I2C Master)
+    I2C_req_Write(1);
 }
 
 void sendHitInd(uint8 currentLaserID)
 {
-    I2C_req_Write(0);
-    
     I2C_SlaveClearReadBuf();    // Clears i2c read buffer
     
     currentLaserID = currentLaserID + 48; // Add ASCII offset to get the chars '0'-'9'
     i2cbuf[0] = currentLaserID; // Write currentLaserID to i2c buffer
     
-    I2C_req_Write(1);   // Request I2C from ComUint (the I2C Master)
+    I2C_req_Write(1);
+    CyDelay(1);         // Hold I2C_req high
+    I2C_req_Write(0);   // Request I2C from ComUint (the I2C Master)
+}
+
+void sendPracticeKitStartInd()
+{
+    I2C_req_Write(1);
+    
+    I2C_SlaveClearReadBuf();    // Clears i2c read buffer
+    
+    i2cbuf[0] = 0x61; // Write 'a' to i2c buffer
+    
+    I2C_req_Write(1);   // Set I2C_req high
+    CyDelay(1);         // Hold I2C_req high
+    I2C_req_Write(0);   // Request I2C from ComUint (the I2C Master)
 }
 
 #endif /* COM_UNIT_IF_H */ 

@@ -260,6 +260,8 @@
       <Data key="2b1fee6d-bd96-4800-8bb6-9b0066ff68d9" value="Pin_4" />
       <Data key="02f2cf2c-2c7a-49df-9246-7a3435c21be3" value="SCL" />
       <Data key="3d138273-6042-4bbd-8e92-fd00a4914e28" value="I2C_req" />
+      <Data key="8d318d8b-cf7b-4b6b-b02c-ab1c5c49d0ba" value="Practice_in" />
+      <Data key="9aa90c7a-abd2-446d-918d-0fdd344eaa24" value="Ind_out" />
       <Data key="44c20e6d-9e47-4091-af02-46fe43435649" value="Pin_2" />
       <Data key="056d41e2-fd41-414d-8c1e-944806514782" value="Pin_3" />
       <Data key="22863ebe-a37b-476f-b252-6e49a8c00b12" value="SDA" />
@@ -3381,12 +3383,22 @@
     </Group>
     <Group key="02f2cf2c-2c7a-49df-9246-7a3435c21be3">
       <Group key="0">
-        <Data key="Port Format" value="0,1" />
+        <Data key="Port Format" value="12,0" />
       </Group>
     </Group>
     <Group key="3d138273-6042-4bbd-8e92-fd00a4914e28">
       <Group key="0">
-        <Data key="Port Format" value="0,2" />
+        <Data key="Port Format" value="12,2" />
+      </Group>
+    </Group>
+    <Group key="8d318d8b-cf7b-4b6b-b02c-ab1c5c49d0ba">
+      <Group key="0">
+        <Data key="Port Format" value="15,0" />
+      </Group>
+    </Group>
+    <Group key="9aa90c7a-abd2-446d-918d-0fdd344eaa24">
+      <Group key="0">
+        <Data key="Port Format" value="1,4" />
       </Group>
     </Group>
     <Group key="44c20e6d-9e47-4091-af02-46fe43435649">
@@ -3401,7 +3413,7 @@
     </Group>
     <Group key="22863ebe-a37b-476f-b252-6e49a8c00b12">
       <Group key="0">
-        <Data key="Port Format" value="0,0" />
+        <Data key="Port Format" value="12,1" />
       </Group>
     </Group>
     <Group key="2919425a-fd17-45ae-a30a-169b216fc2e5">
@@ -3411,7 +3423,7 @@
     </Group>
     <Group key="77715107-f8d5-47e5-a629-0fb83101ac6b">
       <Group key="0">
-        <Data key="Port Format" value="3,3" />
+        <Data key="Port Format" value="1,5" />
       </Group>
     </Group>
     <Group key="e851a3b9-efb8-48be-bbb8-b303b216c393">
