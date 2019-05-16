@@ -1,6 +1,6 @@
 package lasertag3000;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.InetAddress;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -8,69 +8,81 @@ import java.sql.*;
 
 public final class SQLConn {
 
-    //instance for Singleton Class
+    // instance for Singleton Class
     private static volatile SQLConn instance = new SQLConn();
 
     private String URL;
     private String user;
     private String password;
 
-    //default constructor
+    // default constructor
     private SQLConn() {
 
-        //Get values from config files
+        // Get values from config files
         password = Config.getInstance().DBPASS();
         user = Config.getInstance().DBUSER();
         String server = Config.getInstance().DBURL();
         int port = Config.getInstance().DBPORT();
 
-        //Connection string
+        // Connection string
         URL = "jdbc:mysql://" + server + ":" + port + "/lasertag?allowMultiQueries=true&serverTimezone=UTC";
 
         Connection con = getConnection();
         String createtables = null;
 
-        //Get table creation querys from file
+        // Get table creation querys from file
         try {
-            
-            createtables = new String(Files.readAllBytes(Paths.get("createTables.sql")));
+            InputStream istream = getClass().getResourceAsStream("/createTables.sql");
+            ByteArrayOutputStream result = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = istream.read(buffer)) != -1) {
+                result.write(buffer, 0, length);
+            }
+            createtables = result.toString();
+            result.close();
+            istream.close();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+
         PreparedStatement statement = null;
 
-        //execut table creation 
-        try {     
+        // execut table creation
+        try {
             statement = con.prepareStatement(createtables);
             statement.executeUpdate();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
-            //TODO handle exception
-        }
-        finally{
+            // TODO handle exception
+        } finally {
 
-            //close connection to DB
-            try{
-                if(statement != null){statement.close();}
-                if(con != null){con.close();}
-            } catch (Exception e){
-                //TODO handle exception
+            // close connection to DB
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                // TODO handle exception
                 System.out.println(e.getMessage());
                 e.printStackTrace();
             }
-            
+
         }
     }
 
-    //Return instance, part of singleton class
+    // Return instance, part of singleton class
     public static SQLConn getInstance() {
         return instance;
     }
 
-    //Create connection to database
+    // Create connection to database
     private Connection getConnection() {
         Connection con = null;
         try {
@@ -81,77 +93,82 @@ public final class SQLConn {
         }
         return con;
     }
-    
-    //Kit functions
 
+    // Kit functions
 
     public void addKit(InetAddress ip, int id) {
 
-        //prepare query and connection
+        // prepare query and connection
         String query = "INSERT INTO `kits` (`id`, `ipaddress`) VALUES (?, ?)";
         PreparedStatement statement = null;
         Connection con = getConnection();
-        try {     
+        try {
             statement = con.prepareStatement(query);
 
-            //Insert data into query
+            // Insert data into query
             statement.setInt(1, id);
             statement.setString(2, ip.getHostAddress());
 
-            //Send query to database
+            // Send query to database
             statement.executeUpdate();
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            //TODO handle exception
-        }
-        finally{
+            // TODO handle exception
+        } finally {
 
-            //Close open connections
-            try{
-                if(statement != null){statement.close();}
-                if(con != null){con.close();}
-            } catch (Exception e){
-                //TODO handle exception
+            // Close open connections
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                // TODO handle exception
                 System.out.println(e.getMessage());
             }
-            
+
         }
     }
 
     public void removeKit(int id) {
 
-        //prepare query and connection
+        // prepare query and connection
         String query = "DELETE FROM `kits` WHERE `kits`.`id` = ?";
         PreparedStatement statement = null;
         Connection con = getConnection();
         try {
             statement = con.prepareStatement(query);
 
-            //Insert data into query
+            // Insert data into query
             statement.setInt(1, id);
 
-            //Send query to database
+            // Send query to database
             statement.executeUpdate();
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            //TODO handle exception
-        }
-        finally{
+            // TODO handle exception
+        } finally {
 
-            //Close open connections
-            try{
-                if(statement != null){statement.close();}
-                if(con != null){con.close();}
-            } catch (Exception e){
-                //TODO handle exception
+            // Close open connections
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                // TODO handle exception
                 System.out.println(e.getMessage());
             }
         }
     }
 
-    public String[][] getKits(){
+    public String[][] getKits() {
 
-        //prepare query and connection
+        // prepare query and connection
         String query = "SELECT * FROM `kits`";
         Connection con = getConnection();
         ResultSet res = null;
@@ -160,51 +177,55 @@ public final class SQLConn {
         try {
             statement = con.prepareStatement(query);
 
-            //Send query to database
+            // Send query to database
             res = statement.executeQuery();
 
-            //Check the amount of kits in DB
+            // Check the amount of kits in DB
             int rows = 0;
             if (res.last()) {
                 rows = res.getRow();
                 res.beforeFirst();
             }
 
-            if(rows > 0){
-                //Put values in return array
+            if (rows > 0) {
+                // Put values in return array
                 kits = new String[rows][2];
-                for(int i = 0; res.next(); i++){
+                for (int i = 0; res.next(); i++) {
                     kits[i][0] = res.getString("id");
                     kits[i][1] = res.getString("ipaddress");
                 }
-            }
-            else{
+            } else {
                 return null;
             }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            //TODO handle exception
-        }
-        finally{
+            // TODO handle exception
+        } finally {
 
-            //Close open connection
-            try{
-                if(res != null){res.close();}
-                if(statement != null){statement.close();}
-                if(con != null){con.close();}
-            } catch (Exception e){
-                //TODO handle exception
+            // Close open connection
+            try {
+                if (res != null) {
+                    res.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                // TODO handle exception
                 System.out.println(e.getMessage());
             }
-            
+
         }
         return kits;
     }
 
-    public int addGame(){
+    public int addGame() {
 
-        //prepare query and connection
+        // prepare query and connection
         String query = "INSERT INTO `game` (`id`, `gametime`) VALUES (NULL, NULL);";
         PreparedStatement statement = null;
         Connection con = getConnection();
@@ -212,29 +233,34 @@ public final class SQLConn {
         int id = 0;
         try {
 
-            //Execute query
+            // Execute query
             statement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.executeUpdate();
             res = statement.getGeneratedKeys();
 
-            //Get assigned ID
-            if(res.next()){
+            // Get assigned ID
+            if (res.next()) {
                 id = res.getInt(1);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
-            //TODO handle exception
-        }
-        finally{
+            // TODO handle exception
+        } finally {
 
-            //Close open connections
-            try{
-                if(res != null){res.close();}
-                if(statement != null){statement.close();}
-                if(con != null){con.close();}
-            } catch (Exception e){
-                //TODO handle exception
+            // Close open connections
+            try {
+                if (res != null) {
+                    res.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                // TODO handle exception
                 System.out.println(e.getMessage());
                 e.printStackTrace();
             }
@@ -243,10 +269,10 @@ public final class SQLConn {
 
     }
 
-    public int addPlayer(String name, int kit, int game){
+    public int addPlayer(String name, int kit, int game) {
 
-        //Prepare querys and connection
-        String query = "INSERT INTO `player` (`id`, `username`, `kit`, `game`) VALUES (NULL, ?, ?, ?)"; 
+        // Prepare querys and connection
+        String query = "INSERT INTO `player` (`id`, `username`, `kit`, `game`) VALUES (NULL, ?, ?, ?)";
         String query2 = "INSERT INTO `game_score` (`game`, `score`, `player`) VALUES (?, '0', ?);";
         PreparedStatement statement = null;
         Connection con = getConnection();
@@ -260,44 +286,49 @@ public final class SQLConn {
             statement.setInt(3, game);
             statement.executeUpdate();
 
-            //execute first query
+            // execute first query
             res = statement.getGeneratedKeys();
 
-            //get assigned id
-            if(res.next()){
+            // get assigned id
+            if (res.next()) {
                 id = res.getInt(1);
             }
             statement.close();
 
-            //prepare and execute second query
+            // prepare and execute second query
             statement = con.prepareStatement(query2);
             statement.setInt(1, game);
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            //TODO handle exception
-        }
-        finally{
+            // TODO handle exception
+        } finally {
 
-            //Close open connections
-            try{
-                if(res != null){res.close();}
-                if(statement != null){statement.close();}
-                if(con != null){con.close();}
-            } catch (Exception e){
-                //TODO handle exception
+            // Close open connections
+            try {
+                if (res != null) {
+                    res.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                // TODO handle exception
                 System.out.println(e.getMessage());
             }
         }
         return id;
     }
 
-    public void removePlayer(int player){
+    public void removePlayer(int player) {
 
-        //Prepare querys and connection
-        String query = "DELETE FROM `game_score` WHERE `game_score`.`player` = "+player;
-        String query2 = "DELETE FROM `player` WHERE `player`.`id` = "+player;
+        // Prepare querys and connection
+        String query = "DELETE FROM `game_score` WHERE `game_score`.`player` = " + player;
+        String query2 = "DELETE FROM `player` WHERE `player`.`id` = " + player;
         Statement statement = null;
         Connection con = getConnection();
         try {
@@ -305,101 +336,110 @@ public final class SQLConn {
             statement.addBatch(query);
             statement.addBatch(query2);
 
-            //execute querys
+            // execute querys
             statement.executeBatch();
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            //TODO handle exception
-        }
-        finally{
+            // TODO handle exception
+        } finally {
 
-            //close open connections
-            try{
-                if(statement != null){statement.close();}
-                if(con != null){con.close();}
-            } catch (Exception e){
-                //TODO handle exception
+            // close open connections
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                // TODO handle exception
                 System.out.println(e.getMessage());
             }
         }
     }
 
-    public int PlayerShot(int id){
+    public int PlayerShot(int id) {
 
-        //Prepare query and connection
+        // Prepare query and connection
         int points = 0;
-        String query = "SELECT * FROM `game_score` WHERE `game_score`.`player` = "+id;
+        String query = "SELECT * FROM `game_score` WHERE `game_score`.`player` = " + id;
         Statement statement = null;
         Connection con = getConnection();
         ResultSet res = null;
         try {
-            statement = con.createStatement(
-            ResultSet.TYPE_SCROLL_INSENSITIVE,
-            ResultSet.CONCUR_UPDATABLE);
+            statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
-            //execute query
+            // execute query
             res = statement.executeQuery(query);
 
-            //update score field in database
-            if(res.next()){
-                points = res.getInt("score")+1;
+            // update score field in database
+            if (res.next()) {
+                points = res.getInt("score") + 1;
                 res.updateInt("score", points);
             }
             res.updateRow();
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            //TODO handle exception
-        }
-        finally{
+            // TODO handle exception
+        } finally {
 
-            //close open connections
-            try{
-                if(res != null){res.close();}
-                if(statement != null){statement.close();}
-                if(con != null){con.close();}
-            } catch (Exception e){
-                //TODO handle exception
+            // close open connections
+            try {
+                if (res != null) {
+                    res.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                // TODO handle exception
                 System.out.println(e.getMessage());
             }
         }
         return points;
     }
 
-    public void StopGame(int game, int time){
+    public void StopGame(int game, int time) {
 
-        //prepare query and connection
+        // prepare query and connection
         String query = "SELECT * FROM `game` WHERE `id` = " + game;
         Statement statement = null;
         Connection con = getConnection();
         ResultSet res = null;
         try {
-            statement = con.createStatement(
-            ResultSet.TYPE_SCROLL_INSENSITIVE,
-            ResultSet.CONCUR_UPDATABLE);
+            statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
-            //execute query
+            // execute query
             res = statement.executeQuery(query);
 
-            //update timefield in results
-            if(res.next()){
+            // update timefield in results
+            if (res.next()) {
                 res.updateInt("gametime", time);
             }
             res.updateRow();
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            //TODO handle exception
-        }
-        finally{
+            // TODO handle exception
+        } finally {
 
-            //close open connections
-            try{
-                if(res != null){res.close();}
-                if(statement != null){statement.close();}
-                if(con != null){con.close();}
-            } catch (Exception e){
-                //TODO handle exception
+            // close open connections
+            try {
+                if (res != null) {
+                    res.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                // TODO handle exception
                 System.out.println(e.getMessage());
             }
         }

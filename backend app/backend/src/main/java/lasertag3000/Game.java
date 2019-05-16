@@ -11,7 +11,6 @@ public class Game {
     // player variables
     private int _id;
     private List<Player> _players = new ArrayList<Player>();
-    private int _duration;
     private boolean _active = false;
 
     // default constructor
@@ -41,7 +40,7 @@ public class Game {
             _players.add(new Player(id, player, App._kits[kit - 1]));
         } else {
             // log kit not online
-            System.out.println("Couldnt add player becouse kit doesnt exist");
+            System.out.println("Couldnt add player becouse kit doesnt exist or isnt connected");
             return false;
         }
         return true;

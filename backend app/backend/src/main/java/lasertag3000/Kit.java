@@ -9,7 +9,6 @@ public class Kit {
     private InetAddress _ip;
     private volatile Socket _socket;
     private volatile boolean _active;
-    private int _gameid;
     private volatile Boolean connected;
     private OutputStream _out;
 
@@ -22,15 +21,17 @@ public class Kit {
     }
 
     private void connSocket() {
+        System.out.println("Trying to connect to kit " + _id);
         while (true) {
             try {
                 if ((_socket == null || _socket.isClosed()) || !connected && _ip.isReachable(500)) {
                     try {
                         _socket = new Socket(_ip, Config.getInstance().KitPort());
                         connected = true;
+                        System.out.println("Connected to kit " + _id);
                     } catch (IOException e) {
                         // TODO Auto-generated catch block
-                        System.out.println("couldnt connect to socket " + e.getMessage());
+                        // System.out.println("couldnt connect to socket " + e.getMessage());
                         if (_socket != null) {
                             _socket.close();
                         }
@@ -80,7 +81,8 @@ public class Kit {
     }
 
     public void messageReciever() {
-        InputStream istream = null;;
+        InputStream istream = null;
+        ;
         BufferedReader receiveRead = null;
         while (true) {
             try {
@@ -93,13 +95,21 @@ public class Kit {
                     }
                     int message = 0;
                     while (message != -1) {
-                        if(istream.available() > 0){
+                        if (istream.available() > 0) {
                             message = receiveRead.read();
                             message = Character.getNumericValue(message);
                             System.out.println(message);
-                            if (App.game != null & _active) {
-                                App.game.shot(message);
+                            if (message >= 0 & message < 10) {
+                                if (App.game != null & _active) {
+                                    App.game.shot(message);
+                                }
+                            } else if (message == Character.getNumericValue('a')) {
+                                GUICom.getInstance().startPractice();
+                            } else {
+                                System.out.println("Message from kit " + _id + " not understood:");
+                                System.out.println(message);
                             }
+
                         }
                     }
 

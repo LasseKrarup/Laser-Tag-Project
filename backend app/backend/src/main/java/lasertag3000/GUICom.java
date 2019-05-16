@@ -39,7 +39,8 @@ public final class GUICom extends Thread {
             try {
                 //Open socket on port
                 socket = new ServerSocket(port);
-                System.out.println("Server  ready for chatting");
+
+                System.out.println("Ready for gui to connect");
 
                 //Wait for client to connect to socket
                 sock = socket.accept();
@@ -107,12 +108,12 @@ public final class GUICom extends Thread {
 
     private void Send(String message){
         try {
-            //TODO make strings to send to gui
             bout.write(encode(message));
             bout.flush();
         } catch (IOException e) {
+            System.out.println("Error sending message to GUI");
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         return;
     }
@@ -216,7 +217,7 @@ public final class GUICom extends Thread {
 
         //add message
         byte[] bytemsg = StandardCharsets.UTF_8.encode(message).array();
-        for(int i = 0; i < bytemsg.length; i++){
+        for(int i = 0; i < datalength; i++){
             list.add(bytemsg[i]);
         }
 
@@ -251,7 +252,6 @@ public final class GUICom extends Thread {
                     App.game.stopGame();
                 }
             break;
-            //TODO add all options
         }
 
     }
@@ -263,6 +263,14 @@ public final class GUICom extends Thread {
         jsonmap.put("id", String.valueOf(kitid));
         jsonmap.put("score", String.valueOf(score));
         Send(gson.toJson(jsonmap));
+    }
+
+    public void startPractice(){
+        Gson gson = new Gson();
+        HashMap<String, String> jsonmap = new HashMap<>();
+        jsonmap.put("action", "startPractice");
+        Send(gson.toJson(jsonmap));
+
     }
 
 }
