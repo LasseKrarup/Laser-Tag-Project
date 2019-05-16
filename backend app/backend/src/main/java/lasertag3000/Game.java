@@ -8,63 +8,61 @@ import java.util.List;
 
 public class Game {
 
-    //player variables
+    // player variables
     private int _id;
     private List<Player> _players = new ArrayList<Player>();
-    private int _duration;
     private boolean _active = false;
 
-    //default constructor
+    // default constructor
     public Game() {
         _id = SQLConn.getInstance().addGame();
-        //TODO: Log
+        // TODO: Log
     }
 
     public boolean addPlayer(String player, int kit) {
 
-        //check if the kit exists
-        if(App._kits[kit-1] != null && App._kits[kit-1].isConnected()){
+        // check if the kit exists
+        if (App._kits[kit - 1] != null && App._kits[kit - 1].isConnected()) {
 
-            //check if kit is in use
-            if(!_players.isEmpty()){
+            // check if kit is in use
+            if (!_players.isEmpty()) {
                 Iterator<Player> itr = _players.iterator();
-                while(itr.hasNext()){
-                    if(itr.next().getKit().getID() == kit){
-                        //TODO player with kit already exists
+                while (itr.hasNext()) {
+                    if (itr.next().getKit().getID() == kit) {
+                        // TODO player with kit already exists
                         return false;
                     }
                 }
             }
 
-            //add player to database and playerlist
+            // add player to database and playerlist
             int id = SQLConn.getInstance().addPlayer(player, kit, _id);
-            _players.add(new Player(id, player, App._kits[kit-1]));
-        }
-        else{
-            //log kit not online
-            System.out.println("Couldnt add player becouse kit doesnt exist");
+            _players.add(new Player(id, player, App._kits[kit - 1]));
+        } else {
+            // log kit not online
+            System.out.println("Couldnt add player becouse kit doesnt exist or isnt connected");
             return false;
         }
         return true;
-        //TODO: Log
+        // TODO: Log
     }
 
     public void removePlayer(int kit) {
 
-        //find player in list
+        // find player in list
         Iterator<Player> itr = _players.iterator();
-        while(itr.hasNext()){
+        while (itr.hasNext()) {
             Player p;
-            if((p = itr.next()).getKit().getID() == kit){
+            if ((p = itr.next()).getKit().getID() == kit) {
 
-                //remove player from database and list
+                // remove player from database and list
                 SQLConn.getInstance().removePlayer(p.getID());
                 itr.remove();
-                //TODO log player removed
+                // TODO log player removed
                 return;
             }
         }
-        //TODO: Log error while removing player
+        // TODO: Log error while removing player
     }
 
     public void startGame(int time) {
@@ -73,23 +71,22 @@ public class Game {
 
         itr = _players.iterator();
 
-        //enable kits active in game
+        // enable kits active in game
         while (itr.hasNext()) {
             Player player = itr.next();
-            player.getKit().enable(_id);
+            player.getKit().enable();
         }
         _active = true;
-        //Start new thread that waits until time is up or interrupted
+        // Start new thread that waits until time is up or interrupted
         new Thread(() -> stopGame(time)).start();
     }
 
     public void stopGame() {
-        if(_active){
-            synchronized(this){
+        if (_active) {
+            synchronized (this) {
                 this.notifyAll();
             }
-        }
-        else{
+        } else {
             App.game = new Game();
         }
 
@@ -97,45 +94,44 @@ public class Game {
 
     public void stopGame(int delay) {
 
-        //Start timer
+        // Start timer
         LocalDateTime startTime = LocalDateTime.now();
-        synchronized(this){        
-        try {
-            wait(60 * 1000 * delay);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        synchronized (this) {
+            try {
+                wait(60 * 1000 * delay);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
-    }
 
-
-        //Write game duration to database
+        // Write game duration to database
         Duration time = Duration.between(startTime, LocalDateTime.now());
         SQLConn.getInstance().StopGame(_id, (int) time.toMinutes());
         Iterator<Player> itr = _players.iterator();
 
-        //Set kits to inactive
-        while(itr.hasNext()){
+        // Set kits to inactive
+        while (itr.hasNext()) {
             itr.next().getKit().disable();
         }
 
         App.game = new Game();
     }
 
-    public void shot(int id){
-        if(_active){
-            int player_id = 0;
+    public void shot(int id) {
+        if (_active) {
+            id++;
             Iterator<Player> itr = _players.iterator();
-            while(itr.hasNext()){
+            while (itr.hasNext()) {
                 Player p;
-                if((p = itr.next()).getKit().getID() == id){
-    
+                if ((p = itr.next()).getKit().getID() == id) {
+
                     int score = SQLConn.getInstance().PlayerShot(p.getID());
                     GUICom.getInstance().updateHighscore(id, score);
                     return;
                 }
             }
         }
-        
+
     }
 }
