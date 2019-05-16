@@ -31,6 +31,7 @@ class App extends React.Component {
     this.handleStartPractice = this.handleStartPractice.bind(this);
     this.handleStartTimer = this.handleStartTimer.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
+    this.resetScore = this.resetScore.bind(this);
   } // Listen for incoming messages in lifetime method
 
 
@@ -218,8 +219,21 @@ class App extends React.Component {
           wsClient.send(JSON.stringify({
             action: "startGame",
             time: gametime
-          }));
+          })); // Reset the score of all players
+
+          let newPlayers = {};
+          this.state.players.allIds.map(id => {
+            newPlayers = { ...newPlayers,
+              [id]: { ...this.state.players.byId[id],
+                score: 0
+              }
+            };
+          }); // Set state with time and new scores (the reset ones)
+
           this.setState({ ...this.state,
+            players: { ...this.state.players,
+              byId: newPlayers
+            },
             time: { ...this.state.time,
               minutes: gametime
             }
@@ -263,6 +277,8 @@ class App extends React.Component {
       }
     }, 1000);
   }
+
+  resetScore() {}
 
   render() {
     return React.createElement("div", {
