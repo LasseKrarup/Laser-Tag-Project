@@ -18,15 +18,20 @@ class App extends React.Component {
       modal: {
         visible: false,
         message: ""
-      }
+      },
+      countdown: 6,
+      showCountdown: false
     };
     this.interval;
+    this.countdownInterval;
     this.addPlayer = this.addPlayer.bind(this);
     this.removePlayer = this.removePlayer.bind(this);
     this.startGame = this.startGame.bind(this);
     this.handleUpdateHighscore = this.handleUpdateHighscore.bind(this);
+    this.handleStartPractice = this.handleStartPractice.bind(this);
     this.handleStartTimer = this.handleStartTimer.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
+    this.showCountdown = this.showCountdown.bind(this);
   } // Listen for incoming messages in lifetime method
 
 
@@ -39,6 +44,13 @@ class App extends React.Component {
           console.log("Highscore update received from server");
           this.handleUpdateHighscore(msg);
           break;
+
+        case "startPractice":
+          {
+            console.log("Start practice received  from server");
+            this.handleStartPractice();
+            break;
+          }
 
         default:
           console.log("Unknown message received from server");
@@ -66,6 +78,43 @@ class App extends React.Component {
           }
         }
       }
+    });
+  }
+
+  handleStartPractice() {
+    this.setState({ ...this.state,
+      time: {
+        minutes: 1,
+        seconds: 0
+      }
+    }, this.showCountdown());
+  }
+
+  showCountdown() {
+    this.setState({ ...this.state,
+      countdown: 6
+    }, () => {
+      this.countdownInterval = setInterval(() => {
+        this.setState({ ...this.state,
+          countdown: this.state.countdown - 1
+        });
+
+        if (this.state.countdown == 0) {
+          clearInterval(this.countdownInterval); // Add fake player (practice kit)
+
+          wsClient.send(JSON.stringify({
+            action: "addPlayer",
+            name: "Practice Kit",
+            id: "11"
+          })); // Send start game
+
+          wsClient.send(JSON.stringify({
+            action: "startGame",
+            time: "1"
+          }));
+          this.handleStartTimer();
+        }
+      }, 1000);
     });
   }
 
