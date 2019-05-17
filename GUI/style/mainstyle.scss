@@ -1,9 +1,10 @@
 @import url("https://fonts.googleapis.com/css?family=B612");
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500");
 
-$bgcolor: rgb(202, 203, 245);
-$bgcolor2: rgb(47, 55, 90);
-$textcolor: #16161b;
-$textcolor2: #d8d1ff;
+$bgcolor: rgb(18, 29, 18);
+$bgcolor2: rgb(7, 22, 6);
+$textcolor: #fff;
+$textcolor2: #fff;
 
 $lipad: 10px;
 $numli: 2;
@@ -23,7 +24,6 @@ body {
     width: 100%;
     font-family: "B612", sans-serif;
     color: $textcolor;
-    background-color: $bgcolor;
     user-select: none;
 }
 
@@ -38,7 +38,7 @@ form {
     opacity: 1;
     width: 100%;
     height: 20px;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     -webkit-app-region: drag;
@@ -66,11 +66,16 @@ form {
 }
 
 header {
+    z-index: 10;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     margin-bottom: 30px;
     display: block;
     padding: 30px 0;
     text-align: center;
-    background-color: $textcolor;
+    background-color: $bgcolor2;
     color: $textcolor2;
 
     #titletext {
@@ -93,12 +98,33 @@ header {
     }
 }
 
+#playerList {
+    position: relative;
+
+    small {
+        text-transform: uppercase;
+        font-size: 0.6em;
+    }
+    ol {
+        li {
+            // list-style-type: none;
+            font-size: 2em;
+        }
+    }
+
+    .points {
+        margin-left: 40px;
+    }
+}
+
 ul {
+    background-color: $bgcolor;
     display: block;
     padding: 0;
     margin: 0;
     width: 100%;
     height: 100%;
+    box-shadow: 20px 20px;
 
     li {
         transition: all 0.2s ease;
@@ -111,7 +137,7 @@ ul {
         box-sizing: border-box; //calculate size including padding, margin and borders etc.
         height: calc(100% / $numli) + 1px;
         width: 100%;
-        border: 2px solid gray;
+        border: 2px solid rgba(50, 50, 50, 0.7);
         opacity: 0.8;
 
         &:hover {
@@ -125,4 +151,114 @@ ul {
     input {
         width: 70%;
     }
+}
+
+.customModal {
+    font-size: 2em;
+    border-radius: 1em;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    opacity: 1;
+    z-index: 20;
+    padding: 2em;
+    margin: 0;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    background-color: $primary;
+}
+
+.customCountdown {
+    border-radius: 1em;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    opacity: 1;
+    z-index: 20;
+    padding: 2em;
+    margin: 0;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    background-color: $primary;
+    text-align: center;
+
+    // .countdown-content {
+    //     position: absolute;
+    //     top: 50%;
+    //     left: 50%;
+    //     transform: translate(-50%, -50%);
+    // }
+
+    .countdown-text {
+        font-size: 6em;
+        color: red;
+    }
+}
+
+.btn-close {
+    opacity: 0.5;
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.btn-topright {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.visible {
+    visibility: visible;
+}
+.hidden {
+    visibility: hidden;
+}
+
+#react-container {
+    margin-top: 150px;
+}
+
+#background-container {
+    position: absolute;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+
+    &:before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: -100px;
+        background: url(../img/laser.jpg);
+        background-size: contain;
+        background-repeat: no-repeat;
+        transform: rotate(5deg);
+        z-index: -1;
+        width: 150%;
+        height: 150%;
+    }
+}
+
+.gameTimer {
+    position: fixed;
+    padding: 30px 30px;
+    top: 0;
+    right: 0;
+    font-size: 2em;
+    z-index: 11;
+}
+
+.lowTime {
+    color: rgb(201, 0, 0);
 }

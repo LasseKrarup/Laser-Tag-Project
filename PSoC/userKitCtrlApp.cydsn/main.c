@@ -11,7 +11,7 @@
 #include "Receiver.h"
 #include "Transmitter.h"
 
-#define USER_KIT_ID 1   // UserKitID changed by programmer (1-10)
+#define USER_KIT_ID 2   // UserKitID changed by programmer (1-10)
 
 static const uint8 userKitID = USER_KIT_ID-1;   // Hardcoded UserKitId 0-9
 static const float minLevelDetection = 1.0;     // Minimum level for detection in Volt
@@ -28,7 +28,7 @@ int main(void)
     CyGlobalIntEnable;  // Enable global interrupts
     
     initUserKitCtrl(userKitID); // Initialize UserKitCtrl
-    initComUnitIF(userKitID);   // Initialize ComUnitIF
+    initComUnitIF();   // Initialize ComUnitIF
     
     isr_filter_StartEx(isr_filter_handler);                     // Start filter isr
     isr_mixerFreq_StartEx(isr_mixerFreq_handler);               // Start mixerFreq isr
@@ -47,8 +47,8 @@ CY_ISR(isr_filter_handler)
     
     if ((filterOutputVolt > minLevelDetection || filterOutputVolt < -minLevelDetection) && currentLaserID != userKitID) // Cannot shoot yourself
     {
-        sendHitInd(currentLaserID);    // Send hit indication to ComUnit
         receiverHit();
+        sendHitInd(currentLaserID);    // Send hit indication to ComUnit
     }
 }
 
