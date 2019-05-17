@@ -32,16 +32,15 @@ void sendHitInd(uint8 currentLaserID)
 
 void sendPracticeKitStartInd()
 {
-    I2C_req_Write(1);   // Set I2C_req high
-    CyDelay(5);         // Hold I2C_req high
+    I2C_req_Write(1);
     
     I2C_SlaveClearReadBuf();    // Clears i2c read buffer
     
     i2cbuf[0] = 0x61; // Write 'a' to i2c buffer
     
+    I2C_req_Write(1);   // Set I2C_req high
+    CyDelay(1);         // Hold I2C_req high
     I2C_req_Write(0);   // Request I2C from ComUint (the I2C Master)
-    
-    //CyDelay(100);   // Anti prel
 }
 
 #endif /* COM_UNIT_IF_H */ 
