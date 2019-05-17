@@ -47,7 +47,7 @@ void *tcpserver::sendthread(void *)
         pthread_mutex_lock(queue_lock);
         while (!_queue->empty())
         {
-            unsigned char message = (unsigned char)_queue->front();
+            char message = _queue->front();
             _queue->pop();
             send(_socket, &message, 1, 0);
             std::cout << "Sent message: " + message << std::endl;
