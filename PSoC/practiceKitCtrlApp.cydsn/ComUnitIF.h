@@ -24,13 +24,14 @@ void initComUnitIF(uint8 userKitID)
 
 void sendHitInd(uint8 currentLaserID)
 {
+    I2C_req_Write(1);   // Set I2C_req high
+    CyDelay(5);         // Hold I2C_req high
+    
     I2C_SlaveClearReadBuf();    // Clears i2c read buffer
     
     currentLaserID = currentLaserID + 48; // Add ASCII offset to get the chars '0'-'9'
     i2cbuf[0] = currentLaserID; // Write currentLaserID to i2c buffer
     
-    I2C_req_Write(1);
-    CyDelay(1);         // Hold I2C_req high
     I2C_req_Write(0);   // Request I2C from ComUint (the I2C Master)
 }
 

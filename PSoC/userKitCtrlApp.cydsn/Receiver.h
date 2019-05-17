@@ -16,6 +16,8 @@ uint16 clockDividerLO[] = {1188, 1081, 992, 916, 851, 795, 745, 702, 663, 628}; 
 
 void receiverHit(void)
 {
+    CyDelay(1); // Make sure I2C read is done
+    
     transmit_clock_Stop();  // Stop transmitting
         
     PWM_hitIndicator_Start();   // Start hit indication

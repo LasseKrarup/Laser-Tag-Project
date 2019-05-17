@@ -19,7 +19,7 @@ CY_ISR_PROTO(isr_mixerFreq_handler);        // Interrupt handling change of mixe
 CY_ISR_PROTO(isr_practiceKitStart_handler); // Interrupt handling change of mixer frequency
 
 int main(void)
-{
+{ 
     CyGlobalIntEnable;  // Enable global interrupts
     
     initPracticeKitCtrl(); // Initialize PracticeKitCtrl
@@ -40,8 +40,8 @@ CY_ISR(isr_filter_handler)
     
     if (filterOutputVolt > minLevelDetection || filterOutputVolt < -minLevelDetection)
     {
-        receiverHit();
         sendHitInd(currentLaserID);    // Reciever is hit
+        receiverHit();
     }
 }
 

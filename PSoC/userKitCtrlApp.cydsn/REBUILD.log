@@ -1,4 +1,4 @@
---------------- Rebuild Started: 05/16/2019 10:28:14 Project: userKitCtrlApp, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
+--------------- Rebuild Started: 05/17/2019 14:08:59 Project: userKitCtrlApp, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\main.o"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\cyfitter_cfg.o"
 Deleting file ".\CortexM3\ARM_GCC_541\Debug\cymetadata.o"
@@ -147,6 +147,6 @@ No ELF section .cychecksum found, creating one
 Application checksum calculated and stored in ELF section .cychecksum
 Checksum calculated and stored in ELF section .cymeta
 cyelftool.exe -S C:\Users\fresi\Documents\GitHub\Laser-Tag-Project\PSoC\userKitCtrlApp.cydsn\CortexM3\ARM_GCC_541\Debug\userKitCtrlApp.elf
-Flash used: 10190 of 262144 bytes (3.9%).
+Flash used: 10198 of 262144 bytes (3.9%).
 SRAM used: 2633 of 65536 bytes (4.0%). Stack: 2048 bytes. Heap: 128 bytes.
---------------- Rebuild Succeeded: 05/16/2019 10:28:46 ---------------
+--------------- Rebuild Succeeded: 05/17/2019 14:09:47 ---------------
