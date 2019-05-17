@@ -50,6 +50,9 @@ class App extends React.Component {
         // Stop timer
         ipcRenderer.on("stopGame", () => {
             clearInterval(this.interval);
+            this.toggleModal(
+                "The game has finished! Check out your high score. Did you win?"
+            );
             this.setState({
                 ...this.state,
                 time: {
