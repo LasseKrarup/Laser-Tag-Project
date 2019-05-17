@@ -1,9 +1,11 @@
 #include <i2c_driver.hpp>
+#define ADDRESS 0x08
 
 int main(void) {
-  i2cDriver i2cdriver(0x48);
+  i2cDriver i2cdriver(ADDRESS);
 
   printf("Starting test program\n");
+  printf("Slave address: %s\n", ADDRESS);
 
   /* Test send */
   char ch = '1';
