@@ -5,7 +5,7 @@ int main(void) {
   i2cDriver i2cdriver(ADDRESS);
 
   printf("Starting test program\n");
-  printf("Slave address: %s\n", ADDRESS);
+  printf("Slave address: 0x%02x\n", ADDRESS);
 
   /* Test send */
   char ch = '1';
