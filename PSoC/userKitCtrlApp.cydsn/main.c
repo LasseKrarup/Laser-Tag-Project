@@ -28,7 +28,7 @@ int main(void)
     CyGlobalIntEnable;  // Enable global interrupts
     
     initUserKitCtrl(userKitID); // Initialize UserKitCtrl
-    initComUnitIF();   // Initialize ComUnitIF
+    initComUnitIF();            // Initialize ComUnitIF
     
     isr_filter_StartEx(isr_filter_handler);                     // Start filter isr
     isr_mixerFreq_StartEx(isr_mixerFreq_handler);               // Start mixerFreq isr
@@ -47,8 +47,8 @@ CY_ISR(isr_filter_handler)
     
     if ((filterOutputVolt > minLevelDetection || filterOutputVolt < -minLevelDetection) && currentLaserID != userKitID) // Cannot shoot yourself
     {
-        receiverHit();
-        sendHitInd(currentLaserID);    // Send hit indication to ComUnit
+        receiverHit();              // Reciever is hit
+        sendHitInd(currentLaserID); // Send hit indication to ComUnit
     }
 }
 
