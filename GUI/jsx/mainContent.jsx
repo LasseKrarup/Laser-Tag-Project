@@ -10,7 +10,7 @@ class App extends React.Component {
             players: { byId: {}, allIds: [] },
             time: { minutes: 0, seconds: 0 },
             modal: { visible: false, message: "" },
-            countdown: 6,
+            countdown: 5,
             showCountdown: false
         };
 
@@ -24,7 +24,7 @@ class App extends React.Component {
         this.handleStartPractice = this.handleStartPractice.bind(this);
         this.handleStartTimer = this.handleStartTimer.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
-        this.showCountdown = this.showCountdown.bind(this);
+        this.resetScore = this.resetScore.bind(this);
     }
 
     // Listen for incoming messages in lifetime method
@@ -50,6 +50,9 @@ class App extends React.Component {
         // Stop timer
         ipcRenderer.on("stopGame", () => {
             clearInterval(this.interval);
+            this.toggleModal(
+                "The game has finished! Check out your high score. Did you win?"
+            );
             this.setState({
                 ...this.state,
                 time: {
@@ -77,56 +80,60 @@ class App extends React.Component {
     }
 
     handleStartPractice() {
-        this.setState(
-            {
-                ...this.state,
-                time: {
-                    minutes: 1,
-                    seconds: 0
+        if (this.state.players.allIds.length != 0) {
+            this.setState(
+                {
+                    ...this.state,
+                    time: {
+                        minutes: 1,
+                        seconds: 0
+                    },
+                    countdown: 5,
+                    showCountdown: true
+                },
+                () => {
+                    this.countdownInterval = setInterval(() => {
+                        this.setState({
+                            ...this.state,
+                            countdown: this.state.countdown - 1
+                        });
+
+                        if (this.state.countdown == 0) {
+                            clearInterval(this.countdownInterval);
+
+                            this.setState({
+                                ...this.state,
+                                showCountdown: false
+                            });
+
+                            // Add fake player (practice kit)
+                            wsClient.send(
+                                JSON.stringify({
+                                    action: "addPlayer",
+                                    name: "Practice Kit",
+                                    id: "11"
+                                })
+                            );
+
+                            // Send start game
+                            wsClient.send(
+                                JSON.stringify({
+                                    action: "startGame",
+                                    time: "1"
+                                })
+                            );
+
+                            this.handleStartTimer();
+                        }
+                    }, 1000);
                 }
-            },
-            this.showCountdown()
-        );
-    }
-
-    showCountdown() {
-        this.setState(
-            {
-                ...this.state,
-                countdown: 6
-            },
-            () => {
-                this.countdownInterval = setInterval(() => {
-                    this.setState({
-                        ...this.state,
-                        countdown: this.state.countdown - 1
-                    });
-
-                    if (this.state.countdown == 0) {
-                        clearInterval(this.countdownInterval);
-
-                        // Add fake player (practice kit)
-                        wsClient.send(
-                            JSON.stringify({
-                                action: "addPlayer",
-                                name: "Practice Kit",
-                                id: "11"
-                            })
-                        );
-
-                        // Send start game
-                        wsClient.send(
-                            JSON.stringify({
-                                action: "startGame",
-                                time: "1"
-                            })
-                        );
-
-                        this.handleStartTimer();
-                    }
-                }, 1000);
-            }
-        );
+            );
+        } else {
+            console.log("No players added - can't start practice");
+            this.toggleModal(
+                "Oh no! You haven't added any players, so your precious high score won't be saved anywhere. Turn off the practice kit, add a player and turn the practice kit back on!"
+            );
+        }
     }
 
     toggleModal(message = "") {
@@ -249,9 +256,27 @@ class App extends React.Component {
                             time: gametime
                         })
                     );
+
+                    // Reset the score of all players
+                    let newPlayers = {};
+                    this.state.players.allIds.map(id => {
+                        newPlayers = {
+                            ...newPlayers,
+                            [id]: {
+                                ...this.state.players.byId[id],
+                                score: 0
+                            }
+                        };
+                    });
+
+                    // Set state with time and new scores (the reset ones)
                     this.setState(
                         {
                             ...this.state,
+                            players: {
+                                ...this.state.players,
+                                byId: newPlayers
+                            },
                             time: { ...this.state.time, minutes: gametime }
                         },
                         this.handleStartTimer()
@@ -273,7 +298,6 @@ class App extends React.Component {
     }
 
     handleStartTimer() {
-        console.log("handleStartTimer()");
         this.interval = setInterval(() => {
             if (this.state.time.seconds == 0) {
                 // Tick minutes
@@ -302,9 +326,15 @@ class App extends React.Component {
         }, 1000);
     }
 
+    resetScore() {}
+
     render() {
         return (
             <div className="container">
+                <Countdown
+                    isVisible={this.state.showCountdown}
+                    message={this.state.countdown}
+                />
                 <div className="row">
                     <div className="col-2">
                         <FormArea
@@ -539,7 +569,13 @@ class GameTimer extends React.Component {
         let sec = this.props.seconds;
 
         return (
-            <div className={(min < 2 ? "lowTime " : "") + "gameTimer"}>
+            <div
+                className={
+                    "gameTimer" +
+                    (min < 2 ? " lowTime " : "") +
+                    (min == 0 && sec == 0 ? " hidden" : " visible")
+                }
+            >
                 {min < 10 ? "0" + min : min}:{sec < 10 ? "0" + sec : sec}
             </div>
         );
@@ -569,6 +605,35 @@ class Modal extends React.Component {
                     >
                         &times;
                     </button>
+                </div>
+            </div>
+        );
+    }
+}
+
+class Countdown extends React.Component {
+    render() {
+        return (
+            <div className="modalContainer">
+                <div
+                    className={
+                        "overlay " +
+                        (this.props.isVisible ? "visible" : "hidden")
+                    }
+                />
+                <div
+                    className={
+                        "customCountdown " +
+                        (this.props.isVisible ? "visible" : "hidden")
+                    }
+                >
+                    <div className="countdown-content">
+                        <span>Practice starts in...</span>
+                        <br />
+                        <span className="countdown-text">
+                            {this.props.message}
+                        </span>
+                    </div>
                 </div>
             </div>
         );

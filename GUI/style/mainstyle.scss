@@ -168,6 +168,33 @@ ul {
     background-color: $primary;
 }
 
+.customCountdown {
+    border-radius: 1em;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    opacity: 1;
+    z-index: 20;
+    padding: 2em;
+    margin: 0;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    background-color: $primary;
+    text-align: center;
+
+    // .countdown-content {
+    //     position: absolute;
+    //     top: 50%;
+    //     left: 50%;
+    //     transform: translate(-50%, -50%);
+    // }
+
+    .countdown-text {
+        font-size: 6em;
+        color: red;
+    }
+}
+
 .btn-close {
     opacity: 0.5;
     &:hover {
