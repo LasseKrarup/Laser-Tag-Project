@@ -36,6 +36,7 @@
 <v>LaserTag3000\practiceKitCtrlApp\Source Files\main.c</v>
 <v>LaserTag3000\practiceKitCtrlApp\Generated_Source</v>
 <v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5</v>
+<v>LaserTag3000\userKitCtrlApp</v>
 <v>LaserTag3000\userKitCtrlApp\TopDesign</v>
 <v>LaserTag3000\userKitCtrlApp\userKitCtrlApp.cydwr</v>
 <v>LaserTag3000\userKitCtrlApp\userKitCtrlApp.cydwr\Pins</v>
@@ -62,6 +63,51 @@
 <v>LaserTag3000</v>
 <v>LaserTag3000\practiceKitCtrlApp</v>
 <v>LaserTag3000\userKitCtrlApp</v>
+<v>LaserTag3000\userKitCtrlApp\TopDesign</v>
+<v>LaserTag3000\userKitCtrlApp\userKitCtrlApp.cydwr</v>
+<v>LaserTag3000\userKitCtrlApp\userKitCtrlApp.cydwr\Pins</v>
+<v>LaserTag3000\userKitCtrlApp\userKitCtrlApp.cydwr\Analog</v>
+<v>LaserTag3000\userKitCtrlApp\userKitCtrlApp.cydwr\Clocks</v>
+<v>LaserTag3000\userKitCtrlApp\userKitCtrlApp.cydwr\Interrupts</v>
+<v>LaserTag3000\userKitCtrlApp\userKitCtrlApp.cydwr\DMA</v>
+<v>LaserTag3000\userKitCtrlApp\userKitCtrlApp.cydwr\System</v>
+<v>LaserTag3000\userKitCtrlApp\userKitCtrlApp.cydwr\Directives</v>
+<v>LaserTag3000\userKitCtrlApp\userKitCtrlApp.cydwr\Flash Security</v>
+<v>LaserTag3000\userKitCtrlApp\userKitCtrlApp.cydwr\EEPROM</v>
+<v>LaserTag3000\userKitCtrlApp\Header Files</v>
+<v>LaserTag3000\userKitCtrlApp\Header Files\ComUnitIF.h</v>
+<v>LaserTag3000\userKitCtrlApp\Header Files\cyapicallbacks.h</v>
+<v>LaserTag3000\userKitCtrlApp\Header Files\Receiver.h</v>
+<v>LaserTag3000\userKitCtrlApp\Header Files\Transmitter.h</v>
+<v>LaserTag3000\userKitCtrlApp\Header Files\UserKitCtrl.h</v>
+<v>LaserTag3000\userKitCtrlApp\Source Files</v>
+<v>LaserTag3000\userKitCtrlApp\Source Files\main.c</v>
+<v>LaserTag3000\userKitCtrlApp\Generated_Source</v>
+<v>LaserTag3000\userKitCtrlApp\Generated_Source\PSoC5</v>
+<v>LaserTag3000\userKitCtrlApp\Generated_Source\PSoC5\ADC_DelSig</v>
+<v>LaserTag3000\userKitCtrlApp\Generated_Source\PSoC5\ADC_DelSig_Ext_CP_Clk</v>
+<v>LaserTag3000\userKitCtrlApp\Generated_Source\PSoC5\ADC_DelSig_IRQ</v>
+<v>LaserTag3000\userKitCtrlApp\Generated_Source\PSoC5\ADC_DelSig_theACLK</v>
+<v>LaserTag3000\userKitCtrlApp\Generated_Source\PSoC5\Clock_LO</v>
+<v>LaserTag3000\userKitCtrlApp\Generated_Source\PSoC5\cy_boot</v>
+<v>LaserTag3000\userKitCtrlApp\Generated_Source\PSoC5\DMA_DelSig</v>
+<v>LaserTag3000\userKitCtrlApp\Generated_Source\PSoC5\DMA_Filter</v>
+<v>LaserTag3000\userKitCtrlApp\Generated_Source\PSoC5\Em_EEPROM_Dynamic</v>
+<v>LaserTag3000\userKitCtrlApp\Generated_Source\PSoC5\Filter</v>
+<v>LaserTag3000\userKitCtrlApp\Generated_Source\PSoC5\I2C</v>
+<v>LaserTag3000\userKitCtrlApp\Generated_Source\PSoC5\I2C_req</v>
+<v>LaserTag3000\userKitCtrlApp\Generated_Source\PSoC5\Ind_out</v>
+<v>LaserTag3000\userKitCtrlApp\Generated_Source\PSoC5\isr_filter</v>
+<v>LaserTag3000\userKitCtrlApp\Generated_Source\PSoC5\isr_mixerFreq</v>
+<v>LaserTag3000\userKitCtrlApp\Generated_Source\PSoC5\isr_trigger</v>
+<v>LaserTag3000\userKitCtrlApp\Generated_Source\PSoC5\isr_triggerBlocking</v>
+<v>LaserTag3000\userKitCtrlApp\Generated_Source\PSoC5\Mixer</v>
+<v>LaserTag3000\userKitCtrlApp\Generated_Source\PSoC5\mixerFreq_clock</v>
+<v>LaserTag3000\userKitCtrlApp\Generated_Source\PSoC5\pwm_clock</v>
+<v>LaserTag3000\userKitCtrlApp\Generated_Source\PSoC5\PWM_hitIndicator</v>
+<v>LaserTag3000\userKitCtrlApp\Generated_Source\PSoC5\Rcv_in</v>
+<v>LaserTag3000\userKitCtrlApp\Generated_Source\PSoC5\SCL</v>
+<v>LaserTag3000\userKitCtrlApp\Generated_Source\PSoC5\SDA</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="LaserTag3000">
@@ -267,7 +313,7 @@
 <v>Datasheet</v>
 </TreeKeysV2>
 <TreeStatesV2>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="LaserTag3000\userKitCtrlApp\Project Datasheet">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
 <ExpandedNodeIds>
 <v>LaserTag3000</v>
 <v>LaserTag3000\practiceKitCtrlApp\PSoC 5LP Architecture TRM</v>
