@@ -1,0 +1,48 @@
+@startuml GUIsdAddPlayer
+
+skinparam {
+    monochrome true
+    dpi 300
+    padding 5
+    packageStyle rectangle
+    packageStyle frame
+    shadowing false
+}
+
+mainframe **sd** GUI - Add player
+
+    participant Electron
+    participant "Main Window" as main
+    participant "React App" as react
+    participant "FormArea" as form
+    participant "ErrorMessage" as error
+    participant "PlayerList" as players
+    participant "WebSocket Client" as ws
+
+    activate Electron
+    Electron -> main++: create
+    deactivate Electron
+    main -> react++: render DOM
+    deactivate main
+    react -> form--: render
+    ...
+    [->form: Enter player name and kit ID
+
+    alt if kit ID not within range
+        react -> error++: render error
+        [<-error: display message
+        deactivate error
+    else else
+        activate react
+        react -> react: update state
+        react -> players++: render
+        players -> players--: sort and list players
+        react --> main++: player name and ID
+        main -> ws: Send name and ID to server
+        deactivate main
+        activate ws
+        ws ->]: Send to server
+        deactivate ws
+    end
+
+@enduml

@@ -1,0 +1,38 @@
+@startuml GUIsdUpdateHighscore
+
+skinparam {
+    monochrome true
+    dpi 300
+    padding 5
+    packageStyle rectangle
+    packageStyle frame
+    shadowing false
+}
+
+mainframe **sd** GUI - Update high score
+
+    participant Electron
+    participant "Main Window" as main
+    participant "React App" as react
+    participant "WebSocket Client" as ws
+    participant "PlayerList" as players
+
+    activate Electron
+    Electron -> main++: create
+    deactivate Electron
+    main -> react++: render DOM
+    deactivate main
+    react -> players--: render
+    ...
+
+    [->ws: Player ID and new score
+    activate ws
+    ws -> react ++: ID and new score
+    deactivate ws
+
+    react -> react: update state
+    react -> players++: render
+    deactivate react
+    players -> players --: sort and update list
+
+@enduml

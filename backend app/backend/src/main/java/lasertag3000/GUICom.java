@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 
+//Class responsible for commonication with GUI
 public final class GUICom extends Thread {
 
     private static volatile GUICom instance = new GUICom();
@@ -34,40 +35,45 @@ public final class GUICom extends Thread {
     private OutputStream out;
     private Scanner s;
 
+    //Implementation of run function from Thread interface
     public void run() {
         while (true) {
             try {
-                //Open socket on port
+                //Open socket on defined port
                 socket = new ServerSocket(port);
 
                 System.out.println("Ready for gui to connect");
 
-                //Wait for client to connect to socket
+                //Block while waiting for client(GUI) to connect to socket
                 sock = socket.accept();
 
-                //Get input and output stream
+                //Get input and output stream after connection etablished
                 in = sock.getInputStream();
                 out = sock.getOutputStream();
                 bout = new BufferedOutputStream(out);
                 s = new Scanner(in);
 
-                //Make websocket handshake
+                //Make websocket handshake to finish connection
                 BufferedInputStream bin = new BufferedInputStream(in);
                 out.write(handshake(s));
                 
-                
+                //Run while socket is not closed
                 while (!sock.isClosed()) {
-                    //Check if input is aviable
+                    //Check if input is aviable in input stream
                     if (bin.available() > 0) {
+                        //Read from input stream
                         byte[] message = new byte[bin.available()];
                         bin.read(message);
-                        //interpret decoded message
+                        //Decode websocket frame and interpret the decoded json data
                         messageInterpreter(decode(message));
                     }
                 }
-            } catch (IOException e) {
+
+            } 
+            catch (IOException e) {
                 System.out.print(e.getMessage());
             } finally {
+                //Close all open streams and connections
                 try {
                     if (s != null) {
                         s.close();
@@ -89,12 +95,6 @@ public final class GUICom extends Thread {
 
                 }
             }
-            try {
-                sleep(1000);
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
         }
     }
 
@@ -103,12 +103,15 @@ public final class GUICom extends Thread {
     }
 
     private GUICom() {
+        //Get port for GUI connection from config
         port = Config.getInstance().ServerPort();
     }
 
     private void Send(String message){
+        //Check if socket is created and not closed
         if(sock != null && !sock.isClosed()){
             try {
+                //Write encoded websocket frame to output stream
                 bout.write(encode(message));
                 bout.flush();
             } catch (IOException e) {
@@ -120,17 +123,17 @@ public final class GUICom extends Thread {
     }
 
     private byte[] handshake(Scanner s) {
-        //Get new line
+        //Check if recived data contain "GET" keyword
         String data = s.useDelimiter("\\r\\n\\r\\n").next();
         Matcher get = Pattern.compile("GET").matcher(data);
         byte[] response = null;
-        //if handshakerequest
+        //if data contain "GET" keyword (its a websocket handshake request)
         if (get.find()) {
-            //find key
+            //find key in request
             Matcher match = Pattern.compile("Sec-WebSocket-Key: (.*)").matcher(data);
             match.find();
             try {
-                //create response with new key
+                //create response with new key, for deeper understanding read up on websocket handshakes
                 response = ("HTTP/1.1 101 Switching Protocols\r\n" + "Connection: Upgrade\r\n"
                         + "Upgrade: websocket\r\n" + "Sec-WebSocket-Accept: "
                         + Base64.getEncoder()
@@ -144,17 +147,20 @@ public final class GUICom extends Thread {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            
+            System.out.println("Made handshake");
         }
-        System.out.println("Made handshake");
         return response;
     }
 
     private String decode(byte[] data){
         //TODO implement ping pong feature
+        //Find amount the length of data as unsigned int
         int datalength = (data[1] ^ 0x80) & 0xFF;
+
+        //set position of next unread byte
         int position = 2;
         byte[] mask = new byte[4];
+
         //check if length is longer than 125 and get actual size if so
         if(datalength == 126){
             datalength = 0;
@@ -177,11 +183,16 @@ public final class GUICom extends Thread {
             mask[i] = data[position];
             position++;
         }
+
+        //Create empty array to store decoded data
         byte[] decoded = new byte[datalength];
-        //decode data with mask
+
+        //decode data using the mask from websocket frame
         for(int i = 0; i < datalength; i++){
             decoded[i] = (byte) (data[i + position] ^ mask[i % 4]);
         }
+
+        //Return data as string
         return new String(decoded, StandardCharsets.UTF_8);
 
         
@@ -195,7 +206,7 @@ public final class GUICom extends Thread {
         //set bits, part of protocol
         list.add((byte) (0x81));
 
-        //set datalength
+        //set datalength, depending on lenth a different amount of bytes is used
         if(datalength > 125){
             int extlength;
             if(datalength > 0xFFFF){
@@ -216,12 +227,13 @@ public final class GUICom extends Thread {
             list.add(((byte) datalength));
         }
 
-        //add message
+        //add message to websocket frame
         byte[] bytemsg = StandardCharsets.UTF_8.encode(message).array();
         for(int i = 0; i < datalength; i++){
             list.add(bytemsg[i]);
         }
 
+        //Convert Byte list to byte array
         byte[] returnArray = new byte[list.size()];
         for(int i = 0; i < list.size(); i++){
             returnArray[i] = list.get(i).byteValue();
@@ -231,15 +243,25 @@ public final class GUICom extends Thread {
 
     //Interpret json message
     private void messageInterpreter(String message){
+
+        //Create new gson object for json conversion
         Gson gson = new Gson();
+
+        //Create map from json data
         LinkedTreeMap map = gson.fromJson(message, LinkedTreeMap.class);
+
         //get action option from json object
         String action = (String) map.get("action");
+
+        //find action 
         switch(action) {
             case "addPlayer":
+
+            //Create game if it doenst exist before adding player
                 if(App.game == null){
                     App.game = new Game();
                 }
+
                 App.game.addPlayer((String) map.get("name"),  Integer.valueOf((String) map.get("id")));
             break;
             case "removePlayer":
@@ -257,19 +279,29 @@ public final class GUICom extends Thread {
 
     }
 
+    //Send highscore update to gui
     public void updateHighscore(int kitid, int score){
+
+        //Create new map with json options
         Gson gson = new Gson();
         HashMap<String, String> jsonmap = new HashMap<>();
         jsonmap.put("action", "highscoreUpdate");
         jsonmap.put("id", String.valueOf(kitid));
         jsonmap.put("score", String.valueOf(score));
+
+        //Convert map to json formatted string and send it to gui
         Send(gson.toJson(jsonmap));
     }
 
+    //Send message from practice kit to gui to start practice
     public void startPractice(){
+
+        //Create new map with json options
         Gson gson = new Gson();
         HashMap<String, String> jsonmap = new HashMap<>();
         jsonmap.put("action", "startPractice");
+
+        //Convert map to json formatted string and send it to gui
         Send(gson.toJson(jsonmap));
 
     }
