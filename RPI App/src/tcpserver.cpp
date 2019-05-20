@@ -50,7 +50,7 @@ void *tcpserver::sendthread(void *)
             char message = _queue->front();
             _queue->pop();
             send(_socket, &message, 1, 0);
-            std::cout << "send message" << std::endl;
+            std::cout << "Sent message: " + message << std::endl;
         }
         pthread_cond_wait(queue_sig, queue_lock);
         pthread_mutex_unlock(queue_lock);

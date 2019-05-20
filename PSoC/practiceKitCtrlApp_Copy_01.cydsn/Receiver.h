@@ -16,8 +16,6 @@ uint16 clockDividerLO[] = {1188, 1081, 992, 916, 851, 795, 745, 702, 663, 628}; 
 
 void receiverHit(void)
 {
-    CyDelay(1); // Make sure I2C read is done
-    
     Ind_out_Write(1);   // Turn on LED
     CyDelay(500);       // Wait 500 ms
     Ind_out_Write(0);   // Turn of LED

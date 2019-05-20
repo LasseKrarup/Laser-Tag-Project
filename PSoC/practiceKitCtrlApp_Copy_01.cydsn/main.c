@@ -10,16 +10,16 @@
 #include "ComUnitIF.h"
 #include "Receiver.h"
 
-static const float minLevelDetection = 1.0;     // Minimum level for detection in Volt
-float filterOutputVolt = 0;                     // Holds filter output in Volt
-uint8 currentLaserID = 0;                       // Holds current laser id 0-9
+static const float minLevelDetection = 1.0; // Minimum level for detection in Volt
+float filterOutputVolt = 0;                 // Holds filter output in Volt
+uint8 currentLaserID = 0;                   // Holds current laser id 0-9
 
 CY_ISR_PROTO(isr_filter_handler);           // Interrupt handling filter output
 CY_ISR_PROTO(isr_mixerFreq_handler);        // Interrupt handling change of mixer frequency
 CY_ISR_PROTO(isr_practiceKitStart_handler); // Interrupt handling change of mixer frequency
 
 int main(void)
-{        
+{ 
     CyGlobalIntEnable;  // Enable global interrupts
     
     initPracticeKitCtrl();  // Initialize PracticeKitCtrl
@@ -41,8 +41,8 @@ CY_ISR(isr_filter_handler)
     
     if (filterOutputVolt > minLevelDetection || filterOutputVolt < -minLevelDetection)
     {
-        receiverHit();  // Reciever is hit
         sendHitInd(currentLaserID); // Send hit indication to ComUnit
+        receiverHit();              // Reciever is hit
     }
 }
 

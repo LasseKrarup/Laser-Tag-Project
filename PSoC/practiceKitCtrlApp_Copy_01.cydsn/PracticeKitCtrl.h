@@ -10,9 +10,8 @@
 
 #include "project.h"
 
-int16 filterOutput = 0;                                                                 // Holds last output from filter
-uint16 clockDividerTransmit[] = {1200, 1091, 1000, 923, 857, 800, 750, 706, 667, 632};  // Clock devider for frequencies 20 kHz to 38 kHz with 2 kHz steps
-
+int16 filterOutput = 0;     // Holds last output from filter
+    
 void DMA_DelSig_Config()
 {
     /* Variable declarations for DMA_DelSig */
