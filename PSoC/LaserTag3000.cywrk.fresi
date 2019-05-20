@@ -13,9 +13,10 @@
 <v>Output</v>
 </TreeKeys>
 <TreeStates>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="LaserTag3000\practiceKitCtrlApp">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="LaserTag3000\practiceKitCtrlApp\Source Files\main.c">
 <ExpandedNodeIds>
 <v>LaserTag3000</v>
+<v>LaserTag3000\practiceKitCtrlApp</v>
 <v>LaserTag3000\practiceKitCtrlApp\TopDesign</v>
 <v>LaserTag3000\practiceKitCtrlApp\practiceKitCtrlApp.cydwr</v>
 <v>LaserTag3000\practiceKitCtrlApp\practiceKitCtrlApp.cydwr\Pins</v>
@@ -61,7 +62,52 @@
 <VisibleNodeIds>
 <v>LaserTag3000</v>
 <v>LaserTag3000\practiceKitCtrlApp</v>
-<v>LaserTag3000\userKitCtrlApp</v>
+<v>LaserTag3000\practiceKitCtrlApp\TopDesign</v>
+<v>LaserTag3000\practiceKitCtrlApp\practiceKitCtrlApp.cydwr</v>
+<v>LaserTag3000\practiceKitCtrlApp\practiceKitCtrlApp.cydwr\Pins</v>
+<v>LaserTag3000\practiceKitCtrlApp\practiceKitCtrlApp.cydwr\Analog</v>
+<v>LaserTag3000\practiceKitCtrlApp\practiceKitCtrlApp.cydwr\Clocks</v>
+<v>LaserTag3000\practiceKitCtrlApp\practiceKitCtrlApp.cydwr\Interrupts</v>
+<v>LaserTag3000\practiceKitCtrlApp\practiceKitCtrlApp.cydwr\DMA</v>
+<v>LaserTag3000\practiceKitCtrlApp\practiceKitCtrlApp.cydwr\System</v>
+<v>LaserTag3000\practiceKitCtrlApp\practiceKitCtrlApp.cydwr\Directives</v>
+<v>LaserTag3000\practiceKitCtrlApp\practiceKitCtrlApp.cydwr\Flash Security</v>
+<v>LaserTag3000\practiceKitCtrlApp\practiceKitCtrlApp.cydwr\EEPROM</v>
+<v>LaserTag3000\practiceKitCtrlApp\Header Files</v>
+<v>LaserTag3000\practiceKitCtrlApp\Header Files\ComUnitIF.h</v>
+<v>LaserTag3000\practiceKitCtrlApp\Header Files\cyapicallbacks.h</v>
+<v>LaserTag3000\practiceKitCtrlApp\Header Files\PracticeKitCtrl.h</v>
+<v>LaserTag3000\practiceKitCtrlApp\Header Files\Receiver.h</v>
+<v>LaserTag3000\practiceKitCtrlApp\Source Files</v>
+<v>LaserTag3000\practiceKitCtrlApp\Source Files\main.c</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\ADC_DelSig</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\ADC_DelSig_Ext_CP_Clk</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\ADC_DelSig_IRQ</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\ADC_DelSig_theACLK</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\Clock_LO</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\cy_boot</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\DMA_DelSig</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\DMA_Filter</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\Em_EEPROM_Dynamic</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\Filter</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\I2C</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\I2C_req</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\Ind_out</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\isr_filter</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\isr_mixerFreq</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\isr_practiceKitStart</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\Mixer</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\mixerFreq_clock</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\Practice_in</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\Rcv_in</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\SCL</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\SDA</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\TIA</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\cycodeshareexport.ld</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\cycodeshareimport.ld</v>
+<v>LaserTag3000\practiceKitCtrlApp\Generated_Source\PSoC5\cycodeshareimport.scat</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="LaserTag3000">
@@ -214,52 +260,6 @@
 <VisibleNodeIds>
 <v>LaserTag3000</v>
 <v>LaserTag3000\practiceKitCtrlApp</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_Ext_CP_Clk.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_INT.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_IRQ.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_PM.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\ADC_DelSig_theACLK.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_LO.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\CyDmac.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\CySpc.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\cyutils.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\DMA_DelSig_dma.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\DMA_Filter_dma.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\Filter.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\Filter_Coefficients.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\Filter_PM.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\Filter_PVT.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\Filter_RAM_Data.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\I2C.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\I2C_BOOT.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\I2C_INT.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\I2C_MASTER.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\I2C_PM.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\I2C_req.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\I2C_SLAVE.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\Ind_out.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_filter.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_mixerFreq.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_practiceKitStart.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\main.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\Mixer.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\Mixer_PM.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\mixerFreq_clock.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\Practice_in.lst</v>
-<v>LaserTag3000\practiceKitCtrlApp\CortexM3\ARM_GCC_541\Debug\Listing Files\Rcv_in.lst</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStates>
