@@ -1,0 +1,48 @@
+@startuml interruptModuleInit
+
+skinparam {
+    monochrome true
+    dpi 300
+    padding 5
+    packageStyle rectangle
+    packageStyle frame
+    shadowing false
+}
+
+mainframe **activity** Interrupt - init
+
+    start
+        :Request GPIO;
+        :Allocate device region;
+        :Create class;
+        :Create device;
+        :Init device;
+        :Add device;
+        :Request interrupt;
+        :Declare wait queue;
+    stop
+
+@enduml
+
+@startuml interruptModuleRead
+
+skinparam {
+    monochrome true
+    dpi 300
+    padding 5
+    packageStyle rectangle
+    packageStyle frame
+    shadowing false
+}
+
+mainframe **activity** Interrupt - read
+
+    start
+        :Clear wait condition;
+        while (waitcondition set?)
+            :No operation;
+        endwhile
+        :Clear wait condition;
+    stop
+
+@enduml

@@ -1,0 +1,34 @@
+@startuml GUIcomponentDiagram
+
+skinparam {
+    monochrome true
+    dpi 300
+    padding 5
+    packageStyle rectangle
+    packageStyle frame
+    shadowing false
+}
+
+frame "**GUI** - Component diagram" {
+    interface "WebSocket" as ws
+    interface "Feedback" as fb
+    interface "Input"
+    actor User
+    
+    [Electron] --> [Main Window]: creates
+    [Electron] --> [Menu]: creates
+    [Main Window] --> [React App]: contains
+    [Main Window] --> [WebSocket Client]: uses
+    [WebSocket Client] - ws
+    [FormArea] - Input
+    [React App] --> [PlayerList] : renders
+    [React App] --> [FormArea] : renders
+    [React App] --> [ErrorMessage] : renders
+    [React App] --> [GameTimer] : renders
+    [ErrorMessage] - fb
+
+    User -up-> Input: Enters to
+    User -up-> fb: Reads from
+}
+
+@enduml

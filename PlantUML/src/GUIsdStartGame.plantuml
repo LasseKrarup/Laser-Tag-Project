@@ -1,0 +1,45 @@
+@startuml GUIsdStartGame
+
+skinparam {
+    monochrome true
+    dpi 300
+    padding 5
+    packageStyle rectangle
+    packageStyle frame
+    shadowing false
+}
+
+mainframe **sd** GUI - Start game
+
+    participant Electron
+    participant "Main Window" as main
+    participant "React App" as react
+    participant "FormArea" as form
+    participant "ErrorMessage" as error
+    participant "Game Timer" as timer
+    participant "WebSocket Client" as ws
+
+    activate Electron
+    Electron -> main: create
+    main -> react++: render DOM
+    react -> form--: render
+    ...
+    [->form: User enters game time and press button
+
+    alt if game time and player count not within range
+        react -> error: render error
+    else else
+        activate react
+        react -> react: update state
+        react -> timer++: render
+        timer -> timer: start countdown
+        react --> main++: game time
+        deactivate react
+        main -> ws++: Send game time to server
+        deactivate main
+        ws ->]: Send to server
+        deactivate ws
+    end
+    deactivate Electron
+
+@enduml
