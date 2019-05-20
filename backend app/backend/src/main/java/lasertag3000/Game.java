@@ -19,6 +19,11 @@ public class Game {
         // TODO: Log
     }
 
+    public Game(List<Player> players){
+        _id = SQLConn.getInstance().addGame();
+        _players = players;
+    }
+
     public boolean addPlayer(String player, int kit) {
 
         // check if the kit exists
@@ -115,7 +120,7 @@ public class Game {
             itr.next().getKit().disable();
         }
 
-        App.game = new Game();
+        App.game = new Game(_players);
     }
 
     public void shot(int id) {

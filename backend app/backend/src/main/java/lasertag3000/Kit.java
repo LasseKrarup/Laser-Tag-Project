@@ -97,13 +97,12 @@ public class Kit {
                     while (message != -1) {
                         if (istream.available() > 0) {
                             message = receiveRead.read();
-                            message = Character.getNumericValue(message);
                             System.out.println(message);
                             if (message >= 0 & message < 10) {
                                 if (App.game != null & _active) {
                                     App.game.shot(message);
                                 }
-                            } else if (message == Character.getNumericValue('a')) {
+                            } else if (message == 'a') {
                                 GUICom.getInstance().startPractice();
                             } else {
                                 System.out.println("Message from kit " + _id + " not understood:");

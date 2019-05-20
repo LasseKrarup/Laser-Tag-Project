@@ -107,15 +107,16 @@ public final class GUICom extends Thread {
     }
 
     private void Send(String message){
-        try {
-            bout.write(encode(message));
-            bout.flush();
-        } catch (IOException e) {
-            System.out.println("Error sending message to GUI");
-            // TODO Auto-generated catch block
-            //e.printStackTrace();
+        if(sock != null && !sock.isClosed()){
+            try {
+                bout.write(encode(message));
+                bout.flush();
+            } catch (IOException e) {
+                System.out.println("Error sending message to GUI");
+                // TODO Auto-generated catch block
+                //e.printStackTrace();
+            }
         }
-        return;
     }
 
     private byte[] handshake(Scanner s) {
