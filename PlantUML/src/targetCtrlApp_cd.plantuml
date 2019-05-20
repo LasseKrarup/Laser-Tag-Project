@@ -17,18 +17,20 @@ frame "cd targetCtrlApp" {
 
     class main <<utility>> {
         initMain(void): void
+        generateNewSetpoint(void): void
     }
 
     class MotorControl <<controller>> {
-        setPoint : uint16_t
         motorControlInit(void) : void
         motorChangeSetPoint(uint16_t newSetPoint) : void
+        writeKillMotor(bool killValue) : void
+        motorSetDirection(int motorDirectionNew): void
         getPositionControl(uint16_t distance): int
     }
 
     class SonarDriver <<controller>> {
         sonarStart(void) : void
-        sonarGetPosition(uint16_t sampleTimeUs) : int
+        sonarGetPosition(uint16_t sampleTimeUs) : uint16_t
     }
 }
 
