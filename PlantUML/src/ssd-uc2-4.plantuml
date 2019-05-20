@@ -6,7 +6,7 @@ skinparam {
     monochrome true
     dpi 200
     padding 5
-    sequenceMessageAlign center
+    sequenceMessageAlign left
     packageStyle frame
     shadowing false
     'backgroundColor transparent
@@ -17,61 +17,67 @@ mainframe **sd** Use case 2-4
 actor Users as users
 actor Admin as admin
 participant "PC"
-collections "UserKitComUnit" as comUnit
-participant "UserKitCtrl (User 1)" as kitCtrl1
-participant "UserKitCtrl (User 2)" as kitCtrl2
-participant "ScoreDisplay" as display
+participant "UserKit (User 1)" as userKit1
+participant "UserKit (User 2)" as userKit2
 
 == Use case 2: Start spil ==
 
 group Prækondition
-    users -> admin: To eller flere brugere henvender sig
-    activate admin
+    users -> admin++: To eller flere brugere (maks. 10)\ntager kontak til admin
 end
 
-admin -> PC: Vælger at starte spil
-activate PC
-admin -> PC: Indtaster længden på spillet
-loop Indtil alle spillere er indtastet
-    admin -> PC: Indtaster navn på spiller
-    admin -> PC: Indtaster ID på UserKit
-end
-admin -> PC: Bekræfter indtastningerne
-admin -> PC: Bekræfter start af spil
+admin -> PC++: Indtaster navn på spillere\nsamt nummer på udleveret UserKit
+admin -> PC: Indtaster længden på spillet\n(mellem 10 og 20 min)
+
+admin -> PC: Vælger at starte spillet
 deactivate admin
-PC -> PC: Starter timer
-PC -> comUnit: Spil startet
-activate comUnit
+PC -> PC: Der startes en nedtælling\nsvarende til spillets længde
+
+PC -> PC: Nedtællingen ses på GUI
+
+alt Forkert input gives af admin
+    PC -> PC: En unik fejlmeddelelse vises for admin
+    deactivate PC
+    rnote over users, userKit2
+        Use case fortsættes fra start
+    endrnote
+end
 
 == Use case 3: Skyd ==
 
 group Prækondition
-    users -> kitCtrl1: En bruger trykker på aftrækkeren
-    activate kitCtrl1
-    kitCtrl1 -> kitCtrl2: Udsender laserstråle
-    deactivate kitCtrl1
-    activate kitCtrl2
+    users -> userKit1++: En bruger (User 1) trykker på skydknappen på sit UserKit
+    deactivate userKit1
 end
 
-kitCtrl2 -> kitCtrl2: Modtager ramt: Vibrerer og blinker
-kitCtrl2 -> comUnit: Fortæller hvilken bruger, der har ramt modtageren
-deactivate kitCtrl2
-comUnit -> PC: Sender information om ramt modtager til PC
+userKit2 -> userKit2++: Den ramte lasermodtager detektere,\nat den er ramt
 
+alt Bruger rammer ikke sit mål
+    rnote over users, userKit2
+        Use case afsluttes
+    endrnote
+end
+
+userKit2 -> userKit2: Det ramte UserKit vibrerer og blinker
+userKit2 -> PC++: Userkit sender hændelsesinformation til server
+deactivate userKit2
+PC -> PC: Serveren opdaterer databasen
+PC -> PC: Point vises på ScoreDisplay
+deactivate PC
 
 == Use case 4: Afslut spil ==
 
 alt Timer udløber
-    admin -> PC: Afslut spil
+    PC -> PC++: Afslut spil
+    deactivate PC
 else Admin afbryder spil
-    admin -> PC: Spil afbrudt
+    admin -> PC++: Stop spil
+    deactivate PC
 end
 
-PC -> comUnit: Afslut spil
-deactivate comUnit
-
-PC -> PC: Statistikker for det afsluttede spil opdateres
-PC -> display: Point og statistikker gøres tilgængelige på skærm
+PC -> PC++: GUI sender besked til serveren om,\nat spillet er afsluttet
+PC -> PC: Server stopper det aktive spil på serveren
+PC -> PC: High score kan observeres\npå ScoreDisplay indtil spillerene\nslettes eller et nyt spil startes
 deactivate PC
 
 @enduml

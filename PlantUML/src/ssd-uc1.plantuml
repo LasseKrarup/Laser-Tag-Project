@@ -19,42 +19,41 @@ actor Bruger as user
 participant "UserKit" as userKit
 participant "PracticeKit" as practiceKit
 participant "Target" as target
-participant "Server" as server
-participant "ScoreDisplay" as screen
+participant "PC" as pc
 
 '== Use case 1 ==
-user -> practiceKit: Tænder for
+user -> practiceKit++: Trykker på knap på PracticeKit
+practiceKit -> pc++: Practice selected
 
-activate practiceKit
+pc -> pc: Starter nedtælling på 5 sekunder
+practiceKit -> target++: Nulstiller position
+deactivate target
 
-practiceKit -> target: Nulstil position
-practiceKit -> practiceKit: Starter timer (5 sekunder)
 loop 5 sekunder
-    practiceKit -> practiceKit: Venter
+    pc -> pc: Netælling vises på GUI
 end
 
+pc -> pc: Starter nedtælling på 60 sekunder
 practiceKit -> target: Start bevægelse
 activate target
 
-practiceKit -> practiceKit: Starter timer (60 sekunder)
 loop 60 sekunder
-    target -> target: Bevæger sig i tilfældig sekvens
-    user -> userKit: Trykker på aftrækkeren
-    userKit -> target: Udsender laserstråle
+    pc -> pc: Netælling vises på GUI
 
-    alt target rammes
-        target -> practiceKit: Target ramt
-        practiceKit -> practiceKit: Point +1
+    target -> target: Bevæger sig i tilfældig sekvens
+    user -> userKit: Skyder efter target
+
+    alt Target rammes
+        practiceKit -> pc: Point sendes til server
+        pc -> pc: Point vises på ScoreDisplay
     end
 end
 
 practiceKit -> target: Stop bevægelse
 deactivate target
-
-practiceKit -> server: Point sendes til server
 deactivate practiceKit
-activate server
-server -> screen: Point vises på skærm
-deactivate server
+
+user -> pc: Samlet antal point aflæses på ScoreDisplay
+deactivate pc
 
 @enduml
