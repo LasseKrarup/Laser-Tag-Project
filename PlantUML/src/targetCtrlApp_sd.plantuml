@@ -20,19 +20,25 @@ participant SonarDriver <<controller>>
 
 [o-> main: <<start practice>>
 activate main
+main -> main: initMain()
+main -> MotorControl: motorControlInit()
+activate MotorControl
+deactivate MotorControl
+main -> SonarDriver: SonarInit()
+activate SonarDriver
+deactivate SonarDriver
 
 loop
     else Practice for 60 seconds
-    main -> main: Generate position
+    main -> main: generateNewSetpoint()
     loop
-        main -> SonarDriver: Read Position
+        main -> SonarDriver: sonarGetPosition(uint16_t sampleTimeUs)
         activate SonarDriver
-        return currentPosition
+        return distance
         deactivate SonarDriver
-        main -> MotorControl: Get position control(distance)
+        main -> MotorControl: getPositionControl(distance)
         activate MotorControl
         MotorControl -> MotorControl: Move to position
-        return positionCtrl
         deactivate MotorControl
         main -> main: Sample delay
 
