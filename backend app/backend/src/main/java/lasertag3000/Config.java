@@ -13,15 +13,22 @@ public final class Config {
     private File config = null;
 
     private Config(){
+        //Get config file
         config = new File("config.properties");
         boolean createFile = true;
+
+        //check if file exists
         if(config.exists()){
             InputStream input = null;
             try{
                 input = new FileInputStream(config);
+
+                //load properties from file
                 Properties prop = new Properties();
                 prop.load(input);
                 createFile = false;
+
+                //check if file contains all properties
                 if(prop.getProperty("db.url") == null){
                     createFile = true;
                 }
@@ -51,6 +58,8 @@ public final class Config {
 
             
         }
+
+        //if file doesnt exist or doenst contain all properties create new one
         if(createFile){createProperties();}
     }
 
@@ -61,6 +70,7 @@ public final class Config {
     private void createProperties(){
         OutputStream output = null;
         try{
+            //Set properties of file with standard values
             output = new FileOutputStream(config); 
             Properties prop = new Properties();
 
@@ -70,6 +80,8 @@ public final class Config {
             prop.setProperty("db.port", "3306");
             prop.setProperty("Kit.port", "2222");
             prop.setProperty("TCP.port", "9000");
+
+            //Write properties to file
             prop.store(output, null);
 
         } catch (Exception e) {
@@ -88,6 +100,7 @@ public final class Config {
         InputStream input = null;
         Properties prop = new Properties();
         try{
+            //load properties from file
             input = new FileInputStream(config);
             prop.load(input);
             
@@ -95,6 +108,7 @@ public final class Config {
 
         }
         finally{
+            //Close open filestream
             try {
                 input.close();
             } catch (Exception e) {
@@ -104,6 +118,7 @@ public final class Config {
         return prop;
     }
 
+    //Return properties from file
     public String DBURL(){
         Properties prop = getProperties();
         return prop.getProperty("db.url");
@@ -119,6 +134,7 @@ public final class Config {
         return prop.getProperty("db.password");
     }
 
+    //Returning properties from file and tries to cast them to int
     public int DBPORT(){
         Properties prop = getProperties();
         int port = 0;

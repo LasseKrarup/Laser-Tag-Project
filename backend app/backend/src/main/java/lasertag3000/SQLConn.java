@@ -2,8 +2,6 @@ package lasertag3000;
 
 import java.io.*;
 import java.net.InetAddress;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.*;
 
 public final class SQLConn {

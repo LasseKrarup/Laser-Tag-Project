@@ -10,7 +10,7 @@ public class Kit {
     private volatile Socket _socket;
     private volatile boolean _active;
     private volatile Boolean connected;
-    private OutputStream _out;
+    private volatile OutputStream _out;
 
     public Kit(int id, InetAddress ip) {
         _id = id;
@@ -24,8 +24,15 @@ public class Kit {
         System.out.println("Trying to connect to kit " + _id);
         while (true) {
             try {
-                if ((_socket == null || _socket.isClosed()) || !connected && _ip.isReachable(500)) {
+                //if socket is not connected to kit, try to connect
+                if ((_socket == null || _socket.isClosed()) || (!connected && _ip.isReachable(500))) {
                     try {
+                        if(_out != null){
+                            _out.close();
+                        }
+                        if(_socket != null){
+                            _socket.close();
+                        }
                         _socket = new Socket(_ip, Config.getInstance().KitPort());
                         connected = true;
                         System.out.println("Connected to kit " + _id);
@@ -41,37 +48,33 @@ public class Kit {
             } catch (IOException | InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
+                connected = false;
             }
-        } /*
-           * else if (!_socket.isConnected() | _socket.isClosed()) { try {
-           * _socket.close(); } catch (IOException e) { // TODO Auto-generated catch block
-           * e.printStackTrace(); } _socket = null; }
-           */
+        } 
         // TODO check if connection got interrupted and set socket to null
     }
 
     public boolean sendMessage(char message) {
+        //If socket is connected to kit
         if (_socket != null && !_socket.isClosed()) {
             try {
+                //check if output stream exists
                 if (_out == null) {
                     _out = _socket.getOutputStream();
                 }
+
+                //Convert char to int
                 int asci = message;
 
+                //Send int
                 _out.write(asci);
                 _out.flush();
 
             } catch (IOException e) {
                 // TODO Auto-generated catch block
+                //Set connection as not connected on error
                 connected = false;
                 e.printStackTrace();
-            } finally {
-                /*
-                 * if (pwrite != null) { pwrite.close(); } if (ostream != null) { try {
-                 * ostream.close(); } catch (IOException e) { // TODO Auto-generated catch block
-                 * e.printStackTrace(); } }
-                 */
-
             }
             return true;
         } else {
@@ -82,11 +85,11 @@ public class Kit {
 
     public void messageReciever() {
         InputStream istream = null;
-        ;
         BufferedReader receiveRead = null;
         while (true) {
             try {
-                while (_socket != null && !_socket.isClosed()) {
+                if (_socket != null && !_socket.isClosed()) {
+                    //Create inputstream and bufferreader if null
                     if (istream == null) {
                         istream = _socket.getInputStream();
                     }
@@ -94,10 +97,15 @@ public class Kit {
                         receiveRead = new BufferedReader(new InputStreamReader(istream));
                     }
                     int message = 0;
-                    while (message != -1) {
+
+                    //Wait for new messages while kit is connected
+                    while(connected){
+                        //Test for new data in buffer
                         if (istream.available() > 0) {
+                            //Read from buffer
                             message = receiveRead.read();
-                            System.out.println(message);
+
+                            //Evaluate recived data
                             if (message >= 0 & message < 10) {
                                 if (App.game != null & _active) {
                                     App.game.shot(message);
@@ -116,9 +124,12 @@ public class Kit {
 
             } catch (IOException e) {
                 e.printStackTrace();
+                //Set connection as not connected on error
+                connected = false;
                 // TODO Handle exception
 
             } finally {
+                //Close open connections
                 try {
                     if (istream != null) {
                         istream.close();
@@ -135,6 +146,7 @@ public class Kit {
 
     }
 
+    //Return private values
     public int getID() {
         return _id;
     }
