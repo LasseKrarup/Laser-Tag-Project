@@ -19,7 +19,7 @@ CY_ISR_PROTO(isr_mixerFreq_handler);        // Interrupt handling change of mixe
 CY_ISR_PROTO(isr_practiceKitStart_handler); // Interrupt handling change of mixer frequency
 
 int main(void)
-{
+{        
     CyGlobalIntEnable;  // Enable global interrupts
     
     initPracticeKitCtrl();  // Initialize PracticeKitCtrl
@@ -28,10 +28,6 @@ int main(void)
     isr_filter_StartEx(isr_filter_handler);                     // Start filter isr
     isr_mixerFreq_StartEx(isr_mixerFreq_handler);               // Start mixerFreq isr
     isr_practiceKitStart_StartEx(isr_practiceKitStart_handler); // Start practiceKitStart_isr
-    
-    // For testing only:
-    CyDelay(10000);             // Wait 10 sec
-    sendPracticeKitStartInd();  // Start PracticeKit
     
     for(;;)
     {
