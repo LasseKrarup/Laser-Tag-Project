@@ -22,7 +22,7 @@ frame "cd userKitCtrlApp" {
     }
 
     class ComUnitIF <<boundary>> {
-        initComUnitIF(userKitID : int) : void
+        initComUnitIF(void) : void
         sendHitInd(currentLaserID : int) : void
     }
 
