@@ -21,10 +21,11 @@ participant Receiver <<controller>>
 
 main -> PraticeKitCtrl++: initPracticeKitCtrl()
 deactivate PraticeKitCtrl
+main -> ComUnitIF++: initComUnitIF()
+deactivate ComUnitIF
 
 loop
-
-    note over main : empty loop
+    rnote over main, Receiver : Empty loop
 
     else Interrupt from isr_filter
     [o-> main: <<filter event>>
@@ -33,9 +34,11 @@ loop
     main -> main: Update filterOutputVolt
 
     alt filterOutputVolt > minLevelDetection || filterOutputVolt > -minLevelDetection
+        main -> Receiver++: receiverHit()
+        deactivate Receiver
         main -> ComUnitIF++: sendHitInd(currentLaserID)
-        deactivate main
         deactivate ComUnitIF
+        deactivate main
     end
 
     else Interrupt from isr_mixerFreq
@@ -44,6 +47,13 @@ loop
     main -> Receiver++: changeMixerFrequency(currentLaserID)
     return newLaserID
     deactivate main
+
+    else Interrupt from isr_practiceKitStart
+    [o-> main: <<practiceKitStart event>>
+    activate main
+    main -> ComUnitIF++: sendPracticeKitStartInd()
+    deactivate main
+    deactivate ComUnitIF
 end
 
 @enduml
