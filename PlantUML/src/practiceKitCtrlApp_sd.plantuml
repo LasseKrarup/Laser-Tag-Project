@@ -35,10 +35,10 @@ loop
 
     alt filterOutputVolt > minLevelDetection || filterOutputVolt > -minLevelDetection
         main -> Receiver++: receiverHit()
-        main -> ComUnitIF++: sendHitInd(currentLaserID)
-        deactivate main
         deactivate Receiver
+        main -> ComUnitIF++: sendHitInd(currentLaserID)
         deactivate ComUnitIF
+        deactivate main
     end
 
     else Interrupt from isr_mixerFreq
