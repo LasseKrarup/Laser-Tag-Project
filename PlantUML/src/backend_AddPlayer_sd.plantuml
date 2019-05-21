@@ -1,0 +1,46 @@
+@startuml backend_AddPlayer_sd
+
+skinparam {
+    monochrome true
+    dpi 300
+    padding 5
+    packageStyle rectangle
+    packageStyle frame
+    shadowing false
+}
+
+mainframe **sd** Backend - Add player
+
+    participant Database
+    participant SQLConn
+    participant App
+    participant GUICom
+    participant Game
+    participant Player
+    participant Kit
+
+    activate GUICom
+    GUICom -> GUICom: Add player from GUI recived
+    GUICom -> GUICom: Decode and evaluate recived command
+    GUICom -> App++: Get kit with ID from data
+    App -> GUICom: Kit
+    deactivate App
+    GUICom -> Kit++: check if Kit is connected
+    Kit -> GUICom: True
+    deactivate Kit
+    GUICom -> SQLConn++: Add player
+    SQLConn -> Database++: Add player
+    Database -> SQLConn: Player id
+    deactivate Database
+    SQLConn -> GUICom: Player id
+    deactivate SQLConn
+    GUICom -> Player++: Create new Player object
+    Player -> GUICom: Player object
+    deactivate Player
+    GUICom -> Game++: Add Player object to Game
+    deactivate Game
+
+
+
+
+@enduml

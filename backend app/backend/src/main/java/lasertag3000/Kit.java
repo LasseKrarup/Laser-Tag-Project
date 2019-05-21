@@ -83,7 +83,7 @@ public class Kit {
 
     }
 
-    public void messageReciever() {
+    private void messageReciever() {
         InputStream istream = null;
         BufferedReader receiveRead = null;
         while (true) {

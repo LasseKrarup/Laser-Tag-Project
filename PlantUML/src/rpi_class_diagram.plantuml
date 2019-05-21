@@ -1,0 +1,24 @@
+@startuml rpi_class_diagram
+skinparam {
+    monochrome true
+    dpi 300
+    padding 2
+    packageStyle rectangle
+    packageStyle frame
+    shadowing false
+    classAttributeIconSize 0
+}
+hide circle
+hide empty members
+
+    class tcpserver <<boundary>> {
+        - _socket: int
+        - _active: bool
+        - _queue: queue
+        - connect(): void
+        - recievethread(): void
+        - sendthread(): void
+        + start(): void
+    }
+
+@enduml

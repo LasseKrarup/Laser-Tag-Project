@@ -20,8 +20,8 @@ participant ComUnitIF <<boundary>>
 participant Receiver <<controller>>
 
 main -> PraticeKitCtrl++: initPracticeKitCtrl()
-main -> ComUnitIF++: initComUnitIF()
 deactivate PraticeKitCtrl
+main -> ComUnitIF++: initComUnitIF()
 deactivate ComUnitIF
 
 loop
@@ -35,10 +35,10 @@ loop
 
     alt filterOutputVolt > minLevelDetection || filterOutputVolt > -minLevelDetection
         main -> Receiver++: receiverHit()
-        main -> ComUnitIF++: sendHitInd(currentLaserID)
-        deactivate main
         deactivate Receiver
+        main -> ComUnitIF++: sendHitInd(currentLaserID)
         deactivate ComUnitIF
+        deactivate main
     end
 
     else Interrupt from isr_mixerFreq

@@ -1,0 +1,44 @@
+@startuml backend_playershot_sd
+
+skinparam {
+    monochrome true
+    dpi 300
+    padding 5
+    packageStyle rectangle
+    packageStyle frame
+    shadowing false
+}
+
+mainframe **sd** Backend - startup
+
+    participant Database
+    participant SQLConn
+    participant App
+    participant GUICom
+    participant Game
+    participant Player
+    participant Kit
+
+    activate App
+    App -> GUICom: Start new thread waiting for GUI to connect
+    App -> SQLConn++: Get Kits
+    SQLConn -> Database++: Get Kits
+    Database -> SQLConn: Kits as IP and ID
+    deactivate Database
+    SQLConn -> App: Kits as IP and ID
+    deactivate SQLConn
+    loop for each kit in database
+    App -> App: Try to resolve IPaddress
+    App -> Kit++: Create new kit object
+    Kit -> Kit: Start thread trying to connect to thread
+    Kit -> Kit: Start thread listening for data
+    Kit -> App: Kit object
+    deactivate Kit
+    App -> App: Store kit object locally
+    end
+
+
+
+
+
+@enduml
