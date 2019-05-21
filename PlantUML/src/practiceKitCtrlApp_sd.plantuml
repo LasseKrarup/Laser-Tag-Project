@@ -20,8 +20,8 @@ participant ComUnitIF <<boundary>>
 participant Receiver <<controller>>
 
 main -> PraticeKitCtrl++: initPracticeKitCtrl()
-main -> ComUnitIF++: initComUnitIF()
 deactivate PraticeKitCtrl
+main -> ComUnitIF++: initComUnitIF()
 deactivate ComUnitIF
 
 loop
