@@ -22,12 +22,11 @@ participant Receiver <<controller>>
 
 main -> UserKitCtrl++: initUserKitCtrl(userkitID : int)
 deactivate UserKitCtrl
-main -> ComUnitIF++: initComUnitIF(userkitID : int)
+main -> ComUnitIF++: initComUnitIF()
 deactivate ComUnitIF
 
 loop
-
-    note over main : empty loop
+    rnote over main, Receiver : Empty loop
 
     else Interrupt from isr_filter
     [o-> main: <<filter event>>
@@ -36,10 +35,10 @@ loop
     main -> main: update filterOutputVolt
 
     alt (filterOutputVolt > minLevelDetection || filterOutputVolt > -minLevelDetection) && currentLaserID != userkitID
-        main -> ComUnitIF++: sendHitInd(currentLaserID)
-        deactivate ComUnitIF
         main -> Receiver++: receiverHit()
         deactivate Receiver
+        main -> ComUnitIF++: sendHitInd(currentLaserID)
+        deactivate ComUnitIF
         deactivate main
     end
 
@@ -65,7 +64,6 @@ loop
     main -> Transmitter++: stopTransmitting()
     deactivate Transmitter
     deactivate main
-
 end
 
 @enduml

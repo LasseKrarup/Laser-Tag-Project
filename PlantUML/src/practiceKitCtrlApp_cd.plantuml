@@ -22,10 +22,13 @@ frame "cd userKitCtrlApp" {
     }
 
     class ComUnitIF <<boundary>> {
+        initComUnitIF(void) : void
         sendHitInd(currentLaserID : int) : void
+        sendPracticeKitStartInd(void) : void
     }
 
     class Receiver <<controller>> {
+        receiverHit(void) : void
         changeMixerFrequency(currentLaserID : int) : int
     }
 }
