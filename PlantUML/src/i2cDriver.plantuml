@@ -1,0 +1,129 @@
+@startuml i2cDriver-sequence
+
+skinparam {
+    monochrome true
+    dpi 300
+    padding 5
+    sequenceMessageAlign center
+    packageStyle frame
+    shadowing false
+    'backgroundColor transparent
+}
+
+mainframe **sd** i2c_driver - slave read requests
+
+' participant RPiApp
+' participant i2c_driver
+' participant i2cSenderThread
+' participant i2cReceiverThread
+' participant interrupt_module
+
+loop until interrupt
+    i2cReaderThread -> interrupt_module : Read
+    activate i2cReaderThread
+    activate interrupt_module
+end
+
+interrupt_module --> i2cReaderThread
+deactivate interrupt_module
+
+i2cReaderThread -> SenderMsgQueue : I2C_SLAVE_REQ
+deactivate i2cReaderThread
+
+loop true
+    i2cSenderThread -> SenderMsgQueue : pop
+    activate i2cSenderThread
+    activate SenderMsgQueue
+    SenderMsgQueue --> i2cSenderThread : Message
+    deactivate SenderMsgQueue
+
+    opt ID=I2C_SLAVE_REQ
+        i2cSenderThread -> i2cdev : read
+        activate i2cdev
+        i2cdev --> i2cSenderThread : data
+        deactivate i2cdev
+
+        i2cSenderThread -> i2cSenderThread : place in dataqueue
+        i2cSenderThread -> i2cSenderThread : set data-ready flag
+        deactivate i2cSenderThread
+    end
+
+end
+
+@enduml
+
+@startuml i2cDriver-receive
+skinparam {
+    monochrome true
+    dpi 300
+    padding 5
+    sequenceMessageAlign center
+    packageStyle frame
+    shadowing false
+    'backgroundColor transparent
+}
+
+mainframe **activity** i2c_driver - receive byte
+
+    start
+        :Open "/dev/i2c-1";
+        :Set slave address;
+        :Read 1 byte;
+        :Close file descriptor;
+        :Return byte;
+    stop
+@enduml
+
+@startuml i2c_driver.hpp
+
+hide circle
+skinparam {
+    monochrome true
+    dpi 300
+    padding 5
+    sequenceMessageAlign center
+    packageStyle frame
+    shadowing false
+    classAttributeIconSize 0
+    'backgroundColor transparent
+}
+
+class i2cDriver {
+    +i2cDriver(int slaveAddress)
+    +~i2cDriver()
+    +send(char &buf): void
+    +receive(): char
+    +getDataReadyFlag(): unsigned char
+    -dataQueue: std::queue<char>
+    -i2cReaderEventHandler(void *): static void *
+    -i2cSenderEventHandler(void *): static void *
+    -i2cReaderThread: pthread_t
+    -i2cSenderThread: pthread_t
+    -i2cSenderMsgQ: MsgQueue
+    -i2cSendByte(char byte): void
+    -i2cReceiveByte(): char
+    -dataReadyFlag: unsigned char
+    -slaveAddress: int
+}
+
+@enduml
+
+@startuml i2cDriver-send
+skinparam {
+    monochrome true
+    dpi 300
+    padding 5
+    sequenceMessageAlign center
+    packageStyle frame
+    shadowing false
+    'backgroundColor transparent
+}
+
+mainframe **activity** i2c_driver - send byte
+    start
+        :Open "/dev/i2c-1";
+        :Set slave address;
+        :Send 1 byte;
+        :Close file descriptor;
+    stop
+@enduml

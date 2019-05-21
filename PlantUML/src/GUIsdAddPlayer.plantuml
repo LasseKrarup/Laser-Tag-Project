@@ -37,7 +37,8 @@ mainframe **sd** GUI - Add player
         react -> react: update state
         react -> players++: render
         players -> players--: sort and list players
-        react --> main++: player name and ID
+        react -> main++: player name and ID
+        deactivate react
         main -> ws: Send name and ID to server
         deactivate main
         activate ws

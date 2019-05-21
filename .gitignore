@@ -3,6 +3,7 @@
 **/.tmp_versions
 **/bin
 **/build
+*.code*
 
 # PSoC ignore
 codegentemp
