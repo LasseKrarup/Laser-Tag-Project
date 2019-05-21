@@ -41,7 +41,7 @@ void sendPracticeKitStartInd()
     
     I2C_req_Write(0);   // Request I2C from ComUint (the I2C Master)
     
-    //CyDelay(100);   // Anti prel
+    CyDelay(100);   // Anti prel
 }
 
 #endif /* COM_UNIT_IF_H */ 
