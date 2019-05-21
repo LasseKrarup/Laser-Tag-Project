@@ -49,7 +49,7 @@ app.on("ready", () => {
         BrowserWindow.addDevToolsExtension(
             path.join(
                 os.homedir(),
-                "/AppData/Local/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/3.6.0_0"
+                "/.config/google-chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/3.6.0_0"
             )
         );
     }
