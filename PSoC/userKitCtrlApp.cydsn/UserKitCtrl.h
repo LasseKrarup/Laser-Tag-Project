@@ -59,7 +59,7 @@ void DMA_Filter_Config()
     CyDmaChEnable(DMA_Filter_Chan, 1);
 }
 
-void initUserKitCtrl(uint8 unitId)
+void initUserKitCtrl(uint8 userKitID)
 {
     // Start    
     TIA_Start();
@@ -77,7 +77,7 @@ void initUserKitCtrl(uint8 unitId)
     
     DMA_Filter_Config();
     
-    transmit_clock_SetDividerValue(clockDividerTransmit[unitId]);   // Set transmitting frequency
+    transmit_clock_SetDividerValue(clockDividerTransmit[userKitID]);   // Set transmitting frequency
     
     I2C_Start();
 }
