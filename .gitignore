@@ -4,6 +4,7 @@
 **/bin
 **/build
 *.code*
+*/dist
 
 # PSoC ignore
 codegentemp

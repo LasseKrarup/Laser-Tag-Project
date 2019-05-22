@@ -4,7 +4,15 @@
 
 Der skal være installeret [Node.js](https://nodejs.org/en/) på computeren. 
 cd til GUI directory og skriv ```npm install``` for at installere modulerne.
-Kør GUI med kommandoen ```npm start```.
+Kør GUI i development mode med kommandoen ```npm start```.
+
+For at builde og package GUI'en, skriv:
+
+```
+npm run build-linx
+```
+
+For at installere appen, installer da enten `.deb` filen, der bliver oprettet i `dist` mappen, med `sudo apt install ./filename.deb` eller ved at dobbeltklikke på `.deb` filen. Alternativt kan det _unpackaged_ program også køres fra `GUI/dist/linux-unpackaged/gui_lasertag`.
 
 ## BackendApp - install guide
 

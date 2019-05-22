@@ -19,7 +19,7 @@ app.on("ready", () => {
         // height: 560,
         // width: 700,
         title: "Laser Tag-3000",
-        icon: path.join(__dirname, "img/laser-ico.png"),
+        icon: path.join(__dirname, "img/64x64.png"),
     });
     // Load html
     mainWindow.loadURL(
