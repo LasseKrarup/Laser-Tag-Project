@@ -16,7 +16,50 @@ Rækkefølgen er vigtig for installationen af disse. Ved installation af phpMyAd
 
 ```
 sudo apt install apache2
+```
+
+Hvis der er installeret mysql-server før:
+```
+sudo apt purge mysql-client-5.7 mysql-client-core-5.7 mysql-common mysql-server mysql-server mysql-server-5.7 mysql-server-core-5.7
+```
+
+Derefter:
+```
 sudo apt install mysql-server
+```
+
+Kør så:
+
+```
+sudo mysql_secure_installation
+```
+
+Svar ja til validate password plugin. Svar 0 til validation policy. Skriv "password" til nyt root password. Skriv password igen. Svar ja til at bekræfte password-styrke. Svar ja til at fjerne anonyme brugere. Svar ja til disallow remote. Svar ja til remove test. Svar ja til reload privilleges.
+
+Kør så:
+
+```
+sudo mysql -u root
+```
+
+Du bør komme ind i mysql. Indtast da følgende:
+
+```
+FLUSH PRIVILEGES;
+USE mysql;
+UPDATE user SET authentication_string=PASSWORD("password") WHERE User='root';
+UPDATE user SET plugin="mysql_native_password" WHERE User='root';
+quit
+```
+
+Reload mysql service:
+
+```
+sudo service mysql restart
+```
+
+Nu er password sat til 'password' for root-brugeren.
+
 sudo apt install phpmyadmin
 ```
 
@@ -38,33 +81,7 @@ Kør følgende:
 sudo apt install ./jdk-12.0.1_linux-x64_bin.deb
 ```
 
-## MySQL Setup
-
-Efter succesfuld installation, ændr da adgangskoden på `root` brugeren til `password`, hvis det ikke allerede er det:
-
-```
-systemctl stop mysqld
-systemctl set-environment MYSQLD_OPTS="--skip-grant-tables"
-systemctl start mysqld
-mysql -u root
-```
-
-Fra mysql:
-
-```
-mysql> UPDATE mysql.user SET authentication_string = PASSWORD('MyNewPassword') -> WHERE User = 'root' AND Host = 'localhost';
-mysql> FLUSH PRIVILEGES;
-mysql> quit
-```
-
-Bagefter:
-
-```
-systemctl stop mysqld
-systemctl unset-environment MYSQLD_OPTS
-systemctl start mysqld
-mysql -u root -p
-```
+## Klargør database
 
 Åbn [localhost/phpmyadmin](http://localhost/phpmyadmin) i en browser. Opret en ny database, der hedder "lasertag". Vælg databasen "lasertag" i phpMyAdmin og klik "Import". Vælg filen `backend app/kits.sql`, som ligger i dette repository.
 
