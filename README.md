@@ -43,17 +43,27 @@ sudo apt install ./jdk-12.0.1_linux-x64_bin.deb
 Efter succesfuld installation, ændr da adgangskoden på `root` brugeren til `password`, hvis det ikke allerede er det:
 
 ```
-mkdir -p /var/run/mysqld
-chown mysql:mysql /var/run/mysqld
-sudo service mysql stop
-sudo -s
-mysql_safe --skip-grant-tables &
+systemctl stop mysqld
+systemctl set-environment MYSQLD_OPTS="--skip-grant-tables"
+systemctl start mysqld
 mysql -u root
-UPDATE mysql.user SET Password=PASSWORD('password') WHERE User='root';
-FLUSH PRIVILEGES;
-exit;
-mysqladmin -u root -p shutdown
-sudo service mysql start
+```
+
+Fra mysql:
+
+```
+mysql> UPDATE mysql.user SET authentication_string = PASSWORD('MyNewPassword') -> WHERE User = 'root' AND Host = 'localhost';
+mysql> FLUSH PRIVILEGES;
+mysql> quit
+```
+
+Bagefter:
+
+```
+systemctl stop mysqld
+systemctl unset-environment MYSQLD_OPTS
+systemctl start mysqld
+mysql -u root -p
 ```
 
 Åbn [localhost/phpmyadmin](http://localhost/phpmyadmin) i en browser. Opret en ny database, der hedder "lasertag". Vælg databasen "lasertag" i phpMyAdmin og klik "Import". Vælg filen `backend app/kits.sql`, som ligger i dette repository.
