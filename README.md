@@ -42,7 +42,7 @@ sudo apt install ./jdk-12.0.1_linux-x64_bin.deb
 
 Efter succesfuld installation, ændr da adgangskoden på `root` brugeren til `password`, hvis det ikke allerede er det.
 
-Åbn [localhost/phpmyadmin](http://localhost/phpmyadmin) i en browser. Opret en ny database, der hedder "lasertag". Download [kits.sql](backend app/kits.sql). Vælg databasen "lasertag" i phpMyAdmin og klik "Import". Vælg den downloaded `kits.sql` fil.
+Åbn [localhost/phpmyadmin](http://localhost/phpmyadmin) i en browser. Opret en ny database, der hedder "lasertag". Vælg databasen "lasertag" i phpMyAdmin og klik "Import". Vælg filen `backend app/kits.sql`, som ligger i dette repository.
 
 ## Backend Compilation
 
