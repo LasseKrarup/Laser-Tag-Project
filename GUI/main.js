@@ -2,6 +2,7 @@ const electron = require("electron");
 const url = require("url");
 const os = require("os");
 const path = require("path");
+const isDev = require('electron-is-dev');
 
 const { app, BrowserWindow, Menu, ipcMain, globalShortcut } = electron;
 
@@ -46,7 +47,7 @@ app.on("ready", () => {
     Menu.setApplicationMenu(mainMenu);
 
     // React Developer Tools
-    if (process.env.NODE_ENV != "production") {
+    if (isDev) {
         BrowserWindow.addDevToolsExtension(
             path.join(
                 os.homedir(),
@@ -189,7 +190,7 @@ if (process.platform == "darwin") {
 }
 
 // Add developer tools if not in production mode
-if (process.env.NODE_ENV != "production") {
+if (isDev) {
     mainMenuTemplate.push({
         label: "Developer tools",
         submenu: [
