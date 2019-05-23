@@ -11,7 +11,7 @@
 #include "Receiver.h"
 #include "Transmitter.h"
 
-#define USER_KIT_ID 2   // UserKitID changed by programmer (1-10)
+#define USER_KIT_ID 1   // UserKitID changed by programmer (1-10)
 
 static const uint8 userKitID = USER_KIT_ID-1;   // Hardcoded UserKitId 0-9
 static const float minLevelDetection = 1.0;     // Minimum level for detection in Volt
