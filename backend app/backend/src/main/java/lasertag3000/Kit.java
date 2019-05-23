@@ -104,9 +104,9 @@ public class Kit {
                         if (istream.available() > 0) {
                             //Read from buffer
                             message = receiveRead.read();
-
                             //Evaluate recived data
-                            if (message >= 0 & message < 10) {
+                            if (message > 47 & message < 58) {
+                                message = Character.getNumericValue(message);
                                 if (App.game != null & _active) {
                                     App.game.shot(message);
                                 }

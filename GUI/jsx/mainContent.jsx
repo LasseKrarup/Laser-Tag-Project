@@ -24,7 +24,6 @@ class App extends React.Component {
         this.handleStartPractice = this.handleStartPractice.bind(this);
         this.handleStartTimer = this.handleStartTimer.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
-        this.resetScore = this.resetScore.bind(this);
     }
 
     // Listen for incoming messages in lifetime method
@@ -81,53 +80,55 @@ class App extends React.Component {
 
     handleStartPractice() {
         if (this.state.players.allIds.length != 0) {
-            this.setState(
-                {
-                    ...this.state,
-                    time: {
-                        minutes: 1,
-                        seconds: 0
+            if (this.state.players.minutes == 0 && this.state.players.seconds == 0) {
+                this.setState(
+                    {
+                        ...this.state,
+                        time: {
+                            minutes: 1,
+                            seconds: 0
+                        },
+                        countdown: 5,
+                        showCountdown: true
                     },
-                    countdown: 5,
-                    showCountdown: true
-                },
-                () => {
-                    this.countdownInterval = setInterval(() => {
-                        this.setState({
-                            ...this.state,
-                            countdown: this.state.countdown - 1
-                        });
-
-                        if (this.state.countdown == 0) {
-                            clearInterval(this.countdownInterval);
-
+                    () => {
+                        this.countdownInterval = setInterval(() => {
                             this.setState({
                                 ...this.state,
-                                showCountdown: false
+                                countdown: this.state.countdown - 1
                             });
 
-                            // Add fake player (practice kit)
-                            wsClient.send(
-                                JSON.stringify({
-                                    action: "addPlayer",
-                                    name: "Practice Kit",
-                                    id: "11"
-                                })
-                            );
+                            if (this.state.countdown == 0) {
+                                clearInterval(this.countdownInterval);
 
-                            // Send start game
-                            wsClient.send(
-                                JSON.stringify({
-                                    action: "startGame",
-                                    time: "1"
-                                })
-                            );
+                                this.setState({
+                                    ...this.state,
+                                    showCountdown: false
+                                });
 
-                            this.handleStartTimer();
-                        }
-                    }, 1000);
-                }
-            );
+                                // Add fake player (practice kit)
+                                wsClient.send(
+                                    JSON.stringify({
+                                        action: "addPlayer",
+                                        name: "Practice Kit",
+                                        id: "11"
+                                    })
+                                );
+
+                                // Send start game
+                                wsClient.send(
+                                    JSON.stringify({
+                                        action: "startGame",
+                                        time: "1"
+                                    })
+                                );
+
+                                this.handleStartTimer();
+                            }
+                        }, 1000);
+                    }
+                );
+            }
         } else {
             console.log("No players added - can't start practice");
             this.toggleModal(
@@ -289,7 +290,7 @@ class App extends React.Component {
                 }
             } else {
                 console.log("Game time not withing range");
-                this.toggleModal("Game time not within range!");
+                this.toggleModal("The game must be between 10 and 20 minutes. Don't you have the stamina for that? Too bad!");
             }
         } else {
             console.log("A game is already running!");
@@ -325,8 +326,6 @@ class App extends React.Component {
             }
         }, 1000);
     }
-
-    resetScore() {}
 
     render() {
         return (
@@ -547,7 +546,7 @@ class FormArea extends React.Component {
                                 min="10"
                                 max="20"
                                 id="gametime"
-                                placeholder="Enter the game time..."
+                                placeholder="Game time..."
                             />
                         </div>
                         <button
