@@ -39,7 +39,7 @@ CY_ISR(isr_filter_handler)
 {
     filterOutputVolt = ADC_DelSig_CountsTo_Volts(filterOutput); // Convert filter output to volts
     
-    if (filterOutputVolt      > minLevelDetection || filterOutputVolt < -minLevelDetection)
+    if (filterOutputVolt > minLevelDetection || filterOutputVolt < -minLevelDetection)
     {
         receiverHit();  // Reciever is hit
         sendHitInd(currentLaserID); // Send hit indication to ComUnit

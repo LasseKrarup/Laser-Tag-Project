@@ -1,0 +1,43 @@
+@startuml backend_playershot_sd
+
+skinparam {
+    monochrome true
+    dpi 300
+    padding 5
+    packageStyle rectangle
+    packageStyle frame
+    shadowing false
+}
+
+mainframe **sd** Backend - player shot
+
+    participant Database
+    participant SQLConn
+    participant App
+    participant GUICom
+    participant Game
+    participant Player
+    participant Kit
+
+    activate Kit
+    Kit -> Kit: Recieve shot from ID from connected kit
+    Kit -> Game++: Is kit ID in active game
+    Game -> Kit: True
+    deactivate Game
+    Kit -> Game++: Get game ID
+    Game -> Kit: ID
+    deactivate Game
+    Kit -> SQLConn++: Add points for player ID in game ID
+    SQLConn -> Database++: Get points for player
+    Database -> SQLConn: points
+    SQLConn -> Database: Set points for player to points + 1
+    deactivate Database
+    SQLConn -> Kit: Points
+    deactivate SQLConn
+    Kit -> GUICom++: Set new points for player
+    deactivate GUICom
+
+
+
+
+@enduml

@@ -75,7 +75,7 @@ public final class Config {
             Properties prop = new Properties();
 
             prop.setProperty("db.url", "127.0.0.1");
-            prop.setProperty("db.user", "admin");
+            prop.setProperty("db.user", "root");
             prop.setProperty("db.password", "password");
             prop.setProperty("db.port", "3306");
             prop.setProperty("Kit.port", "2222");

@@ -1,0 +1,110 @@
+@startuml backend_class_diagram
+
+skinparam {
+    monochrome true
+    dpi 300
+    padding 2
+    packageStyle rectangle
+    packageStyle frame
+    shadowing false
+    classAttributeIconSize 0
+}
+hide circle
+hide empty members
+
+    class SQLConn <<boundary>>{
+        - instance: SQLConn
+        - _URL: String
+        - _user: String
+        - _password: String
+        - SQLConn(): SQLConn
+        - getConnection(): Connection
+        + getInstance(): SQLConn
+        + addKit(): int
+        + removeKit(): void
+        + addPlayer(): int
+        + removePlayer(): void
+        + getKits(): String[][]
+        + addGame(): int
+        + stopGame(): void
+        + playerShot(): int
+    }
+
+    class Kit <<boundary>>{
+        - _id: int
+        - _ip: InetAddress
+        - _active: boolean
+        - _connected: boolean
+        - conSocket(): void
+        - messageReciever(): void
+        + Kit(int, InetAddress): Kit
+        + sendMessage(char): boolean
+        + getID(): int
+        + getIP(): InetAddress
+        + enable(): void
+        + disable(): void
+        + isConnected(): boolean
+    }
+
+    class Player{
+        - _kit: Kit
+        - _name: String
+        - _id: int
+        + Player(int, String, Kit): Player
+        + getName(): String
+        + getID(): int
+        + getKit(): Kit
+    }
+
+    class GUICom <<boundary>> {
+        - instance: GUICom
+        + getInstance(): GUICom
+        - GUICom(): GUICom
+        - Send(String): void
+        - decode(byte[]): String
+        - encode(): byte[]
+        - handshake(): byte[]
+        - messageInterpreter(): void
+        + updateHighScore(): void
+        + startPractice(): void
+    }
+
+    class Game{
+        - _id: int
+        - _players: List
+        - _active: boolean
+        + addPlayer(): boolean
+        + removePlayer(): void
+        + startGame(): void
+        + stopGame(): void
+        + shot(): void
+    }
+
+    class Config{
+        - _config: File
+        - instance: Config
+        - Config(): Config
+        + getInstance(): Config
+        + DBURL(): String
+        + DBUSER(): String
+        + DBPASS(): String
+        - DBPORT(): int
+        - KitPort(): int
+        - ServerPort(): int
+    }
+
+    class App{
+        - _kits: Kit[]
+        - game: Game
+        - getKits(): void
+    }
+
+    App *-- "1" Game
+    Game *-- "1..*" Player
+    App *-- "1..*" Kit
+    Player *-- "1" Kit
+    App --> "1" SQLConn
+    App --> "1" GUICom
+
+
+@enduml
