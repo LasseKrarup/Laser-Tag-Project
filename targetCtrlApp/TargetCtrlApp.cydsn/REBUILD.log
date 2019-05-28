@@ -1,0 +1,12 @@
+--------------- Rebuild Started: 04/24/2019 15:25:28 Project: main.c, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/main.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c main.c -o .\CortexM3\ARM_GCC_541\Debug\main.o
+In file included from main.c:13:0:
+SonarDriver.h:12:0: error: unterminated #ifndef
+ #ifndef SONARDRIVER_H
+ ^
+main.c: In function 'main':
+main.c:17:5: warning: implicit declaration of function 'sonarStart' [-Wimplicit-function-declaration]
+     sonarStart();
+     ^
+The command 'arm-none-eabi-gcc.exe' failed with exit code '1'.
+--------------- Rebuild Failed: 04/24/2019 15:25:30 ---------------
