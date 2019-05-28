@@ -9,6 +9,8 @@ skinparam {
     shadowing false
 }
 
+hide footbox
+
 mainframe **sd** GUI - Start game
 
     participant Electron
