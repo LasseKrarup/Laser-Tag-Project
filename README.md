@@ -68,6 +68,9 @@ sudo service mysql restart
 
 Nu er password sat til 'password' for root-brugeren.
 
+Installer også phpMyAdmin
+
+```
 sudo apt install phpmyadmin
 ```
 
