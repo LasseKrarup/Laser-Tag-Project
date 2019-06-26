@@ -21,7 +21,11 @@ public class Game {
 
     public Game(List<Player> players){
         _id = SQLConn.getInstance().addGame();
-        _players = players;
+        Iterator<Player> itr = players.iterator();
+        while (itr.hasNext()) {
+            Player p = itr.next();
+            this.addPlayer(p.getName(), p.getKit().getID());
+        }
     }
 
     public boolean addPlayer(String player, int kit) {
@@ -90,7 +94,7 @@ public class Game {
         if (_active) {
             //notify active thread to stop waiting
             synchronized (this) {
-                this.notifyAll();
+                this.notify();
             }
         } else {
             //create new game object
